@@ -1,0 +1,13 @@
+{
+  "name": "somnus-plot",
+  "version": "0.6.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "go": "node main.js",
+    "build": "node build.mjs",
+    "test": "node tests/integration.mjs && node tests/resident.mjs",
+    "bench": "node tests/benchmark.mjs && node tests/resident-benchmark.mjs",
+    "resident": "node capabilities/resident.mjs"
+  }
+}

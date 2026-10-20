@@ -1,0 +1,43 @@
+{
+  "id": "mixed-runtime-plot",
+  "version": "0.4.0",
+  "hosts": [
+    "node"
+  ],
+  "permissions": {
+    "fs": [
+      ".",
+      ".grave"
+    ],
+    "spawn": true
+  },
+  "tenants": {
+    "python": {
+      "depth": "shallow",
+      "packages": []
+    }
+  },
+  "steps": [
+    {
+      "cmd": "node",
+      "args": [
+        "-e",
+        "const fs=require(\"node:fs\"); const data={samples:[11,23,37,43]}; fs.writeFileSync(\"samples.json\",JSON.stringify(data));console.log(\"Node prepared samples:\",data.samples.length)"
+      ]
+    },
+    {
+      "cmd": ".grave/py/bin/python3",
+      "args": [
+        "-c",
+        "import json,pathlib; p=pathlib.Path(\"samples.json\"); d=json.loads(p.read_text()); v=d[\"samples\"]; r={\"count\":len(v),\"total\":sum(v),\"average\":sum(v)/len(v)}; pathlib.Path(\"result.json\").write_text(json.dumps(r)); print(\"Python tenant calculated:\",r)"
+      ]
+    },
+    {
+      "cmd": "node",
+      "args": [
+        "-e",
+        "const d=require(\"node:fs\").readFileSync(\"result.json\",\"utf8\");console.log(\"Node consumed Python result:\",d)"
+      ]
+    }
+  ]
+}

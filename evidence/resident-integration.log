@@ -1,0 +1,20 @@
+PASS optional capability acquisition and native-only clean CLI startup
+PASS concurrent start clients converge on one authenticated supervisor
+PASS job outlives submitting CLI; a distinct CLI discovers identity, status and output
+PASS abrupt transport disconnect after submission does not cancel accepted work
+PASS concurrent clients, stable identities and exactly one job for retried submission
+PASS supervisor SIGKILL/restart reconnects to an already running independent worker
+PASS exact frozen view, executable, environment, literal commands and dependencies survive changes
+PASS persistent Python jobs retain conflicting package views while reusing one runtime
+PASS bounded binary stdout/stderr, byte cursors, timeout, cancellation and step failure
+PASS missing capability, authority denial, unauthenticated calls and invalid requests fail closed
+PASS stale records never authorize signalling an unrelated live process
+PASS worker crash becomes interrupted/unreachable; no success fabricated or step replayed
+PASS acquisition crash reconciliation retains incomplete objects, committed views and owned state
+PASS damaged job records remain visible and cannot hide healthy jobs
+PASS cancellation owns the direct child and bounds inherited-pipe waiting
+PASS legacy unstamped locks and ambiguous live writers remain blocked
+PASS failed resident acquisition rolls back; disconnected provisioning client does not cancel writer
+PASS cold acquisition continues through supervisor death and restart
+PASS supervisor stop leaves submitted job running and status available after restart
+19/19 resident integration checks

@@ -1,0 +1,103 @@
+{
+  "started_at": "2026-10-17T03:44:33.839Z",
+  "finished_at": "2026-10-17T03:45:00.074Z",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "arch": "x64",
+  "python": "Python 3.12.14",
+  "core_bytes": 9061,
+  "total": 18,
+  "passed": 18,
+  "checks": [
+    {
+      "name": "shipped core stays at or below original 9063 bytes",
+      "passed": true,
+      "ms": 0.2555540000000036
+    },
+    {
+      "name": "real mixed Node/Python demo and module import parity",
+      "passed": true,
+      "ms": 2989.589814
+    },
+    {
+      "name": "default CLI is plot-relative when launched elsewhere",
+      "passed": true,
+      "ms": 308.8719369999999
+    },
+    {
+      "name": "literal arguments, step cwd/env, and stop on child exit",
+      "passed": true,
+      "ms": 235.7735300000004
+    },
+    {
+      "name": "spawn:false and missing trusted declaration fail before acquisition",
+      "passed": true,
+      "ms": 167.2757499999998
+    },
+    {
+      "name": "host mismatch, invalid IDs, missing dependencies, cycles fail closed",
+      "passed": true,
+      "ms": 248.43737299999975
+    },
+    {
+      "name": "host recipe precedence, wildcard fallback and optional unsupported DLC",
+      "passed": true,
+      "ms": 349.82952200000045
+    },
+    {
+      "name": "DAG order, reuse, dependency invalidation and frozen older views",
+      "passed": true,
+      "ms": 491.6737149999999
+    },
+    {
+      "name": "failed installer/check preserve active view, ledger, writable data",
+      "passed": true,
+      "ms": 383.6786999999995
+    },
+    {
+      "name": "cross-process acquisition lock rejects racing writer",
+      "passed": true,
+      "ms": 959.6545110000006
+    },
+    {
+      "name": "missing asset and cross-device view require reprovision",
+      "passed": true,
+      "ms": 298.6589039999999
+    },
+    {
+      "name": "real pip target acquisition, shared interpreter and version conflicts",
+      "passed": true,
+      "ms": 3592.915006000001
+    },
+    {
+      "name": "Python module, script, argv, metadata resources and console entrypoint",
+      "passed": true,
+      "ms": 320.88744100000076
+    },
+    {
+      "name": "subprocess package inheritance, host PYTHONPATH exclusion and writable isolation",
+      "passed": true,
+      "ms": 154.10391899999922
+    },
+    {
+      "name": "package installation failure and requested depth/version drift fail without stale reuse",
+      "passed": true,
+      "ms": 2822.941063
+    },
+    {
+      "name": "archive traversal, symlink pivots, hardlinks, PAX, duplicate paths, truncation rejected",
+      "passed": true,
+      "ms": 52.543320000000676
+    },
+    {
+      "name": "bounded decompression aborts oversized archive without activation",
+      "passed": true,
+      "ms": 2806.9504660000002
+    },
+    {
+      "name": "real locally reconstructed CPython archive and legacy integrity check",
+      "passed": true,
+      "ms": 9800.851772999999
+    }
+  ]
+}

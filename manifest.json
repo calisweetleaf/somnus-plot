@@ -1,0 +1,87 @@
+{
+  "id": "somnus-plot",
+  "version": "0.6.0",
+  "hosts": [
+    "node"
+  ],
+  "execution": "trusted",
+  "permissions": {
+    "spawn": true
+  },
+  "tenants": {
+    "python": {
+      "depth": "shallow",
+      "packages": []
+    }
+  },
+  "capabilities": {
+    "samples": {
+      "install": [
+        {
+          "cmd": "node",
+          "args": [
+            "-e",
+            "require('node:fs').writeFileSync('samples.json',JSON.stringify({samples:[11,23,37,43]}))"
+          ]
+        }
+      ],
+      "check": [
+        {
+          "cmd": "node",
+          "args": [
+            "-e",
+            "if(JSON.parse(require('node:fs').readFileSync('samples.json')).samples.length!==4)process.exit(2)"
+          ]
+        }
+      ]
+    },
+    "analysis": {
+      "needs": [
+        "samples",
+        "python-packages"
+      ],
+      "install": [
+        {
+          "cmd": "node",
+          "args": [
+            "-e",
+            "require('node:fs').writeFileSync('ready.txt','ready')"
+          ]
+        }
+      ]
+    },
+    "resident": {
+      "install": [
+        {
+          "cmd": "node",
+          "args": [
+            "-e",
+            "require('node:fs').copyFileSync(process.argv[1],'resident.mjs')",
+            "${root}/capabilities/resident.mjs"
+          ]
+        }
+      ]
+    }
+  },
+  "environment": {
+    "use": [
+      "analysis"
+    ]
+  },
+  "steps": [
+    {
+      "cmd": "python",
+      "args": [
+        "-c",
+        "import json,pathlib,os;d=json.loads(pathlib.Path(r'${cap:samples}/samples.json').read_text());v=d['samples'];r={'count':len(v),'total':sum(v),'average':sum(v)/len(v)};pathlib.Path(os.environ['PLOT_STATE'],'result.json').write_text(json.dumps(r));print(r)"
+      ]
+    },
+    {
+      "cmd": "node",
+      "args": [
+        "-e",
+        "console.log('Node consumed:',require('node:fs').readFileSync(require('node:path').join(process.env.PLOT_STATE,'result.json'),'utf8'))"
+      ]
+    }
+  ]
+}

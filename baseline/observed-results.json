@@ -1,0 +1,66 @@
+{
+  "checks": 12,
+  "confirmed": 12,
+  "results": [
+    {
+      "test": "shallow Python bootstrap",
+      "passed": true,
+      "details": "[somnus] land deed: somnus-plot v0.4.0\n[somnus] rite: shallow dig \u2014 venv over host python (Python 3.13.5)\n[somnus] ledger written: data.json\n\n\u25b6 [1/2] node -v\nv22.16.0\n\n\u25b6 [2/2] .grave/py/bin/python3 -c import sys;print('tenant alive:', sys.version.split()[0])\ntenant alive: 3.13.5\n"
+    },
+    {
+      "test": "Python tenant idempotence",
+      "passed": true,
+      "details": "[somnus] land deed: somnus-plot v0.4.0\n[somnus] grave already occupied (dug 2026-10-12T20:01:51.459Z, shallow) \u2014 skipping rite\n\n\u25b6 [1/2] node -v\nv22.16.0\n\n\u25b6 [2/2] .grave/py/bin/python3 -c import sys;print('tenant alive:', sys.version.split()[0])\ntenant alive: 3.13.5\n"
+    },
+    {
+      "test": "Node host declaration enforced",
+      "passed": true,
+      "details": "file:///tmp/somnus-plot-probe-272ysltj/host/main.js:146\nif (m.hosts && !m.hosts.includes(\"node\")) throw new Error(`pack ${m.id} does not support the node host (hosts: ${m.hosts.join(\",\")})`);\n                                                ^\n\nError: pack somnus-plot does not support the node host (hosts: webview)\n    at file:///tmp/somnus-plot-probe-272ysltj/host/main.js:146:49\n    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)\n    at async onImport.tracePromise.__proto__ (node:i"
+    },
+    {
+      "test": "halt on nonzero step",
+      "passed": true,
+      "details": "[somnus] land deed: somnus-plot v0.4.0\n\n\u25b6 [1/2] node -e process.exit(7)\n[somnus] exit 7 at step 1 \u2014 halting\n"
+    },
+    {
+      "test": "Node permission bypass reproduced",
+      "passed": true,
+      "details": "[somnus] land deed: somnus-plot v0.4.0\n\n\u25b6 [1/1] node -e console.log(\"SPAWN_ALLOWED\")\nSPAWN_ALLOWED\n"
+    },
+    {
+      "test": "Node filesystem scope bypass reproduced",
+      "passed": true,
+      "details": "[somnus] land deed: somnus-plot v0.4.0\n\n\u25b6 [1/1] node -e console.log(require(\"node:fs\").readFileSync(\"/tmp/somnus-plot-probe-272ysltj/outside-plot-sentinel.txt\",\"utf8\"))\nREAD_ME\n"
+    },
+    {
+      "test": "step args stay literal",
+      "passed": true,
+      "details": "[somnus] land deed: somnus-plot v0.4.0\n\n\u25b6 [1/1] node -e console.log(process.argv[1]) $(echo SHELL_SHOULD_NOT_RUN)\n$(echo SHELL_SHOULD_NOT_RUN)\n"
+    },
+    {
+      "test": "deep offline pinned fixture",
+      "passed": true,
+      "details": "[somnus] land deed: somnus-plot v0.4.0\n[somnus] rite: deep dig \u2014 plot takes ownership\n[somnus] fetching /tmp/somnus-plot-probe-272ysltj/valid.tar.gz\n[somnus] dig source: local mirror\n[somnus] sha256 verified\n[somnus] extracting with the land's own untar (no host tar/xz needed)\n[somnus] dug: Python 3.13.9\n[somnus] ledger written: data.json\n\n\u25b6 [1/1] .grave/py/bin/python3 --version\nPython 3.13.9\n"
+    },
+    {
+      "test": "incorrect pin rejected",
+      "passed": true,
+      "details": "[somnus] land deed: somnus-plot v0.4.0\n[somnus] rite: deep dig \u2014 plot takes ownership\n[somnus] fetching /tmp/somnus-plot-probe-272ysltj/valid.tar.gz\n[somnus] dig source: local mirror\nfile:///tmp/somnus-plot-probe-272ysltj/bad-pin/main.js:174\n          throw new Error(`sha256 mismatch: want ${py.sha256} got ${got}`);\n                ^\n\nError: sha256 mismatch: want ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff got 6db10eea1a6943a6da00bf7922610011ae8fb1092ff5d542ed2721fb69495a90\n"
+    },
+    {
+      "test": "direct parent traversal rejected",
+      "passed": true,
+      "details": "[somnus] land deed: somnus-plot v0.4.0\n[somnus] rite: deep dig \u2014 plot takes ownership\n[somnus] fetching /tmp/somnus-plot-probe-272ysltj/traversal.tar.gz\n[somnus] dig source: local mirror\n[somnus] sha256 verified\n[somnus] extracting with the land's own untar (no host tar/xz needed)\nfile:///tmp/somnus-plot-probe-272ysltj/traversal/main.js:25\n  if (!inside(root, p)) throw new Error(`tar entry escapes destination: ${rel}`);\n                              ^\n\nError: tar entry escapes destination: ../es"
+    },
+    {
+      "test": "chained symlink escapes extraction root REPRODUCED",
+      "passed": true,
+      "details": "[somnus] land deed: somnus-plot v0.4.0\n[somnus] rite: deep dig \u2014 plot takes ownership\n[somnus] fetching /tmp/somnus-plot-probe-272ysltj/symlink-chain.tar.gz\n[somnus] dig source: local mirror\n[somnus] sha256 verified\n[somnus] extracting with the land's own untar (no host tar/xz needed)\nfile:///tmp/somnus-plot-probe-272ysltj/pivot/main.js:106\n  if (r.error) throw new Error(`exec failed: ${cmd} \\u2014 ${r.error.message}`);\n                     ^\n\nError: exec failed: .grave/py/bin/python3 \u2014 spawnSyn"
+    },
+    {
+      "test": "requested Python depth change ignored REPRODUCED",
+      "passed": true,
+      "details": "[somnus] land deed: somnus-plot v0.4.0\n[somnus] grave already occupied (dug 2026-10-12T20:01:51.459Z, shallow) \u2014 skipping rite\n\n\u25b6 [1/2] node -v\nv22.16.0\n\n\u25b6 [2/2] .grave/py/bin/python3 -c import sys;print('tenant alive:', sys.version.split()[0])\ntenant alive: 3.13.5\n"
+    }
+  ]
+}

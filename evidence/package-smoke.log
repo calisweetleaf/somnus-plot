@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-17T03:53:08.709Z",
+  "deployed_files": [
+    "main.js",
+    "manifest.json",
+    "package.json",
+    "capabilities/resident.mjs"
+  ],
+  "node": "v24.19.0",
+  "platform": "linux",
+  "core_bytes": 9061,
+  "resident_bytes": 20708,
+  "npm_install_required": false,
+  "python_required": false,
+  "launch_cwd": "outside deployed root",
+  "status": 0,
+  "job_id": "2d2b4497-8a42-47e9-abfd-71ad9ac0f5ba",
+  "client_reconnected": true,
+  "output": "clean package started\nclean package survived\n",
+  "owned_assets": [
+    "resident"
+  ]
+}

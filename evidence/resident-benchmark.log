@@ -1,0 +1,107 @@
+{
+  "started_at": "2026-10-17T03:52:38.884Z",
+  "finished_at": "2026-10-17T03:52:53.305Z",
+  "environment": {
+    "platform": "linux",
+    "arch": "x64",
+    "node": "v24.19.0",
+    "release": "6.18.55",
+    "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+    "filesystem": "container scratch, warm local cache",
+    "core_bytes": 9061,
+    "optional_resident_bytes": 20708
+  },
+  "cold_acquisition": {
+    "native_data_ms": 95.584412,
+    "optional_resident_ms": 90.747062,
+    "observations": 1,
+    "network": false
+  },
+  "resident_startup_ms": 113.61492500000003,
+  "metrics": {
+    "direct_persisted_cached_view": {
+      "n": 1000,
+      "p50_ms": 1.9215439999999262,
+      "p95_ms": 4.06588099999999,
+      "p99_ms": 5.964157000000114,
+      "max_ms": 50.550850999999966,
+      "mean_ms": 2.28849399
+    },
+    "resident_ping": {
+      "n": 300,
+      "p50_ms": 0.1630329999998139,
+      "p95_ms": 0.6635559999999714,
+      "p99_ms": 1.4152610000001005,
+      "max_ms": 2.1489799999999377,
+      "mean_ms": 0.2464566333333384
+    },
+    "resident_persisted_cached_view": {
+      "n": 300,
+      "p50_ms": 2.177055999999993,
+      "p95_ms": 3.614387000000079,
+      "p99_ms": 4.531599000000369,
+      "max_ms": 24.068439000000126,
+      "mean_ms": 2.3867847399999937
+    },
+    "raw_node_child_startup": {
+      "n": 40,
+      "p50_ms": 78.99908099999993,
+      "p95_ms": 113.27163500000006,
+      "p99_ms": 130.85210600000028,
+      "max_ms": 130.85210600000028,
+      "mean_ms": 82.9530126
+    },
+    "resident_durable_submit": {
+      "n": 40,
+      "p50_ms": 5.635675999999876,
+      "p95_ms": 7.860732000001008,
+      "p99_ms": 9.54497899999842,
+      "max_ms": 9.54497899999842,
+      "mean_ms": 5.9633764999998675
+    },
+    "accepted_to_worker_control_ready": {
+      "n": 40,
+      "p50_ms": 84.81253199999992,
+      "p95_ms": 103.32537599999887,
+      "p99_ms": 151.03859099999863,
+      "max_ms": 151.03859099999863,
+      "mean_ms": 87.26800917499989
+    },
+    "complete_submit_through_verified_child_exit": {
+      "n": 40,
+      "p50_ms": 176.81413299999986,
+      "p95_ms": 192.70084900000074,
+      "p99_ms": 251.89756699999998,
+      "max_ms": 251.89756699999998,
+      "mean_ms": 179.0677127249999
+    },
+    "resident_terminal_inspect": {
+      "n": 40,
+      "p50_ms": 1.0030169999990903,
+      "p95_ms": 2.368776000001162,
+      "p99_ms": 3.055189999999129,
+      "max_ms": 3.055189999999129,
+      "mean_ms": 1.22619584999984
+    }
+  },
+  "verified_job_ids": 40,
+  "gates": {
+    "direct_cached_view_p95_under_6_ms": true,
+    "resident_cached_view_p95_under_6_ms": true
+  },
+  "scope": {
+    "resident_persisted_cached_view": "Fresh TCP connection, authentication, selected DAG and marker checks, authoritative core provisioning, state mkdir, file fsync, rename and response. No acquisition or child launch.",
+    "resident_durable_submit": "Fresh TCP connection, spec resolution, private durable submission, detached worker spawn acknowledgement, response. Excludes worker initialization and tenant execution.",
+    "accepted_to_worker_control_ready": "Observed from submit response to private worker endpoint record. Includes worker process startup; 1 ms file polling adds measurement overhead. It is not raw child startup.",
+    "complete_submit_through_verified_child_exit": "Submission through worker terminal metadata and captured child exit, including real Node dataset computation and output/state writes. 1 ms polling overhead included; output correctness checked after timing.",
+    "raw_node_child_startup": "spawn through exit/stdout drain for an independent Node child; no view or resident worker.",
+    "resident_ping": "Fresh TCP connection through authentication and response; no job or view operation."
+  },
+  "limits": [
+    "Host-specific warm filesystem measurements, not hardware-independent guarantees.",
+    "Cold acquisitions are single offline observations, without network/resolver latency.",
+    "No full-system reboot/power-loss durability test. Core fsyncs files, not parent directories.",
+    "Worker pool reuse is not implemented: each job starts an independent Node worker and tenant process.",
+    "Benchmarks run sequentially after integration; percentiles retain outliers without trimming."
+  ]
+}

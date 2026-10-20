@@ -1,0 +1,173 @@
+{
+  "started_at": "2026-10-17T03:50:55.800Z",
+  "finished_at": "2026-10-17T03:51:13.724Z",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "arch": "x64",
+  "total": 19,
+  "passed": 19,
+  "checks": [
+    {
+      "name": "optional capability acquisition and native-only clean CLI startup",
+      "passed": true,
+      "ms": 381.04517000000004,
+      "evidence": {
+        "pythonRequired": false,
+        "acquiredResident": true
+      }
+    },
+    {
+      "name": "concurrent start clients converge on one authenticated supervisor",
+      "passed": true,
+      "ms": 400.42403699999994,
+      "evidence": {
+        "clients": 3,
+        "supervisors": 1
+      }
+    },
+    {
+      "name": "job outlives submitting CLI; a distinct CLI discovers identity, status and output",
+      "passed": true,
+      "ms": 1019.602176,
+      "evidence": {
+        "id": "d3c44385-c55a-4682-84fb-32e3f5aba7a2",
+        "submittingClientExited": true,
+        "reconnectedClient": true,
+        "status": "succeeded",
+        "output": "before disconnect\nafter disconnect\n"
+      }
+    },
+    {
+      "name": "abrupt transport disconnect after submission does not cancel accepted work",
+      "passed": true,
+      "ms": 471.724461,
+      "evidence": {
+        "id": "drop-ad0b98ae-0eee-4ca0-b431-57373560a692",
+        "transportClosedBeforeResponse": true
+      }
+    },
+    {
+      "name": "concurrent clients, stable identities and exactly one job for retried submission",
+      "passed": true,
+      "ms": 751.7935670000002,
+      "evidence": {
+        "clients": 8,
+        "retries": 2,
+        "singleExecution": true
+      }
+    },
+    {
+      "name": "supervisor SIGKILL/restart reconnects to an already running independent worker",
+      "passed": true,
+      "ms": 1786.3909309999995,
+      "evidence": {
+        "id": "5be27d2f-1673-4a19-9b35-258f3181a491",
+        "workerInstance": "32508e70-05ed-401c-82f4-1598681c3285",
+        "state": "succeeded"
+      }
+    },
+    {
+      "name": "exact frozen view, executable, environment, literal commands and dependencies survive changes",
+      "passed": true,
+      "ms": 939.740468,
+      "evidence": {
+        "oldObjectRetained": true,
+        "snapshotExecuted": true
+      }
+    },
+    {
+      "name": "persistent Python jobs retain conflicting package views while reusing one runtime",
+      "passed": true,
+      "ms": 3925.594631000001,
+      "evidence": {
+        "sharedRuntime": true,
+        "isolatedVersions": [
+          "1.0",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "name": "bounded binary stdout/stderr, byte cursors, timeout, cancellation and step failure",
+      "passed": true,
+      "ms": 1536.854847999999
+    },
+    {
+      "name": "missing capability, authority denial, unauthenticated calls and invalid requests fail closed",
+      "passed": true,
+      "ms": 11.149989999999889
+    },
+    {
+      "name": "stale records never authorize signalling an unrelated live process",
+      "passed": true,
+      "ms": 3.949956000000384,
+      "evidence": {
+        "state": "unreachable",
+        "unrelatedProcessUntouched": true
+      }
+    },
+    {
+      "name": "worker crash becomes interrupted/unreachable; no success fabricated or step replayed",
+      "passed": true,
+      "ms": 432.4123550000004,
+      "evidence": {
+        "id": "9e26f941-b3c2-4298-af36-9db63e5e2ccf",
+        "state": "interrupted",
+        "executions": 1
+      }
+    },
+    {
+      "name": "acquisition crash reconciliation retains incomplete objects, committed views and owned state",
+      "passed": true,
+      "ms": 1802.9957890000005,
+      "evidence": {
+        "reconciliation": "reconciled",
+        "incompleteRetained": true,
+        "viewRetained": true,
+        "noSignals": true
+      }
+    },
+    {
+      "name": "damaged job records remain visible and cannot hide healthy jobs",
+      "passed": true,
+      "ms": 4.525121000000581
+    },
+    {
+      "name": "cancellation owns the direct child and bounds inherited-pipe waiting",
+      "passed": true,
+      "ms": 1352.0047470000009,
+      "evidence": {
+        "directChildCancelled": true,
+        "descendantNotSignalled": true
+      }
+    },
+    {
+      "name": "legacy unstamped locks and ambiguous live writers remain blocked",
+      "passed": true,
+      "ms": 6.299173999999766
+    },
+    {
+      "name": "failed resident acquisition rolls back; disconnected provisioning client does not cancel writer",
+      "passed": true,
+      "ms": 982.1743559999995,
+      "evidence": {
+        "clientKilled": true,
+        "viewCommitted": true
+      }
+    },
+    {
+      "name": "cold acquisition continues through supervisor death and restart",
+      "passed": true,
+      "ms": 1047.6159169999992,
+      "evidence": {
+        "supervisorKilled": true,
+        "acquisitionCommitted": true
+      }
+    },
+    {
+      "name": "supervisor stop leaves submitted job running and status available after restart",
+      "passed": true,
+      "ms": 917.1211800000019
+    }
+  ]
+}
