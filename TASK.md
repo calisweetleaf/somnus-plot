@@ -135,7 +135,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-07 — Adversarial integration and cross-host proof
 
-- Status: ACTIVE 2026-10-20 · Owner: Keeper
+- Status: **LANDED** 2026-10-20 · Owner: Keeper · 12/12 e2e · resident 70,243 B
 - Mission: Wire all suites into `scripts/gate.sh`; compose cartographer → assembler → seed → bootstrap → resident end to end; crash injection at publication, claim, activation, turn completion, prune; clean-package smoke from foreign cwd; host runners/kits for Windows/macOS/Termux.
 - Surfaces: `scripts/gate.sh`, `tests/package-smoke.mjs`, `tests/e2e.mjs`, `bootstrap/hosts/`.
 - Hard Bans: No skipped regressions; no Linux-as-other-OS claims.
@@ -144,7 +144,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-08 — Measurements, whitepaper, release
 
-- Status: QUEUED · Owner: measurement lane + chronicler
+- Status: ACTIVE 2026-10-20 · Owner: Keeper
 - Mission: Extend benchmarks per contracts §12; `scripts/gate.sh --bench` then `--evidence`; reconcile claims; `WHITEPAPER.md`; version 0.7.0 across `package.json`, `manifest.json`, `README.md`, `STAGE-1.md`, `PERSISTENT-NATIVE.md`, `tests/report.mjs`, router and continuity.
 - Hard Bans: No hand-edited evidence, outlier removal, warm/cold merging, workload reduction, full-completion claim with open gates.
 - Validation: `scripts/gate.sh --bench`, `scripts/gate.sh --evidence`, final `scripts/gate.sh`; Sentinel + Fletcher passes.
@@ -160,6 +160,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 | P07-02 | Dependency cartographer | 2026-10-20 | 12/12; gate wired; NOTEPAD |
 | P07-03 | Offline layer assembler and Seed Bank | 2026-10-20 | 15/15; gate wired; NOTEPAD |
 | P07-09 | Host bootstrap and acquisition | 2026-10-20 | 21/21; gate wired; NOTEPAD |
+| P07-07 | Adversarial integration and cross-host proof | 2026-10-20 | gate PASS 12/12 e2e; host matrix non-Linux NOT RUN; NOTEPAD |
 | P07-06 | Resident execution environments | 2026-10-20 | gate PASS 21/21 resident-env; NOTEPAD |
 | P07-05 | Standby claim and sustainable capacity | 2026-10-20 | gate PASS 41/41 resident; NOTEPAD |
 | P07-04 | Admission, recovery, pins, maintenance | 2026-10-20 | gate PASS 32/32 resident (seed-coupled); NOTEPAD |

@@ -32,7 +32,7 @@ preflight
 if [ "$mode" = "--evidence" ]; then
   cd "$root_dir"
   step build node build.mjs
-  for pair in integration:integration resident:resident-integration resident-env:resident-env benchmark:benchmark \
+  for pair in integration:integration resident:resident-integration resident-env:resident-env e2e:e2e benchmark:benchmark \
               resident-benchmark:resident-benchmark package-smoke:package-smoke; do
     t="${pair%%:*}" log="${pair#*:}"
     step "$t" bash -o pipefail -c "node tests/$t.mjs 2>&1 | tee evidence/$log.log"
@@ -55,6 +55,7 @@ step resident-env node tests/resident-env.mjs
 step cartographer node tests/cartographer.mjs
 step assembler node tests/assembler.mjs
 step bootstrap node tests/bootstrap.mjs
+step e2e node tests/e2e.mjs
 step package-smoke sh -c 'node tests/package-smoke.mjs >/dev/null'
 if [ "$mode" = "--bench" ]; then
   step benchmark node tests/benchmark.mjs

@@ -72,7 +72,31 @@ Neither Node.js nor python-build-standalone publishes an Android build. `plan` r
 3. For Git, the source-build route applies when `cc` and `make` are on PATH (`pkg install clang make`,
    which you also install yourself). Then run `sh bootstrap/plot.sh bootstrap acquire git --kit <kit>`.
 
-## 5. What a certifying run must record
+## 5. Certification runners
+
+`certify.sh` (Linux, macOS, Termux) and `certify.ps1` (Windows) copy the seed into a disposable
+directory, obtain Node through the launcher, and run bootstrap plan/acquire/verify. They then run
+every Node suite and, on POSIX with `--quick` omitted, `scripts/gate.sh`. Each step's stdout, stderr
+and exit code goes to `<out>/<family>-<stamp>/`, together with `summary.json` (`plot.certify/1`,
+status `RECORDED`). A reviewer turns that record into a result here. The runners never write PASS.
+
+```sh
+PLOT_KIT=/path/to/kit sh bootstrap/hosts/certify.sh /path/to/out          # add --quick to skip the gate
+```
+
+```powershell
+$env:PLOT_KIT='D:\kit'; powershell -ExecutionPolicy Bypass -File bootstrap\hosts\certify.ps1 -Out D:\plot-cert
+```
+
+| Host family | Status (2026-10-20) |
+| --- | --- |
+| Linux x64 glibc (reference) | RUN: gate PASS; `certify.sh --quick` all steps exit 0 (validates the runner only) |
+| Windows x64 | NOT RUN |
+| macOS arm64/x64 | NOT RUN |
+| Android/Termux aarch64 | NOT RUN |
+| Linux in a fresh container | NOT RUN (no container runtime on the reference host) |
+
+## 6. What a certifying run must record
 
 For each host family, record the following:
 

@@ -1,6 +1,6 @@
 # File Tree: somnus-plot v0.6 → v0.7 (in progress)
 
-**Refreshed:** 2026-10-20 (previous generation 2026-10-19 recorded the old root `LAB/Experiments/projects/somnus-plot/`)
+**Refreshed:** 2026-10-20 after P07-07 (previous generation 2026-10-19 recorded the old root `LAB/Experiments/projects/somnus-plot/`)
 **Root Path:** `/home/factory-user/repos/somnus-plot/`
 
 Topology map only. Route work from `AGENTS.md`, not from this tree.
@@ -9,6 +9,7 @@ Topology map only. Route work from `AGENTS.md`, not from this tree.
 ├── AGENTS.md                 router (control plane)
 ├── TASK.md                   packet board (control plane)
 ├── PLAN.md                   v0.7 master architecture plan
+├── WHITEPAPER.md             v0.7 whitepaper (draft until P07-08)
 ├── README.md                 quick start
 ├── STAGE-1.md                v0.5 acquisition/view contract
 ├── PERSISTENT-NATIVE.md      v0.6 resident contract
@@ -17,17 +18,31 @@ Topology map only. Route work from `AGENTS.md`, not from this tree.
 ├── package.json              version + script aliases, no deps
 ├── manifest.json             default demo plot
 ├── build.mjs                 compactor: src/plot.mjs -> main.js, 9,063-byte ceiling
-├── main.js                   GENERATED core bundle (9,061 bytes)
+├── main.js                   GENERATED core bundle (9,008 bytes)
 ├── src
 │   └── plot.mjs              core source of truth
 ├── capabilities
-│   ├── resident.mjs          optional acquired resident capability
-│   └── cartographer.mjs      v0.7 dependency closure planner
+│   ├── resident.mjs          resident supervisor, standby workers, environment hosts/tenants
+│   ├── cartographer.mjs      npm dependency closure planner (plot.closure/1)
+│   ├── assembler.mjs         offline wheel/npm layer assembler, Seed Bank, planWheels
+│   └── bootstrap.mjs         host inspect/plan/acquire/verify/activate/kit
+├── bootstrap
+│   ├── plot.sh               Node-absent launcher (POSIX)
+│   ├── plot.ps1              Node-absent launcher (Windows PowerShell)
+│   ├── recipes/              pinned node/python/git/zlib recipes
+│   └── hosts
+│       ├── README.md         Windows/macOS/Termux runbooks (NOT RUN)
+│       ├── certify.sh        POSIX host certification runner
+│       └── certify.ps1       Windows host certification runner
 ├── tests
 │   ├── helpers.mjs           fixtures (wheels, C extension, TAR, CLI)
-│   ├── integration.mjs       18 checks -> evidence/integration.json
-│   ├── resident.mjs          19 checks -> evidence/resident-integration.json
+│   ├── integration.mjs       24 checks -> evidence/integration.json
+│   ├── resident.mjs          41 checks -> evidence/resident-integration.json
+│   ├── resident-env.mjs      21 checks -> evidence/resident-env.json
 │   ├── cartographer.mjs      cartographer suite (12 checks)
+│   ├── assembler.mjs         assembler suite (15 checks)
+│   ├── bootstrap.mjs         bootstrap suite (21 checks)
+│   ├── e2e.mjs               12 composition + crash checks -> evidence/e2e.json
 │   ├── fixtures/closure/     generated corpus + sample-plan.json
 │   ├── package-smoke.mjs     clean deploy -> evidence/package-smoke.json
 │   ├── benchmark.mjs         -> evidence/benchmark.json

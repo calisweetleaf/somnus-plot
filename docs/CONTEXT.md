@@ -11,9 +11,10 @@ _Last refreshed: 2026-10-20 00:47 CDT._
 | Version | v0.6.0 Persistent Native Execution |
 | Git | `main` @ `b72a98d` base (older entries cite `896f48d`, absent from this checkout). Coordinator commits each landed v0.7 packet locally; nothing pushed. Untracked operator files: `.colony/`, `.factory/`, `SWARM.md`, `attachments/`. |
 | Location | `/home/factory-user/repos/somnus-plot` (earlier: `/home/daeron/Repositories/somnus-plot`) |
-| Active packet | Landed P07-00/01/02/03/04/05/09. P07-06 landed; P07-07 active (Keeper); then P07-08. See `TASK.md`, `docs/V07-CONTRACTS.md` |
+| Active packet | Landed P07-00..07 and P07-09. P07-08 active (Keeper). See `TASK.md`, `docs/V07-CONTRACTS.md` (v1.8) |
 | Core bytes | `main.js` 9,008 / 9,063 ceiling (55 bytes headroom) after P07-01 |
-| Resident bytes | `capabilities/resident.mjs` 69,478 after P07-06 (counted separately); 41/41 resident, 21/21 resident-env |
+| Resident bytes | `capabilities/resident.mjs` 70,243 after P07-07 (counted separately); 41/41 resident, 21/21 resident-env, 12/12 e2e |
+| Host matrix | Linux x64 glibc reference: RUN (gate + `certify.sh --quick`). Windows, macOS, Android/Termux, fresh container: NOT RUN (no host or runtime available) |
 
 ## Gate posture
 
