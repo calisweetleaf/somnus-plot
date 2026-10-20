@@ -32,3 +32,13 @@ Format:
 - Surfaces synchronized: `PLAN.md`, `docs/V07-CONTRACTS.md`, `TASK.md`, `AGENTS.md`, `docs/CONTEXT.md`, `docs/NOTEPAD.md`, `filetree.md`.
 - Next agent: Wave 1 foragers on P07-01, P07-02, P07-03, P07-09 per `TASK.md`.
 - Hazards: 2 bytes of core headroom; sustained-submit bell bounded by worker replenishment; second OS family NOT RUN keeps cross-host acceptance open.
+
+### 2026-10-20 13:05 UTC — Droid (Keeper; wore Sentinel; counted the beat with Fletcher's lexicon) — P07-01 landed
+- Base: `fc683f8`.
+- Did: Landed forager-1's P07-01: historical exact-key reuse (scan `.grave/objects/<k>-*` under L1, zero spawn), `atom` parent-dir fsync + `create` write-once primitive, `exec` stdout fallback, `pip:false` + `venv --without-pip` for package-less tenants, mandatory foreground pin in `run()`. Compactor strengthened (collision-free alphabet, `;}` drop, `let` joining, numeric folding) and repeated forms removed from src.
+- Validation: Keeper `scripts/gate.sh` → `gate: PASS` (build 9,008/9,063, rebuild identical, 24/24 integration, 19/19 resident, smoke). Keeper Sentinel tastes in scratch copy: rebuild deterministic; `a` vs `a-b` prefix collision cannot cross-adopt (keys differ) and v1 reuse spawned nothing. Second independent Sentinel NOT RUN (operator redirected reviewer use).
+- Proof facts: `main.js` 9,008 bytes (55 headroom), `src/plot.mjs` 12,017, `build.mjs` 4,586.
+- Decision: accepted `pip:false` one-time key change for package-less Python tenants (contracts v1.2).
+- Minor: if two valid objects share a key, selection follows `readdirSync` order (harmless; identical identity).
+- Next agent: P07-04 (forager-5, running) may now close its seed-coupled checks.
+- Hazards: historical scan is O(objects with prefix) on ledger miss; no index.

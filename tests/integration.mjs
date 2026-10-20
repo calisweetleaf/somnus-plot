@@ -35,6 +35,30 @@ try{
   let root=fixture(tmp,'race',{capabilities:{a:{install:[{cmd:node,args:['-e',`require('node:fs').writeFileSync(${JSON.stringify(path.join(tmp,'started'))},'1');setTimeout(()=>{},800)`]}]}}});let child=spawn(node,[path.join(base,'main.js'),'--root',root,'provision'],{stdio:'ignore'});let exit=new Promise((resolve,reject)=>{child.on('exit',resolve);child.on('error',reject)});let deadline=Date.now()+5000;while(!fs.existsSync(path.join(tmp,'started'))&&Date.now()<deadline)await new Promise(r=>setTimeout(r,10));assert.ok(fs.existsSync(path.join(tmp,'started')));let other=cli(root,['provision','racer']);assert.notEqual(other.status,0);assert.match(other.stderr,/busy/);assert.equal(await exit,0);assert.ok(!fs.existsSync(path.join(root,'.grave/.lock')));
  });
  await test('missing asset and cross-device view require reprovision',async()=>{let root=fixture(tmp,'missing-asset',{capabilities:{a:capability('a')}}),plot=openPlot(root),v=await plot.provision();fs.rmSync(path.join(v.assets.a.path,'.plot.json'));assert.throws(()=>plot.view('default'),/asset missing/);let next=await plot.provision();assert.notEqual(next.assets.a.path,v.assets.a.path);let file=path.join(root,'.grave/envs/default.json');let broken=JSON.parse(fs.readFileSync(file));broken.host=['different','host'];fs.writeFileSync(file,JSON.stringify(broken));assert.throws(()=>plot.view('default'),/host changed/)});
+ await test('historical exact-key reuse: v1->v2->v1 capability switch spawns nothing',async()=>{
+  let counter=path.join(tmp,'history-spawns.txt'),cap=(value,deps)=>({needs:deps,install:[{cmd:node,args:['-e',`const fs=require('node:fs');fs.appendFileSync(${JSON.stringify(counter)},'x');fs.writeFileSync('value.txt',${JSON.stringify(value)})`]}]}),spec=v=>({capabilities:{a:cap(v),b:cap(v,['a'])},environment:{use:['b']}});
+  let root=fixture(tmp,'history',spec('v1')),plot=openPlot(root),one=await plot.provision('one');manifest(root,spec('v2'));let two=await plot.provision('two');assert.equal(fs.readFileSync(counter,'utf8'),'xxxx');assert.notEqual(two.assets.a.path,one.assets.a.path);
+  let objects=fs.readdirSync(path.join(root,'.grave/objects')).sort();manifest(root,spec('v1'));let again=await plot.provision('again');
+  assert.equal(fs.readFileSync(counter,'utf8'),'xxxx');assert.deepEqual(fs.readdirSync(path.join(root,'.grave/objects')).sort(),objects);assert.deepEqual(again.assets,one.assets);
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(root,'data.json'))).assets,one.assets);assert.equal(fs.readFileSync(path.join(plot.view('again').assets.b.path,'value.txt'),'utf8'),'v1');assert.deepEqual(plot.view('two').assets,two.assets);
+ });
+ await test('unstamped, interrupted or forged stages are never adopted',async()=>{
+  let counter=path.join(tmp,'unstamped-spawns.txt'),cap=value=>({capabilities:{a:{install:[{cmd:node,args:['-e',`require('node:fs').appendFileSync(${JSON.stringify(counter)},'x');require('node:fs').writeFileSync('value.txt',${JSON.stringify(value)})`]}]}}});
+  let root=fixture(tmp,'unstamped',cap('v1')),plot=openPlot(root),one=await plot.provision('one'),stamp=path.join(one.assets.a.path,'.plot.json'),record=fs.readFileSync(stamp);manifest(root,cap('v2'));await plot.provision('two');
+  fs.renameSync(stamp,stamp+'.'+process.pid);let forged=path.join(root,'.grave/objects/a-forged');fs.mkdirSync(forged);fs.writeFileSync(path.join(forged,'.plot.json'),record);
+  manifest(root,cap('v1'));let again=await plot.provision('again');assert.equal(fs.readFileSync(counter,'utf8'),'xxx');assert.notEqual(again.assets.a.path,one.assets.a.path);assert.notEqual(again.assets.a.path,forged);assert.equal(fs.readFileSync(path.join(again.assets.a.path,'value.txt'),'utf8'),'v1');
+ });
+ await test('stdout-only child diagnostic reaches the failure message',async()=>{let root=fixture(tmp,'stdout-diagnostic',{capabilities:{a:{install:[{cmd:node,args:['-e',`process.stdout.write('diagnostic only on stdout');process.exit(4)`]}]}}});await assert.rejects(openPlot(root).provision(),/diagnostic only on stdout/);assert.ok(!fs.existsSync(path.join(root,'data.json')))});
+ await test('foreground pin names transitive objects during a run and is removed after',async()=>{
+  let probe=`const fs=require('node:fs'),p=require('node:path'),d=p.join(process.argv[1],'.grave','pins');fs.writeFileSync(p.join(process.argv[1],'seen.json'),JSON.stringify(fs.readdirSync(d).map(x=>[x,fs.statSync(p.join(d,x)).mode&0o777,JSON.parse(fs.readFileSync(p.join(d,x),'utf8'))])))`;
+  let root=fixture(tmp,'pins',{capabilities:{a:capability('pinned'),b:{needs:['a'],install:[{cmd:node,args:['-e','0']}]}},environment:{use:['b']},steps:[{cmd:node,args:['-e',probe,'${root}']}]});must(cli(root));
+  let view=openPlot(root).view('default'),seen=JSON.parse(fs.readFileSync(path.join(root,'seen.json')));assert.equal(seen.length,1);let [name,mode,pin]=seen[0];
+  assert.match(name,/^foreground-[0-9]+-[a-z0-9]+\.json$/);assert.equal(mode,0o600);assert.equal(pin.schema,1);assert.equal(pin.kind,'foreground');assert.equal(pin.ref,'fg');assert.equal(typeof pin.owner.pid,'number');assert.equal(pin.owner.birth,null);assert.ok(!Number.isNaN(Date.parse(pin.created)));
+  assert.deepEqual(pin.paths.sort(),[view.assets.a.path,view.assets.b.path].sort());assert.deepEqual(fs.readdirSync(path.join(root,'.grave/pins')),[]);
+  let plot=openPlot(root);assert.equal(await plot.run('default',[{cmd:node,args:['-e',probe,root]},{cmd:node,args:['-e','process.exit(3)']}]),3);assert.equal(JSON.parse(fs.readFileSync(path.join(root,'seen.json'))).length,1);assert.deepEqual(fs.readdirSync(path.join(root,'.grave/pins')),[]);
+  await assert.rejects(plot.run('default',[{cmd:path.join(tmp,'absent-binary'),args:[]}]));assert.deepEqual(fs.readdirSync(path.join(root,'.grave/pins')),[]);
+  fs.rmSync(path.join(view.assets.a.path,'.plot.json'));await assert.rejects(plot.run('default'),/asset missing/);assert.deepEqual(fs.readdirSync(path.join(root,'.grave/pins')),[]);
+ });
  let wheelDir=path.join(tmp,'wheels');fs.mkdirSync(wheelDir);let dist=wheels(wheelDir),pkgRoot=fixture(tmp,'packages',{tenants:{python:{depth:'shallow',command:python,packages:[dist.one,dist.native],pip:['--no-index']}},steps:[]}),plot=openPlot(pkgRoot),one,two;
  await test('real pip target acquisition, shared interpreter and version conflicts',async()=>{
   one=await plot.provision('one');two=await plot.provision('two',{python:{packages:[dist.two,dist.native]}});assert.equal(one.python,two.python);assert.notEqual(one.packages,two.packages);assert.ok(!fs.existsSync(path.join(one.state,'pyvenv.cfg')));assert.ok(!fs.existsSync(path.join(two.packages,'pyvenv.cfg')));
@@ -54,6 +78,19 @@ try{
   let before=fs.readFileSync(path.join(pkgRoot,'.grave/envs/one.json'));await assert.rejects(plot.provision('one',{python:{packages:['not-present==1'],pip:['--no-index']}}));assert.deepEqual(fs.readFileSync(path.join(pkgRoot,'.grave/envs/one.json')),before);
   await assert.rejects(plot.provision('one',{python:{depth:'deep',url:'missing.tar.gz'}}));assert.deepEqual(fs.readFileSync(path.join(pkgRoot,'.grave/envs/one.json')),before);
   await assert.rejects(plot.provision('one',{python:{version:'99.0'}}),/version mismatch/);assert.deepEqual(fs.readFileSync(path.join(pkgRoot,'.grave/envs/one.json')),before);
+ });
+ await test('historical exact-key reuse: Python package switch v1->v2->v1 runs no pip',async()=>{
+  assert.equal(JSON.parse(fs.readFileSync(path.join(pkgRoot,'data.json'))).assets['python-packages'].path,two.packages);let hidden=dist.one+'.hidden';fs.renameSync(dist.one,hidden);
+  try{let again=await plot.provision('again',{python:{packages:[dist.one,dist.native]}});assert.equal(again.packages,one.packages);assert.equal(again.python,one.python);assert.equal(JSON.parse(fs.readFileSync(path.join(pkgRoot,'data.json'))).assets['python-packages'].path,one.packages);
+   assert.equal(await plot.run('again',[{cmd:'python',args:['-c','import plot_sample,plot_native;assert plot_sample.VERSION=="1.0";assert plot_native.value()==37']}]),0)}finally{fs.renameSync(hidden,dist.one)}
+ });
+ await test('package-less shallow venv provisions without ensurepip; pip-bearing tenant reports stdout diagnostic',async()=>{
+  let wrapper=path.join(tmp,'python-without-ensurepip'),calls=path.join(tmp,'venv-calls.txt');
+  fs.writeFileSync(wrapper,`#!/bin/sh\ncase " $* " in *" -m venv "*) echo "$*" >> '${calls}'; case " $* " in *" --without-pip "*) ;; *) echo "Error: ensurepip is not available on this host"; exit 1;; esac;; esac\nexec '${python}' "$@"\n`,{mode:0o755});
+  let root=fixture(tmp,'no-ensurepip',{tenants:{python:{depth:'shallow',command:wrapper,packages:[]}},steps:[{cmd:'python',args:['-c','import sys;print("bare", sys.version_info[0])']}]}),r=must(cli(root));assert.match(r.stdout,/bare 3/);
+  assert.match(fs.readFileSync(calls,'utf8'),/--without-pip/);let v=openPlot(root).view('default');assert.equal(v.assets.python.key.includes('"pip":false'),true);
+  assert.equal(command(v.python,['-c','import importlib.util;print(importlib.util.find_spec("pip") is None)']),'True');
+  let need=fixture(tmp,'needs-pip',{tenants:{python:{depth:'shallow',command:wrapper,packages:[dist.one],pip:['--no-index']}}});await assert.rejects(openPlot(need).provision(),/ensurepip is not available/);assert.ok(!fs.existsSync(path.join(need,'data.json')));
  });
  await test('archive traversal, symlink pivots, hardlinks, PAX, duplicate paths, truncation rejected',async()=>{
   const cases=[

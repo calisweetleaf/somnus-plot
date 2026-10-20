@@ -51,7 +51,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-01 — Universal seed evolution
 
-- Status: DISPATCHED (Wave 1) · Owner: forager-1
+- Status: **LANDED** 2026-10-20 · Owner: forager-1 · core 9,008/9,063 · 24/24 integration
 - Mission: Implement `PLAN.md` §§4.1–4.5: historical exact-key object reuse (zero child spawn), POSIX parent-dir fsync in `atom`, `exec` stdout fallback, `--without-pip` shallow venv when no pip is needed, foreground pin per contracts §4. Reclaim bytes by sound responsibility changes and compactor improvements (2 bytes headroom today), not by hiding payload.
 - Required Reads: `src/plot.mjs`, `build.mjs` in full; `STAGE-1.md`; `tests/integration.mjs`, `tests/helpers.mjs`; contracts §§1, 3, 4, 13.
 - Invariant: `main.js` ≤ 9,063 bytes, deterministic byte-identical rebuild; identity key unchanged; unstamped/tombstoned stages never adopted; all 18 existing checks keep passing.
@@ -156,3 +156,4 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 | --- | --- | --- | --- |
 | P06-CP | Accelerate control plane installed | 2026-10-20 | `docs/NOTEPAD.md` first entry |
 | P07-00 | Opening contract freeze | 2026-10-20 | `docs/V07-CONTRACTS.md` §0; NOTEPAD |
+| P07-01 | Universal seed evolution | 2026-10-20 | gate PASS 24/24 + 19/19; NOTEPAD |

@@ -14,7 +14,7 @@
 | Status in Somnus | Laboratory experiment. Plot has **no role** in broader Somnus and must not become a dependency of it. First Flash Pack. |
 | Landed version | v0.6.0 "Persistent Native Execution" (`package.json`, `manifest.json`) |
 | Active packet | v0.7 Wave 1 (`P07-01`, `P07-02`, `P07-03`, `P07-09`) **DISPATCHED** in `TASK.md`; architecture `PLAN.md`; frozen interfaces `docs/V07-CONTRACTS.md` |
-| Completion witness | `scripts/gate.sh` → `gate: PASS` (build determinism, core ≤ 9,063 bytes, 18/18 integration, 19/19 resident, clean-package smoke) |
+| Completion witness | `scripts/gate.sh` → `gate: PASS` (build determinism, core ≤ 9,063 bytes, 24/24 integration, 19/19 resident, clean-package smoke) |
 | Landed state | Everything listed as PASS in `evidence/RESULTS.md` (2026-10-17 run) and re-run locally 2026-10-20 (see `docs/CONTEXT.md`) |
 | Deferred / unverified | Windows/macOS/Termux execution, reboot/power-loss durability, process-tree ownership, quotas, hostile-code sandboxing, worker pooling, GC, full Python CLI/venv emulation, browser host. See the "Unimplemented or unverified" table in `evidence/RESULTS.md`. |
 

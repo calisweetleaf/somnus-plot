@@ -5,7 +5,7 @@
 # because the tests rewrite evidence/*.json and build.mjs rewrites main.js.
 # The evidence of record is therefore never replaced by an ordinary gate run.
 #
-#   scripts/gate.sh             build determinism + byte ceiling + 37 checks + clean-package smoke
+#   scripts/gate.sh             build determinism + byte ceiling + integration/resident checks + clean-package smoke
 #   scripts/gate.sh --bench     the above plus both benchmark suites (still in the disposable copy)
 #   scripts/gate.sh --evidence  run everything in place, sequentially, and regenerate
 #                               evidence/*.json, *.log and evidence/RESULTS.md
