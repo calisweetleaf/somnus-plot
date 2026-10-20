@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "all": {
+      "source_edits": true,
+      "tools": ["colony", "workspace"]
+    },
+    "somnus-forager": {
+      "source_edits": true,
+      "tools": ["colony", "workspace"]
+    },
+    "somnus-chronicler": {
+      "source_edits": true,
+      "tools": ["colony", "workspace"]
+    },
+    "fletcher": {
+      "source_edits": false,
+      "tools": ["colony", "workspace"]
+    }
+  }
+}

@@ -1,0 +1,148 @@
+#!/usr/bin/env bash
+# colony - the scent helper. See SWARM.md. Append-only scent, atomic claims.
+# Usage: colony mark KIND PLACE TASTE "what" [--via X] [--breaks-if X] [--crosses id,id]
+#        colony sniff [place] | colony cold | colony scent
+#        colony claim PLACE | colony release PLACE | colony claims
+# Env: COLONY_WORKER (required for mark/claim/release), COLONY_ROOT, COLONY_DIR.
+set -euo pipefail
+
+COLONY_ROOT="${COLONY_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
+COLONY_DIR="${COLONY_DIR:-$COLONY_ROOT/.colony}"
+SCENT="$COLONY_DIR/scent.tsv"
+CLAIMS_DIR="$COLONY_DIR/claims"
+LOCK="$COLONY_DIR/.lock"
+KINDS="FORAGE SALT ALARM CLAIM ROT LEAP TEMPO CUE"
+
+die() { printf 'colony: %s\n' "$*" >&2; exit 1; }
+init_dirs() { mkdir -p "$CLAIMS_DIR"; [ -f "$SCENT" ] || : > "$SCENT"; }
+need_worker() { [ -n "${COLONY_WORKER:-}" ] || die "COLONY_WORKER unset; prefix with COLONY_WORKER=<caste>-<n>"; }
+clean() { printf '%s' "$1" | tr '\t\r\n' '    '; }
+place_file() { case "$1" in *::*) printf '%s' "${1%%::*}";; *) printf '%s' "$1";; esac; }
+
+hash_place() {
+  local f; f="$(place_file "$1")"; f="${f#"$COLONY_ROOT"/}"
+  if [ -f "$COLONY_ROOT/$f" ]; then sha256sum "$COLONY_ROOT/$f" | cut -d' ' -f1; else printf -- '-'; fi
+}
+
+# dead_ids: ids killed by ROT --crosses
+dead_ids() { awk -F'\t' '$4=="ROT" && $10!="-" {n=split($10,a,","); for(i=1;i<=n;i++) print a[i]}' "$SCENT" 2>/dev/null; }
+
+is_cold() { # $1 id  $2 place  $3 stored hash
+  [ "$3" = "-" ] && return 1
+  local now; now="$(hash_place "$2")"
+  [ "$now" != "$3" ]
+}
+
+print_mark() { # id ts worker kind place taste what via breaks_if crosses hash status
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9" "${10}" "${11}"
+}
+
+cmd_mark() {
+  need_worker
+  [ $# -ge 4 ] || die "mark KIND PLACE TASTE \"what\" [--via X] [--breaks-if X] [--crosses id,id]"
+  local kind="$1" place="$2" taste="$3" what="$4"; shift 4
+  local via="-" breaks="-" crosses="-"
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --via) via="${2:?--via needs a value}"; shift 2;;
+      --breaks-if) breaks="${2:?--breaks-if needs a value}"; shift 2;;
+      --crosses) crosses="${2:?--crosses needs a value}"; shift 2;;
+      *) die "unknown option $1";;
+    esac
+  done
+  case " $KINDS " in *" $kind "*) ;; *) die "unknown KIND $kind ($KINDS)";; esac
+  case "$taste" in TASTED|SMELL) ;; *) die "TASTE must be TASTED or SMELL";; esac
+  [ "${#what}" -le 500 ] || die "what is ${#what} chars; 500 max. Two marks, not one essay."
+  if [ "$taste" = TASTED ] && [ "$via" = "-" ]; then die "TASTED requires --via (Law 1)"; fi
+  case "$kind" in
+    LEAP|TEMPO) [ "$breaks" != "-" ] || die "$kind requires --breaks-if";;
+    CUE) [ "$via" != "-" ] || die "CUE requires --via: the work that earns it";;
+  esac
+  init_dirs
+  local hash; hash="$(hash_place "$place")"
+  (
+    flock -x 9
+    local id
+    id=$(( $(awk -F'\t' 'NF{m=$1} END{print m+0}' "$SCENT") + 1 ))
+    print_mark "$id" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$(clean "$COLONY_WORKER")" "$kind" \
+      "$(clean "$place")" "$taste" "$(clean "$what")" "$(clean "$via")" "$(clean "$breaks")" \
+      "$(clean "$crosses")" "$hash" >> "$SCENT"
+    printf 'marked %s %s %s\n' "$id" "$kind" "$place"
+  ) 9>"$LOCK"
+}
+
+list_marks() { # $1 filter: live|cold|dead|all ; $2 optional place
+  local filter="$1" query="${2:-}"
+  [ -f "$SCENT" ] || return 0
+  local dead; dead="$(dead_ids)"
+  while IFS=$'\t' read -r id ts worker kind place taste what via breaks crosses hash status; do
+    [ -n "$id" ] || continue
+    local is_dead=0 is_cold=0
+    case " $dead " in *" $id "*) is_dead=1;; esac
+    if [ "$is_dead" = 0 ] && is_cold "$id" "$place" "$hash"; then is_cold=1; fi
+    case "$filter" in
+      live) [ "$is_dead" = 1 ] && continue;;
+      cold) { [ "$is_dead" = 1 ] || [ "$is_cold" = 0 ]; } && continue;;
+      dead) [ "$is_dead" = 0 ] && continue;;
+    esac
+    if [ -n "$query" ]; then
+      local qf mf; qf="$(place_file "$query")"; mf="$(place_file "$place")"
+      { [ "$place" = "$query" ] || [ "$mf" = "$qf" ] || [ "$mf" = "$query" ]; } || continue
+    fi
+    local st=LIVE
+    [ "$is_dead" = 1 ] && st=DEAD
+    [ "$is_dead" = 0 ] && [ "$is_cold" = 1 ] && st=COLD
+    print_mark "$id" "$ts" "$worker" "$kind" "$place" "$taste" "$what" "$via" "$breaks" "$crosses" "$st"
+  done < "$SCENT"
+}
+
+claim_key() { printf '%s' "$1" | sha256sum | cut -c1-16; }
+
+cmd_claim() {
+  need_worker; init_dirs
+  local place="${1:?claim needs a PLACE}" key dir
+  key="$(claim_key "$place")"; dir="$CLAIMS_DIR/$key"
+  if ! mkdir "$dir" 2>/dev/null; then
+    die "$place already claimed by $(cat "$dir/worker" 2>/dev/null || echo unknown)"
+  fi
+  printf '%s\n' "$COLONY_WORKER" > "$dir/worker"
+  printf '%s\n' "$place" > "$dir/place"
+  printf '%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$dir/since"
+  cmd_mark CLAIM "$place" TASTED "I am working here" --via "colony claim $place" >/dev/null
+  printf 'claimed %s by %s\n' "$place" "$COLONY_WORKER"
+}
+
+cmd_release() {
+  need_worker
+  local place="${1:?release needs a PLACE}" key dir
+  key="$(claim_key "$place")"; dir="$CLAIMS_DIR/$key"
+  [ -d "$dir" ] || die "no claim on $place"
+  local owner; owner="$(cat "$dir/worker" 2>/dev/null || echo unknown)"
+  if [ "$owner" != "$COLONY_WORKER" ] && [ "${COLONY_FORCE:-0}" != 1 ]; then
+    die "$place is held by $owner; COLONY_FORCE=1 to override"
+  fi
+  rm -rf -- "$dir"
+  printf 'released %s (was %s)\n' "$place" "$owner"
+}
+
+cmd_claims() {
+  init_dirs
+  local d found=0
+  for d in "$CLAIMS_DIR"/*; do
+    [ -d "$d" ] || continue; found=1
+    printf '%s\t%s\tsince %s\n' "$(cat "$d/place")" "$(cat "$d/worker")" "$(cat "$d/since")"
+  done
+  [ "$found" = 1 ] || printf 'no open claims\n'
+}
+
+cmd="${1:-}"; shift 0 || true
+case "$cmd" in
+  mark) shift; cmd_mark "$@";;
+  sniff) shift; init_dirs; list_marks live "${1:-}";;
+  cold) init_dirs; list_marks cold;;
+  scent) init_dirs; list_marks all;;
+  claim) shift; cmd_claim "$@";;
+  release) shift; cmd_release "$@";;
+  claims) cmd_claims;;
+  *) die "usage: colony {mark|sniff|cold|scent|claim|release|claims}";;
+esac
