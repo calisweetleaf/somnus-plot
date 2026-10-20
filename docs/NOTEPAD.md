@@ -66,3 +66,10 @@ Format:
 - Proof facts: kit Node archives are the pinned upstream files (never repacked from the host `node`), which closes Fletcher call 17. Android has no upstream Node/Python build, so the route is operator-supplied `PLOT_NODE`.
 - Next agent: P07-05 (Keeper).
 - Hazards: the suite downloads about 60 MB into `$TMPDIR/plot-bootstrap-cache` on first run. Windows/macOS/Termux remain NOT RUN.
+
+### 2026-10-20 14:05 UTC — Droid (Keeper) — P07-03 landed
+- Base: `7e13d89`.
+- Did: Landed forager-3's `capabilities/assembler.mjs` (51,459 B; `verifyWheel`, `installWheels`, `assembleFromBank`, `planWheels`, CLI incl. `plan-wheels`) and `tests/assembler.mjs`. Wired `step assembler` into `scripts/gate.sh`. Contracts v1.5 records the npm component object, the layer `.plot.json` `inputs[]`, and `BANK_CHANGED`.
+- Validation: lane `node tests/assembler.mjs` 15/15 (in place and in a disposable copy); lane `scripts/gate.sh` PASS. Every installing check consumes a code-emitted plan; runtime labels `{"shallow-host":8}`; owned-runtime check NOT RUN (`PLOT_TEST_OWNED_PYTHON` unset).
+- Next agent: P07-05 (Keeper, in progress); P07-07 composes assembler with bootstrap-acquired Python for the `owned` label.
+- Hazards: markers in `Requires-Dist` are recorded unsupported, not evaluated; glibc Linux wheel tags only; case-only path collisions not detected; an acquisition pin from a killed writer awaits reconciler release.

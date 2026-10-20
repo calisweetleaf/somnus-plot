@@ -75,7 +75,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-03 — Offline layer assembler and Seed Bank
 
-- Status: DISPATCHED (Wave 1) · Owner: forager-3
+- Status: **LANDED** 2026-10-20 · Owner: forager-3 · 15/15 assembler; gate wired
 - Mission: Implement `PLAN.md` §6.2 as `capabilities/assembler.mjs` exporting `verifyWheel`, `installWheels`, `assembleFromBank`, and a CLI. Stage + atomic publish into `.grave/objects` with `.plot.json` per contracts §3, pin per §4. Integrate real cartographer plans once P07-02 lands.
 - Required Reads: `PLAN.md` §6.2 incl. wheel boundary; `tests/helpers.mjs` wheel/C-extension builders; `src/plot.mjs` untar confinement; contracts §§3, 4, 10.
 - Invariant: No pip/ensurepip at runtime; Node stdlib + target Python only; bank material immutable.
@@ -158,5 +158,6 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 | P07-00 | Opening contract freeze | 2026-10-20 | `docs/V07-CONTRACTS.md` §0; NOTEPAD |
 | P07-01 | Universal seed evolution | 2026-10-20 | gate PASS 24/24 + 19/19; NOTEPAD |
 | P07-02 | Dependency cartographer | 2026-10-20 | 12/12; gate wired; NOTEPAD |
+| P07-03 | Offline layer assembler and Seed Bank | 2026-10-20 | 15/15; gate wired; NOTEPAD |
 | P07-09 | Host bootstrap and acquisition | 2026-10-20 | 21/21; gate wired; NOTEPAD |
 | P07-04 | Admission, recovery, pins, maintenance | 2026-10-20 | gate PASS 32/32 resident (seed-coupled); NOTEPAD |
