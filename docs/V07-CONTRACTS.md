@@ -65,7 +65,7 @@ Directory `.grave/pins/`, one file per live holder, written with `once` then rem
 - **Pin-then-validate:** holder writes the pin, then checks every path exists under `.grave/objects` and has no tombstone intent (§6). On failure it removes the pin and fails retryably.
 - Release: `kind=job` on terminal status; `env` on incarnation retirement; `foreground` in `run()` `finally`; `explicit` only by explicit unpin.
 - A pin whose owner is proven `absent`/`other` is released by the reconciler; `same`/`unknown` (incl. `birth:null` with a live pid) is retained.
-- The seed's `run()` writes a `foreground` pin (P07-01). If the seed cannot afford it, P07-01 records why and prune apply must refuse object eviction whenever an unstamped foreground run cannot be excluded. Default prune never evicts objects anyway.
+- The seed's `run()` **must** write a `foreground` pin (P07-01) and remove it in `finally`. There is no byte-budget exception: if the pin cannot fit, P07-01 stays open and the Keeper escalates a ceiling decision to the operator per `docs/MEMORY.md` law 3. Default prune never evicts objects.
 
 ## 5. Request IDs and lookup (P07-04/05/06)
 
@@ -154,6 +154,7 @@ Paths named in PLAN §3 (`envs/<name>/instance.json` etc.) resolve through `curr
 - Serialization: object keys sorted except `entry.exports` and other order-significant manifest maps, which preserve source order. `order` is a deterministic topological sort (ties by `id`).
 - `ok:false` whenever `diagnostics` contains a fail-closed code; consumers refuse `ok:false` plans.
 - Consumers own publication and pinning; the planner writes nothing.
+- Producers: `capabilities/cartographer.mjs` emits `npm` nodes; `capabilities/assembler.mjs` `planWheels({bank, target, requirements})` emits `wheel` nodes in the same schema. Every assembler acceptance check that installs a wheel consumes a plan emitted by code, never a hand-written plan.
 - Supported range grammar: exact, `^`, `~`, `x`/`*`, comparators `>= <= > < =`, hyphen ranges, `||`. Others → `unsupported`.
 
 ## 11. Bootstrap entry and host matrix (P07-09)
@@ -171,7 +172,9 @@ Paths named in PLAN §3 (`envs/<name>/instance.json` etc.) resolve through `curr
 | macOS arm64/x64 | NOT RUN (kit + sh runner shipped) |
 | Android/Termux aarch64 | NOT RUN (kit + sh runner shipped) |
 
-Cross-host acceptance remains **open** while every non-Linux family is NOT RUN.
+Cross-host acceptance remains **open** while every non-Linux family is NOT RUN. Searched 2026-10-20: no qemu, wine, docker, podman, pwsh, lxc, vagrant or `/dev/kvm` on the reference host (Fletcher pass).
+
+Provenance rules: a kit's Node archive must come from a pinned official sha256 or a bank record independent of the host binary (never repacked from the host `node`). Any suite importing Python code labels its runtime `owned` (under `.grave/objects` or `.grave/host`) or `shallow-host`; owned-runtime acceptance requires `owned`.
 
 ## 12. Benchmark workloads (frozen before tuning)
 
@@ -182,14 +185,14 @@ Cross-host acceptance remains **open** while every non-Linux family is NOT RUN.
 | `multi_version_switch` | v1↔v2 both acquired, child spawn count = 0 | 300 | p95 < 6 ms |
 | `resident_cached_view_rpc` | authenticated provision RPC | 300 | p95 < 6 ms |
 | `durable_submit_and_claim` | request start → reply; request start → control-ready | ≥300 warm | p95 < 6 ms both |
-| `sustained_submit` | open-loop **5 submissions/s for 200 s (1,000 offered)**, default pool, empty-pool start; job = `node -e "process.stdout.write('ok')"` (≤64 B output) | 1000 | successful p95 < 6 ms, acceptance ≥ 99 %, 0 correctness failures |
+| `sustained_submit` | open-loop **Poisson arrivals, mean 10 submissions/s, 120 s (≥1,200 offered)**, interarrival seed `0x5eed07`, schedule fixed before the run and independent of completions; default pool (ready 2, maxStarting 2), empty-pool start; job = `node -e "process.stdout.write('ok')"` (≤64 B output). Evidence must record pool-empty observations; a run in which the default pool was never observed empty is invalid, not a pass | ≥1200 | successful p95 < 6 ms, acceptance ≥ 99 %, 0 correctness failures |
 | `burst_submit` | bursts 2/8/16/32 | all | accounted, bounded |
 | `saturation` | ramp 5→40/s step 5/s, 30 s each, then drain | all | report max stable rate |
 | `warm_env_interact` python | `import plot_native; plot_native.add(2,3)` style real native call, ≤64 B output | ≥300 | p95 < 6 ms |
-| `warm_env_interact` node | `globalThis.__plot_session__.n++` plus `require('node:zlib').crc32` style real call | ≥300 | p95 < 6 ms |
+| `warm_env_interact` node | `globalThis.__plot_session__.n++` plus a call into an **acquired** npm-style package materialized under `.grave/objects` (not a Node built-in) | ≥300 | p95 < 6 ms |
 | `cold_worker_spawn`, `complete_isolated_job`, `cold_acquisition`, `bootstrap_cold`, `replenish` | separate distributions | ≥40 | reported, no 6 ms claim |
 
-Nominal-rate rationale: v0.6 measured worker readiness p95 103 ms; with `maxStarting=2` replenishment capacity is ≈ 19 workers/s, so 5/s is ≈ 26 % of replenishment capacity and turns a 2-slot pool over 2.5×/s. Fixed before any tuning; not to be reduced after results.
+Nominal-rate rationale: v0.6 measured worker readiness p95 103 ms; with `maxStarting=2` replenishment capacity is ≈ 19 workers/s. Mean 10/s Poisson is ≈ 52 % of that capacity, turns the 2-slot pool over 5×/s, and its bursts empty the pool, so cold/waited paths are exercised rather than hidden by a prefilled reservoir. Fixed before any tuning (amended once, pre-tuning, per Fletcher TEMPO 18); not to be reduced after results.
 
 Percentiles: nearest-rank over all successful samples; failures/rejections/timeouts reported with counts alongside. Timer `process.hrtime.bigint()` from client request initiation.
 
@@ -213,3 +216,4 @@ Percentiles: nearest-rank over all successful samples; failures/rejections/timeo
 | Date | Contract | Change | Consumers updated |
 | --- | --- | --- | --- |
 | 2026-10-20 | v1 | Initial freeze | — |
+| 2026-10-20 | v1.1 | Fletcher TEMPO 14–20: foreground pin mandatory (§4); wheel-node producer `planWheels` (§10); runtime ownership labelling for assembler and kit Node provenance (§11); sustained workload Poisson 10/s with pool-empty validity (§12); Node warm row uses an acquired package (§12); P07-04 starts before P07-01 lands | P07-01, P07-03, P07-09, P07-04..P07-08 (notified at landing/dispatch) |

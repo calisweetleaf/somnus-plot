@@ -22,7 +22,7 @@
 
 ```
 P07-00 -> {P07-01, P07-02, P07-03, P07-09}
-P07-01 -> P07-04 -> P07-05 -> P07-06
+P07-00 -> P07-04 (resident-only work; seed-coupled checks wait for P07-01) -> P07-05 -> P07-06
 P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 {P07-06, P07-09, P07-03, P07-02, P07-01} -> P07-07 -> P07-08
 ```
@@ -99,7 +99,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-04 — Admission, recovery, pins, maintenance
 
-- Status: QUEUED (after P07-01) · Owner: resident lane
+- Status: DISPATCHED 2026-10-20 (Fletcher TEMPO 20: resident-only work starts now; foreground-pin and historical-reuse-after-prune checks land after P07-01) · Owner: forager-5
 - Mission: `PLAN.md` §§5.1, 5.1.1, 5.3, 5.5 per contracts §§4–7: O(1) reserved admission, revisioned status with fenced reconciler, background reconciliation, request IDs, `PLOT_JOB_STATE` + step conduit, pin-safe dry-run/apply prune with tombstones.
 - Required Reads: `PERSISTENT-NATIVE.md`; full `capabilities/resident.mjs`; `tests/resident.mjs`; contracts.
 - Invariant: Worker owns live state; uncertainty holds capacity; terminal records inspectable; historical cache survives default prune.
