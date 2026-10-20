@@ -9,14 +9,14 @@
 
 ## TABLE OF CONTENTS
 
-1. [Executive Summary](#bookmark=id.dwfeiebch7fr)
-2. [System Flow: Operational Logic](#bookmark=id.q716ikf490ct)
-3. [Core Technical Innovations](#bookmark=id.sw8dhdrpz0uy)
-4. [Component-by-Component Breakdown](#bookmark=id.dgymgp39ygx2)
-5. [Data Structures and Schemas](#bookmark=id.17eoegnea6lz)
-6. [Integration Challenges](#bookmark=id.pvuwlurj5m46)
-7. [Operational Hazards and Critical Issues](#bookmark=id.4vyktn716arc)
-8. [Roadmap and Path Forward](#bookmark=id.nd8c9l0evfa)
+1. [Executive Summary](#1-executive-summary)
+2. [System Flow: Operational Logic](#2-system-flow)
+3. [Core Technical Innovations](#3-core-technical-innovations)
+4. [Component-by-Component Breakdown](#4-component-breakdown)
+5. [Data Structures and Schemas](#5-data-structures-and-schemas)
+6. [Integration Challenges](#6-integration-challenges)
+7. [Operational Hazards and Critical Issues](#7-operational-hazards)
+8. [Roadmap and Path Forward](#8-roadmap)
 
 ## 1. EXECUTIVE SUMMARY
 

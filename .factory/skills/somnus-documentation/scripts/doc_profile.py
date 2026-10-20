@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 
 SUFFIXES = {".md", ".markdown", ".mdx"}
-IGNORED = {".git", ".venv", "venv", "node_modules", "__pycache__"}
+IGNORED = {".git", ".venv", "venv", "node_modules", "__pycache__", ".somnus-debug", ".python_doctor", "render-check"}
 FENCE = re.compile(r"^\s*(\x60{3,}|~{3,})(.*)$")
 HEADING = re.compile(r"^(#{1,6})\s+(.+?)\s*#*\s*$")
 IMAGE = re.compile(r"!\[[^\]]*\]\(\s*[^)]+\)")

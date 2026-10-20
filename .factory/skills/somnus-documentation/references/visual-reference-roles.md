@@ -51,3 +51,8 @@ The user has explicitly asked that the fictional source of the atmosphere remain
 - Do not default to black-only styling, a fixed palette, a particular typeface, Gothic ornament, horror cues, occult decoration, faux antiquity, or ceremonial symbols.
 - Do not publish these reference screenshots or their marks and text as project assets unless the user explicitly approves them for that use. When publishing an image, keep alt text, provenance, rights, and GitHub rendering in view.
 - When future examples clarify or change an image's role, update this map while preserving each retained file byte-for-byte.
+
+## Next state
+
+- From S5: return to [design-schema.md, Visual devices](design-schema.md#visual-devices) with each image's role assigned, then continue to S6.
+- From E1 (a new image set): add each file to the inventory above with its role and provenance, record the change in [source-lineage.md](source-lineage.md), then run E3: `python3 scripts/doc_gate.py --self`.

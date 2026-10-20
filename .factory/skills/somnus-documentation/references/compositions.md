@@ -94,3 +94,7 @@ Separate the governing atmosphere from the role of an individual image. In the c
 | Evidence panel | A claim needs support, limits, or provenance nearby | It restates promotional language |
 | Source trace | A real path, command, run, or failure signal is useful | It is fabricated or terminal wallpaper |
 | Decision record | A consequential choice needs durable rationale | It repeats history without informing a reader |
+
+## Next state
+
+Leave S2 with an outline in which every section names its reader question. Then enter S3 and load [design-schema.md, Voice and evidence](design-schema.md#voice-and-evidence). For an architecture dossier, the [scope note's section map](examples/project-specific-architecture/README.md#section-map) is the only sanctioned way into the large example.

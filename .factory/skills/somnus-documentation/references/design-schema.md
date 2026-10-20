@@ -72,31 +72,26 @@ Keep a project's palette, logo, typography, metaphor, and banner local to that c
 
 Treat supplied images as evidence about visual intent. First decide what role each image plays: the governing atmosphere, a banner or section image, an asset intended for publication, or an example whose role is not yet clear. Then describe visible mechanisms such as crop and scale, color relationships, light and shadow, material and texture, negative space, density, repetition, and hierarchy. Convert those observations into document treatments without copying source-specific words, marks, characters, or symbols. Do not assign a fixed palette or publish a reference image just because it was supplied.
 
-### Governing atmosphere: a document entrusted to a reverend mother
+### Governing atmosphere: a kept record
 
-Use the user's “Reverend Mother” and “Bene Gesserit scroll” language as private art-direction shorthand. The design should embody that presence in the document itself: a composed record of knowledge held, tested, and passed on by a disciplined institution. Authority comes from command of the material, exactness, memory, and controlled disclosure. The page should feel considered and consequential, as if it is meant to be kept and consulted.
+The current reference set asks the page to read as a record that a disciplined institution maintains and passes on: exact, composed, and deliberate about when each detail appears. Authority comes from command of the material, not from tone. The private art-direction shorthand and image analysis behind this atmosphere live in [visual-reference-roles.md](visual-reference-roles.md); read that file when assigning image roles, and keep its shorthand and source out of public prose.
 
-When composing, imagine a Reverend Mother has arranged this page for a future reader: she sees the material clearly, knows what deserves prominence, preserves lineage and consequence, and wastes no movement. Let the page communicate discernment, self-command, memory, and mastery before a reader reaches the body text. This is a direction for the judgment expressed by the composition, not an invitation to imitate the character.
+The atmosphere is not a palette. It does not require black backgrounds, monochrome pages, serif type, parchment, gold, or any fixed color. Each signal below has a concrete test, so a reviewer or a script can confirm it instead of judging a mood:
 
-This is not a request to imitate a fictional character's voice or to turn documentation into roleplay. Keep public prose direct, contemporary, and technically precise. Do not name the fictional source, quote it, wink at it, or borrow its plot, costume, symbols, invented language, or specific iconography in public documents.
-
-The reference is not a palette. It is not a requirement for black backgrounds, monochrome pages, serif type, parchment, gold, or any fixed color. Its visual force can come from form and behavior:
-
-| Design signal | Translate it into the page | Avoid using as a shortcut |
+| Design signal | Concrete test | Avoid using as a shortcut |
 | --- | --- | --- |
-| Authority through knowledge | A clear hierarchy, confident alignment, exact labels, supported claims, useful cross-references, and deliberate emphasis. | Oversized launch slogans, grandiose copy, invented authority, or dense decoration. |
-| Controlled disclosure | A purposeful reading sequence, well-framed details, partial crops when an image supports them, and space around meaningful transitions. | Obscuring essential information, arbitrary secrecy, hidden text, or mystery without a reader purpose. |
-| Institutional memory | Useful document identity, dates and status when verified, provenance, source maps, and links between related records. | Fake archival dates, invented seals, faux manuscript effects, or decorative “ancient” language. |
-| Composed presence | A clear heading cadence, precise captions, balanced prose and table density, deliberate image-and-text relationships, and selective material detail. | A generic dark theme, Gothic clutter, theatrical sacred symbols, or empty minimalism. |
+| Authority through knowledge | Every behavior, status, or measurement names its source (path, test, command, or run) or is labeled as intent or inference. `scripts/claims_check.py` reports no missing paths, scripts, flags, or anchors. | Oversized launch slogans, grandiose copy, invented authority, or dense decoration. |
+| Controlled disclosure | Every H2 opens with a sentence that states the section's job (`scripts/check_docs.py --check-composition`). Deferred or collapsed material is reachable from the contents list, and no required step exists only inside an image or a collapsed block. | Obscuring essential information, arbitrary secrecy, hidden text, or mystery without a reader purpose. |
+| Institutional memory | Every date, version, and status on the page is verified in the repository. Related records are linked, and every link resolves. | Fake archival dates, invented seals, faux manuscript effects, or decorative "ancient" language. |
+| Composed presence | One H1, no skipped heading levels, at most one assertive image event, and every section passes the deletion test below. | A generic dark theme, Gothic clutter, theatrical sacred symbols, or empty minimalism. |
 
-The supplied atmosphere references show composed figures, partial concealment, precise gestures, close framing, strong tonal contrast, and richly worked materials: layered drapery, patterned veils, beads, and worked surfaces. Let those observable qualities inform image selection and framing when suitable; a poised hand, a partly revealed face, a measured silhouette, or an intricate real material can carry more presence than a decorative emblem. Do not reproduce a recognizable character or exact costume. Texture may come from actual approved photography or a repository-owned asset; do not add synthetic grain, parchment, stone, fabric, or metal effects just to signal age or sanctity.
+Let the opening act as a threshold: identity, scope, and a reader route, with one composed image or typographic lockup when it serves the project. Image selection can draw on the references' observable qualities (close framing, partial reveal, strong tonal contrast, and real worked materials) only through approved photography or repository-owned assets. Do not add synthetic grain, parchment, stone, fabric, or metal effects to signal age.
 
-Let the opening act as a threshold into the document: identity, scope, and a deliberately composed image or typographic lockup when it serves the project. Let section order, heading cadence, blank-line rhythm, restrained rules, useful labels, captions, and cross-references create the feeling of a maintained record. Use the target renderer's available type treatments for clarity and long reading; choose visual density deliberately. These choices must remain legible in the target renderer and specific to the codebase.
+Restraint must still hold the full depth. A quiet surface over an exact structure is the goal: depth appears through ordered sections, evidence, definitions, provenance, and cross-references, never through ornament. Readers must still find every fact, limit, procedure, and piece of evidence they need.
 
-Restraint should feel chosen and complete. It can hold substantial detail. Do not confuse mystique with obscurity: readers should still find the facts, limits, procedures, and evidence they need. Do not turn the reference into Gothic horror, occult ornament, Greek-temple styling, fantasy decoration, or roleplay. These are private design cues, not public-facing language.
+### Deletion test
 
-The surface can be quiet while the structure beneath it is exact and deep. Let that depth appear through well-ordered sections, evidence, definitions, provenance, and cross-references—not through ornamental density. A reader should sense that detail has been deliberately held in reserve and then placed where it becomes useful.
-
+Length follows the subject, but every section must earn its place. For each section, name the reader question it answers. If no question can be named, or an earlier section already answers it, cut or merge the section. This test removes padding; it never justifies dropping source-backed detail that answers a real question.
 ### Banner and image role: vivid natural form
 
 The supplied coral references are banner and image-treatment examples, not a uniform macro-texture set. One is a blurred organic field with coral-like forms near its lower edge; the other is a shallow soft-focus color band. Choose the treatment from the actual image's crop, color, and visible detail. A selected image can make an opening or section boundary distinctive without establishing the body palette, requiring more color elsewhere, or displacing the governing atmosphere.
@@ -132,6 +127,9 @@ Apply these checks before delivery:
 | Narrow screen | Inspect a phone-width rendering. No heading, caption, diagram, or table is clipped; unavoidable wide code remains understandable and reachable. |
 | Renderer claims | Any claim about HTML, SVG, CSS, Mermaid, or badges reflects the exact target render that was checked. Do not infer GitHub behavior from another Markdown viewer. |
 | Complete disclosure | The reading sequence may defer detail, but never hides required facts, caveats, procedures, ownership, or evidence. |
+| Section job | Every H2 opens with a sentence stating what the section is for. `scripts/check_docs.py --check-composition` flags sections that open with a table, list, fence, image, or heading. |
+| Deletion | Every section names the reader question it answers; sections that cannot are cut or merged. |
+| Claims | `scripts/claims_check.py` reports no missing paths, scripts, flags, or anchors, or each remaining warning is a deliberate output path. |
 
 These checks make the composition reviewable; they do not prescribe a shared palette or a universal number of sections.
 
@@ -160,5 +158,18 @@ This skill covers reader-facing documentation design. It does not define or inte
 - Confirm the requested structure remains intact and the subject has enough evidence-backed depth.
 - Confirm readers can distinguish implementation, proposal, inference, and unknowns.
 - Confirm the page retains its codebase identity instead of importing a global theme.
-- Complete the six checks above against the rendered target, including GitHub when required.
+- Complete the checks above against the rendered target, including GitHub when required. `scripts/render_check.py` produces GitHub's actual HTML plus desktop, narrow, and grayscale views.
 - Confirm every `SPEC.md` begins with a visible title and explicit scope statement.
+
+## Next state
+
+This file serves several states. Leave it by the route that matches where you entered:
+
+| Entered from | Section used | Leave to |
+| --- | --- | --- |
+| S3 EVIDENCE | [Voice and evidence](#voice-and-evidence) | Run `scripts/claims_check.py`; pass goes to S4 |
+| S4 COMPOSE | [Page logic](#reader-facing-page-logic), [banners](#banners-and-openings), [README](#readme-as-landing-page-and-walkthrough) | S5, loading [Visual devices](#visual-devices) |
+| S5 VISUAL | [Visual devices](#visual-devices), [atmosphere](#governing-atmosphere-a-kept-record), [image roles](#translate-image-references-into-visual-roles) | [visual-reference-roles.md](visual-reference-roles.md) when images are supplied; otherwise S6 |
+| S8 READER | [Final review](#final-review) | EXIT with the gate report, or back to the owning state |
+
+Any HTML, SVG, or inline style chosen here must pass through [rendering-and-assets.md](rendering-and-assets.md#html-svg-and-styling) before S6.

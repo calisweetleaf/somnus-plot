@@ -52,3 +52,7 @@ The document does not wrap every inline example or diagram in a terminal frame. 
 7. Treat the document's own “GitHub render contract” as an example-specific claim to verify in that repository, not as a universal compatibility guarantee.
 
 For future examples such as the user's Full Reinforcement Learning Pipeline README, add the original file to `references/` and extend this case study only after the example is supplied.
+
+## Next state
+
+Return to S2 with the template's section order fixed and a list of additions justified by the target codebase's evidence. Use the [scope note's section map](README.md#section-map) for any excerpt you still need.

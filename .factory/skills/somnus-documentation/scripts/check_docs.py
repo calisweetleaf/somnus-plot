@@ -20,7 +20,14 @@ INLINE_LINK = re.compile(r"!?\[[^\]]*\]\(\s*(<[^>]+>|[^\s)]+)")
 HTML_TARGET = re.compile(r"\b(?:href|src)\s*=\s*([\"'])(.*?)\1", re.IGNORECASE)
 IMAGE_ALT = re.compile(r"!\[([^\]]*)\]\(", re.IGNORECASE)
 HTML_TAG = re.compile(r"<\s*(img|svg)\b[^>]*>", re.IGNORECASE | re.DOTALL)
-IGNORED_DIRS = {".git", ".venv", "venv", "node_modules", "__pycache__"}
+REFERENCE_DEF = re.compile(r"^\s{0,3}\[(?!\^)([^\]]+)\]:\s*(<[^>]+>|\S+)")
+EMPTY_ALT_IMAGE = re.compile(r"!\[\s*\]\(")
+IMG_ELEMENT = re.compile(r"<\s*img\b[^>]*>", re.IGNORECASE | re.DOTALL)
+IMG_ALT = re.compile(r"\balt\s*=\s*([\"'])\s*\S.*?\1", re.IGNORECASE | re.DOTALL)
+# Pictographic planes plus the emoji presentation selector; text symbols such as ✓ are left alone.
+EMOJI = re.compile("[\U0001F000-\U0001FAFF\uFE0F]")
+LIST_ITEM = re.compile(r"^\s*(?:[-*+]|\d+[.)])\s")
+IGNORED_DIRS = {".git", ".venv", "venv", "node_modules", "__pycache__", ".somnus-debug", ".python_doctor", "render-check"}
 SPEC_TITLE_WINDOW = 20
 SPEC_SCOPE_LABEL = re.compile(
     r"^\s*(?:>\s*)?(?:\*\*)?(?:scope|applies to|governs)(?:\*\*)?:|^\s*(?:>\s*)?(?:\*\*)?(?:scope|applies to|governs):\*\*",
@@ -149,12 +156,45 @@ def is_legacy_reference(path: Path, root: Path) -> bool:
     return len(relative.parts) >= 2 and relative.parts[:2] == ("references", "legacy")
 
 
+def composition_findings(path: Path, text: str, visible: list[tuple[int, str]]) -> list[Finding]:
+    """Warn when an H2 opens with a device instead of a sentence stating the section's job."""
+    raw = text.splitlines()
+    findings: list[Finding] = []
+    for number, line in visible:
+        match = HEADING.match(line)
+        if not match or len(match.group(1)) != 2:
+            continue
+        following = next((candidate for candidate in raw[number:] if candidate.strip()), None)
+        if following is None:
+            findings.append(Finding("WARNING", path, f"H2 at line {number} has no content"))
+            continue
+        stripped = following.strip()
+        if FENCE_OPEN.match(following):
+            opener = "a code fence"
+        elif HEADING.match(following):
+            opener = "another heading"
+        elif stripped.startswith("|"):
+            opener = "a table"
+        elif LIST_ITEM.match(following):
+            opener = "a list"
+        elif stripped.startswith(("<", "![")):
+            opener = "an image or HTML block"
+        else:
+            continue
+        findings.append(Finding(
+            "WARNING", path,
+            f"H2 at line {number} opens with {opener}; lead with a sentence that states the section's job",
+        ))
+    return findings
+
+
 def inspect_document(
     path: Path,
     root: Path,
     *,
     check_external_assets: bool = False,
     check_renderer_features: bool = False,
+    check_composition: bool = False,
 ) -> list[Finding]:
     findings: list[Finding] = []
     try:
@@ -199,6 +239,21 @@ def inspect_document(
             if level > previous_level + 1:
                 findings.append(Finding("WARNING", path, f"heading level jumps at line {line_number}"))
 
+    if not is_legacy_reference(path, root):
+        missing_alt = len(EMPTY_ALT_IMAGE.findall(visible_text)) + sum(
+            not IMG_ALT.search(match.group(0)) for match in IMG_ELEMENT.finditer(visible_text)
+        )
+        if missing_alt:
+            findings.append(Finding(
+                "WARNING", path,
+                f"has {missing_alt} image(s) with empty or missing alt text; describe informative images or confirm they are decorative",
+            ))
+        emoji_count = len(EMOJI.findall(visible_text))
+        if emoji_count:
+            findings.append(Finding("WARNING", path, f"contains {emoji_count} emoji character(s); public docs in this system do not use emoji"))
+        if check_composition:
+            findings.extend(composition_findings(path, text, visible))
+
     if path.name.casefold() == "spec.md":
         opening = strip_front_matter([line for _, line in visible])[:SPEC_TITLE_WINDOW]
         opening_title = any(HEADING.match(line) and HEADING.match(line).group(1) == "#" for line in opening)
@@ -240,6 +295,15 @@ def inspect_document(
         if target_path is not None and not target_path.exists():
             findings.append(Finding("ERROR", path, f"local HTML target does not exist: {target}"))
 
+    for _, line in visible:
+        definition = REFERENCE_DEF.match(line)
+        if not definition:
+            continue
+        target = definition.group(2)
+        target_path = link_path(target, path, root)
+        if target_path is not None and not target_path.exists():
+            findings.append(Finding("ERROR", path, f"local reference link target does not exist: {target.strip('<>')}"))
+
     if check_external_assets and remote_image_count:
         findings.append(Finding(
             "WARNING", path,
@@ -269,6 +333,10 @@ def main() -> int:
         "--check-renderer-features", action="store_true",
         help="warn when inline CSS needs review in the target renderer",
     )
+    parser.add_argument(
+        "--check-composition", action="store_true",
+        help="warn when an H2 opens with a table, list, fence, image, or heading instead of a sentence",
+    )
     args = parser.parse_args()
 
     root = Path(args.root).resolve()
@@ -279,6 +347,7 @@ def main() -> int:
             root,
             check_external_assets=args.check_external_assets,
             check_renderer_features=args.check_renderer_features,
+            check_composition=args.check_composition,
         ))
 
     for finding in findings:

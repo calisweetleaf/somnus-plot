@@ -75,9 +75,17 @@ Before delivery, confirm that:
 - Measurements and implementation claims have traceable evidence.
 - Every file named `SPEC.md` begins with a visible title and explicit scope statement.
 
+`scripts/render_check.py` covers the GitHub items above: it reports raw HTML that GitHub strips and stages desktop, narrow, and grayscale views. It does not render Mermaid, which github.com draws client-side.
+
 Treat a visual acceptance item as failed if it cannot be verified in the target rendering. Do not claim a font choice, spacing behavior, or CSS effect based on a different viewer.
 
 Official GitHub references:
 - [Creating diagrams](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams)
 - [Working with non-code files and embedded HTML](https://docs.github.com/en/repositories/working-with-files/using-files/working-with-non-code-files)
 - [Basic writing and formatting syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
+
+## Next state
+
+- From S5, after choosing enhanced markup: continue to S6 and run `scripts/check_docs.py --check-renderer-features`.
+- From S7, when `scripts/render_check.py` reports stripped features: return to S5 and replace each one with a device from [the GitHub levers table](#composition-levers-available-in-github-markdown) or a committed image asset.
+- From S7 with all three views clean: continue to S8 and [design-schema.md, Final review](design-schema.md#final-review).
