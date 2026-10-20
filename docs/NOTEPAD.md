@@ -50,3 +50,11 @@ Format:
 - Proof facts: supported range grammar per contracts §10; unsupported forms reported (tags, git+, npm:, file:, workspace:, URLs, 4-part, `~>`).
 - Next agent: P07-03 must stamp `recipe.component` for npm presence and add `planWheels` (Fletcher TEMPO 15).
 - Hazards: placement is deterministic hoisting, not npm arborist parity; optional-subtree deep failure fails the plan (stricter than npm).
+
+### 2026-10-20 13:45 UTC — Droid (Keeper; wore Sentinel) — P07-04 landed
+- Base: `eef36b8`.
+- Did: Landed forager-5's resident work (`capabilities/resident.mjs` 20,708→39,085 B, `tests/resident.mjs` 41,206 B): O(1) reserved admission map built at `serve` start, revisioned `status.json` with fenced reconciler (250 ms / 8 entries / 500 ms probe, off the submit path), worker `done` notification authenticated by supervisor token, `rid` lookup records (`request conflict`, `request expired`), `PLOT_JOB_STATE`/`PLOT_STEP_INDEX`/`PLOT_STEP_OUT`, transitive job pins, pin-safe dry-run/apply prune with tombstone intents and crash recovery, `PLOT_RESIDENT_MAX_ACTIVE`, `launch.json`.
+- Validation: Keeper `PLOT_REQUIRE_SEED_COUPLED=1 scripts/gate.sh` → `gate: PASS` (24/24 integration, 32/32 resident, 12/12 cartographer, smoke). Keeper Sentinel: `.kill(` uses only `process.kill(pid,0)` liveness probe and SIGTERM/SIGKILL of the worker's own direct child; no signal is sent to a PID read from a record.
+- Decisions (contracts v1.4): job pins released at terminal status; `interrupted` written only by the reconciler and never expired by it; evicted rid leaves an expired marker; completion notify goes to the supervisor recorded in the submission.
+- Next agent: P07-05 standby claim (Keeper, per operator 2026-10-20: Keeper implements directly).
+- Hazards: ALARM 51 open: seed `run()` does not re-check `.grave/tombstones/<obj>.json` after writing its foreground pin (pin-then-validate gap on the seed side; 55 bytes headroom). PERSISTENT-NATIVE.md not yet updated for v0.7 resident ops (P07-08).

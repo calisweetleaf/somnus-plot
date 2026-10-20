@@ -99,7 +99,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-04 — Admission, recovery, pins, maintenance
 
-- Status: DISPATCHED 2026-10-20 (Fletcher TEMPO 20: resident-only work starts now; foreground-pin and historical-reuse-after-prune checks land after P07-01) · Owner: forager-5
+- Status: **LANDED** 2026-10-20 · Owner: forager-5 · resident 39,085 B · 32/32 resident
 - Mission: `PLAN.md` §§5.1, 5.1.1, 5.3, 5.5 per contracts §§4–7: O(1) reserved admission, revisioned status with fenced reconciler, background reconciliation, request IDs, `PLOT_JOB_STATE` + step conduit, pin-safe dry-run/apply prune with tombstones.
 - Required Reads: `PERSISTENT-NATIVE.md`; full `capabilities/resident.mjs`; `tests/resident.mjs`; contracts.
 - Invariant: Worker owns live state; uncertainty holds capacity; terminal records inspectable; historical cache survives default prune.
@@ -111,7 +111,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-05 — Standby claim and sustainable capacity
 
-- Status: QUEUED (after P07-04) · Owner: resident lane
+- Status: ACTIVE 2026-10-20 · Owner: Keeper (operator: implement directly)
 - Mission: `PLAN.md` §§5.2–5.2.1 per contracts §8.
 - Required Reads: post-04 resident source; `tests/resident-benchmark.mjs`; contracts §§7, 8, 12.
 - Invariant: Success only after an independent worker durably owns the job; single-use workers; lost ACK never creates a second worker.
@@ -158,3 +158,4 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 | P07-00 | Opening contract freeze | 2026-10-20 | `docs/V07-CONTRACTS.md` §0; NOTEPAD |
 | P07-01 | Universal seed evolution | 2026-10-20 | gate PASS 24/24 + 19/19; NOTEPAD |
 | P07-02 | Dependency cartographer | 2026-10-20 | 12/12; gate wired; NOTEPAD |
+| P07-04 | Admission, recovery, pins, maintenance | 2026-10-20 | gate PASS 32/32 resident (seed-coupled); NOTEPAD |
