@@ -1,0 +1,104 @@
+{
+ "schema": "plot.host-recipe/1",
+ "tool": "git",
+ "version": "2.56.0",
+ "exe": {
+  "posix": "bin/git",
+  "win32": "cmd/git.exe"
+ },
+ "bin": {
+  "posix": "bin",
+  "win32": "cmd"
+ },
+ "probe": {
+  "args": [
+   "--version"
+  ],
+  "expect": "^git version 2\\.56\\.0"
+ },
+ "artifacts": [
+  {
+   "platform": [
+    "linux",
+    "darwin",
+    "android"
+   ],
+   "arch": "*",
+   "libc": null,
+   "route": "source-build",
+   "kind": "tar.gz",
+   "strip": 1,
+   "file": "git-2.56.0.tar.gz",
+   "url": "https://www.kernel.org/pub/software/scm/git/git-2.56.0.tar.gz",
+   "publisher": "Git project (kernel.org release tarball)",
+   "checksums": "https://www.kernel.org/pub/software/scm/git/sha256sums.asc",
+   "needs": [
+    "zlib"
+   ],
+   "requires": {
+    "system": [
+     "sh",
+     "cc",
+     "make"
+    ],
+    "note": "C toolchain, make and POSIX utilities are host prerequisites; bootstrap never installs them. Result links only the host C library (zlib is static). No HTTP transport (NO_CURL), no gettext, no Perl/Python/Tcl helpers."
+   },
+   "build": [
+    {
+     "cmd": "make",
+     "args": [
+      "-j${jobs}",
+      "prefix=${out}",
+      "NO_RUST=YesPlease",
+      "RUNTIME_PREFIX=YesPlease",
+      "NO_CURL=YesPlease",
+      "NO_EXPAT=YesPlease",
+      "NO_GETTEXT=YesPlease",
+      "NO_TCLTK=YesPlease",
+      "NO_PERL=YesPlease",
+      "NO_PYTHON=YesPlease",
+      "NO_OPENSSL=YesPlease",
+      "INSTALL_SYMLINKS=YesPlease",
+      "SKIP_DASHED_BUILT_INS=YesPlease",
+      "CFLAGS=-O2 -I${dep:zlib}/include",
+      "LDFLAGS=-L${dep:zlib}/lib",
+      "install"
+     ]
+    }
+   ],
+   "sha256": "826817fd3671b8565586d6d49f688298de8354ab11db829c02720e5c74b9b39f",
+   "size": 12765691,
+   "unpacked": 50416387,
+   "verified": "2026-10-20: full artifact downloaded and sha256 matched the publisher checksum list",
+   "installed": 21820482,
+   "buildScratch": 124614504,
+   "measured": "linux-x64 reference host 2026-10-20 (installed tree bytes; build tree bytes)"
+  },
+  {
+   "platform": "win32",
+   "arch": "x64",
+   "libc": null,
+   "route": "binary",
+   "kind": "zip",
+   "strip": 0,
+   "file": "MinGit-2.56.0.2-64-bit.zip",
+   "url": "https://github.com/git-for-windows/git/releases/download/v2.56.0.windows.2/MinGit-2.56.0.2-64-bit.zip",
+   "publisher": "Git for Windows project (MinGit, official relocatable distribution)",
+   "checksums": "https://github.com/git-for-windows/git/releases/tag/v2.56.0.windows.2 (release notes and asset digest)",
+   "exe": "cmd/git.exe",
+   "bin": "cmd",
+   "version": "2.56.0.windows.2",
+   "requires": {},
+   "sha256": "da35e72aa21c005a5a0d298cfbae110bc1609a815730ea0dde84b01a1b3cd3be",
+   "size": 39806486,
+   "unpacked": 96142395,
+   "verified": "2026-10-20: full artifact downloaded and sha256 matched the publisher checksum list"
+  }
+ ],
+ "unsupported": [
+  {
+   "platform": "*",
+   "reason": "no universal Git binary exists; POSIX hosts need the source-build prerequisites (sh, cc, make) and Windows uses MinGit"
+  }
+ ]
+}

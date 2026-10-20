@@ -1,0 +1,177 @@
+{
+ "schema": "plot.host-recipe/1",
+ "tool": "node",
+ "version": "24.22.0",
+ "exe": {
+  "posix": "bin/node",
+  "win32": "node.exe"
+ },
+ "bin": {
+  "posix": "bin",
+  "win32": "."
+ },
+ "probe": {
+  "args": [
+   "-e",
+   "process.stdout.write(process.version)"
+  ],
+  "expect": "^v24\\.22\\.0$"
+ },
+ "artifacts": [
+  {
+   "platform": "linux",
+   "arch": "x64",
+   "libc": "glibc",
+   "route": "binary",
+   "kind": "tar.gz",
+   "strip": 1,
+   "file": "node-v24.22.0-linux-x64.tar.gz",
+   "url": "https://nodejs.org/dist/v24.22.0/node-v24.22.0-linux-x64.tar.gz",
+   "publisher": "Node.js project (official release)",
+   "checksums": "https://nodejs.org/dist/v24.22.0/SHASUMS256.txt",
+   "requires": {
+    "glibc": "2.28",
+    "libs": [
+     "libstdc++.so.6 (GLIBCXX_3.4.21)",
+     "libgcc_s.so.1",
+     "libm",
+     "libdl",
+     "libpthread"
+    ]
+   },
+   "sha256": "28ea0a438de9a13bd7891fd758eee6c7819ee8af5442dfd8d45bd65e56d4228c",
+   "size": 58256361,
+   "unpacked": 201678212,
+   "verified": "2026-10-20: full artifact downloaded and sha256 matched the publisher checksum list"
+  },
+  {
+   "platform": "linux",
+   "arch": "arm64",
+   "libc": "glibc",
+   "route": "binary",
+   "kind": "tar.gz",
+   "strip": 1,
+   "file": "node-v24.22.0-linux-arm64.tar.gz",
+   "url": "https://nodejs.org/dist/v24.22.0/node-v24.22.0-linux-arm64.tar.gz",
+   "publisher": "Node.js project (official release)",
+   "checksums": "https://nodejs.org/dist/v24.22.0/SHASUMS256.txt",
+   "requires": {
+    "glibc": "2.28",
+    "libs": [
+     "libstdc++.so.6",
+     "libgcc_s.so.1"
+    ]
+   },
+   "sha256": "b7e7991d5407815adfa74a2a9cd4db683552c8ce32ff4a295c22e972849c3f5d",
+   "size": 57997377,
+   "unpacked": 198130272,
+   "verified": "2026-10-20: full artifact downloaded and sha256 matched the publisher checksum list"
+  },
+  {
+   "platform": "darwin",
+   "arch": "x64",
+   "libc": null,
+   "route": "binary",
+   "kind": "tar.gz",
+   "strip": 1,
+   "file": "node-v24.22.0-darwin-x64.tar.gz",
+   "url": "https://nodejs.org/dist/v24.22.0/node-v24.22.0-darwin-x64.tar.gz",
+   "publisher": "Node.js project (official release)",
+   "checksums": "https://nodejs.org/dist/v24.22.0/SHASUMS256.txt",
+   "requires": {},
+   "sha256": "495e3f273c645f3c4677d438304cdfc701729ea5dec5728f5c8e76a2dece4b91",
+   "size": 54356645,
+   "unpacked": 200534581,
+   "verified": "2026-10-20: full artifact downloaded and sha256 matched the publisher checksum list"
+  },
+  {
+   "platform": "darwin",
+   "arch": "arm64",
+   "libc": null,
+   "route": "binary",
+   "kind": "tar.gz",
+   "strip": 1,
+   "file": "node-v24.22.0-darwin-arm64.tar.gz",
+   "url": "https://nodejs.org/dist/v24.22.0/node-v24.22.0-darwin-arm64.tar.gz",
+   "publisher": "Node.js project (official release)",
+   "checksums": "https://nodejs.org/dist/v24.22.0/SHASUMS256.txt",
+   "requires": {},
+   "sha256": "6a9724d9b50a5f22b4816cded441b5a8d9ddae546191a5e5b7efa5a5e2ee26d5",
+   "size": 53049576,
+   "unpacked": 197365224,
+   "verified": "2026-10-20: full artifact downloaded and sha256 matched the publisher checksum list"
+  },
+  {
+   "platform": "win32",
+   "arch": "x64",
+   "libc": null,
+   "route": "binary",
+   "kind": "zip",
+   "strip": 1,
+   "file": "node-v24.22.0-win-x64.zip",
+   "url": "https://nodejs.org/dist/v24.22.0/node-v24.22.0-win-x64.zip",
+   "publisher": "Node.js project (official release)",
+   "checksums": "https://nodejs.org/dist/v24.22.0/SHASUMS256.txt",
+   "requires": {},
+   "sha256": "f9683a19877e12a9b167305c8db71040d812876359de21f0d2e97c3f321f80c3",
+   "size": 37733703,
+   "unpacked": 107312622,
+   "verified": "2026-10-20: full artifact downloaded and sha256 matched the publisher checksum list"
+  },
+  {
+   "platform": "linux",
+   "arch": "x64",
+   "libc": "musl",
+   "route": "binary",
+   "kind": "tar.gz",
+   "strip": 1,
+   "file": "node-v24.22.0-linux-x64-musl.tar.gz",
+   "url": "https://unofficial-builds.nodejs.org/download/release/v24.22.0/node-v24.22.0-linux-x64-musl.tar.gz",
+   "publisher": "Node.js unofficial-builds project (project-hosted, not an official release)",
+   "checksums": "https://unofficial-builds.nodejs.org/download/release/v24.22.0/SHASUMS256.txt",
+   "requires": {
+    "libs": [
+     "libstdc++ (musl build)",
+     "libgcc"
+    ]
+   },
+   "sha256": "72cd253fbe0c2539d52208ed098d47b78ff2c32ba76295d8e6b5b0ce067dcba5",
+   "size": 60222855,
+   "unpacked": 206482030,
+   "verified": "2026-10-20: full artifact downloaded and sha256 matched the publisher checksum list"
+  },
+  {
+   "platform": "linux",
+   "arch": "arm64",
+   "libc": "musl",
+   "route": "binary",
+   "kind": "tar.gz",
+   "strip": 1,
+   "file": "node-v24.22.0-linux-arm64-musl.tar.gz",
+   "url": "https://unofficial-builds.nodejs.org/download/release/v24.22.0/node-v24.22.0-linux-arm64-musl.tar.gz",
+   "publisher": "Node.js unofficial-builds project (project-hosted, not an official release)",
+   "checksums": "https://unofficial-builds.nodejs.org/download/release/v24.22.0/SHASUMS256.txt",
+   "requires": {
+    "libs": [
+     "libstdc++ (musl build)",
+     "libgcc"
+    ]
+   },
+   "sha256": "6812a53e5b37fbc32476d6c3511038d2bc3bbd1b3bb348d6c04dd2c70a1c8f4a",
+   "size": 60105814,
+   "unpacked": 203826634,
+   "verified": "2026-10-20: full artifact downloaded and sha256 matched the publisher checksum list"
+  }
+ ],
+ "unsupported": [
+  {
+   "platform": "android",
+   "reason": "Node.js publishes no Android/Termux build; supply an operator-built Node through PLOT_NODE or a kit record (provenance kit), bootstrap will not run pkg"
+  },
+  {
+   "platform": "win32",
+   "arch": "arm64",
+   "reason": "win-arm64 archive exists upstream but is not pinned in this recipe"
+  }
+ ]
+}

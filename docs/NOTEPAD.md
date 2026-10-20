@@ -58,3 +58,11 @@ Format:
 - Decisions (contracts v1.4): job pins released at terminal status; `interrupted` written only by the reconciler and never expired by it; evicted rid leaves an expired marker; completion notify goes to the supervisor recorded in the submission.
 - Next agent: P07-05 standby claim (Keeper, per operator 2026-10-20: Keeper implements directly).
 - Hazards: ALARM 51 open: seed `run()` does not re-check `.grave/tombstones/<obj>.json` after writing its foreground pin (pin-then-validate gap on the seed side; 55 bytes headroom). PERSISTENT-NATIVE.md not yet updated for v0.7 resident ops (P07-08).
+
+### 2026-10-20 13:55 UTC — Droid (Keeper) — P07-09 landed
+- Base: `9f6f548`.
+- Did: Landed forager-4's host bootstrap: `capabilities/bootstrap.mjs` (37,922 B; inspect/plan/acquire/verify/activate/kit), `bootstrap/plot.sh`, `bootstrap/plot.ps1`, `bootstrap/recipes/{node,python,git,zlib}.json` (official sha256 pins; musl Node from unofficial-builds, labelled), `bootstrap/hosts/README.md` (Windows/macOS/Termux runbooks, NOT RUN). Wired `step bootstrap` into `scripts/gate.sh`.
+- Validation: `node tests/bootstrap.mjs` → 21/21 on the reference host, including online official-source checks (network available) and a Node-absent launcher with PATH masked. The suite reports offline checks as NOT RUN when no network and no cache exist.
+- Proof facts: kit Node archives are the pinned upstream files (never repacked from the host `node`), which closes Fletcher call 17. Android has no upstream Node/Python build, so the route is operator-supplied `PLOT_NODE`.
+- Next agent: P07-05 (Keeper).
+- Hazards: the suite downloads about 60 MB into `$TMPDIR/plot-bootstrap-cache` on first run. Windows/macOS/Termux remain NOT RUN.

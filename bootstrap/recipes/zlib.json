@@ -1,0 +1,71 @@
+{
+ "schema": "plot.host-recipe/1",
+ "tool": "zlib",
+ "version": "1.3.2",
+ "role": "build-dependency",
+ "exe": {
+  "posix": "lib/libz.a"
+ },
+ "bin": null,
+ "probe": null,
+ "artifacts": [
+  {
+   "platform": [
+    "linux",
+    "darwin",
+    "android"
+   ],
+   "arch": "*",
+   "libc": null,
+   "route": "source-build",
+   "kind": "tar.gz",
+   "strip": 1,
+   "file": "zlib-1.3.2.tar.gz",
+   "url": "https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz",
+   "publisher": "zlib project (madler/zlib GitHub release)",
+   "checksums": "https://api.github.com/repos/madler/zlib/releases/tags/v1.3.2 (asset digest)",
+   "requires": {
+    "system": [
+     "sh",
+     "cc",
+     "make"
+    ]
+   },
+   "build": [
+    {
+     "cmd": "sh",
+     "args": [
+      "./configure",
+      "--static",
+      "--prefix=${out}"
+     ]
+    },
+    {
+     "cmd": "make",
+     "args": [
+      "-j${jobs}"
+     ]
+    },
+    {
+     "cmd": "make",
+     "args": [
+      "install"
+     ]
+    }
+   ],
+   "sha256": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16",
+   "size": 1502830,
+   "unpacked": 3579037,
+   "verified": "2026-10-20: full artifact downloaded and sha256 matched the publisher checksum list",
+   "installed": 274671,
+   "buildScratch": 4412244,
+   "measured": "linux-x64 reference host 2026-10-20 (installed tree bytes; build tree bytes)"
+  }
+ ],
+ "unsupported": [
+  {
+   "platform": "win32",
+   "reason": "only consumed by the POSIX Git source-build route; Windows uses MinGit"
+  }
+ ]
+}

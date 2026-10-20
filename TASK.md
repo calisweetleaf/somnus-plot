@@ -87,7 +87,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-09 — Host bootstrap and acquisition
 
-- Status: DISPATCHED (Wave 1) · Owner: forager-4
+- Status: **LANDED** 2026-10-20 · Owner: forager-4 · 21/21 bootstrap; gate wired
 - Mission: Implement `PLAN.md` §6.3: `capabilities/bootstrap.mjs` (inspect → plan → acquire → verify → activate), `bootstrap/plot.sh` and `bootstrap/plot.ps1` Node-absent launchers, recipes for Node, Python, Git (online pinned sources + offline kit/bank), resumable transactional install under `.grave/`.
 - Required Reads: `PLAN.md` §6.3; `src/plot.mjs` acquire/untar; contracts §§3, 4, 10, 11.
 - Invariant: Prerequisites explicit; user-local; no hidden reliance on host Python/Git/Node in proofs; bootstrap optional where the seed already runs.
@@ -158,4 +158,5 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 | P07-00 | Opening contract freeze | 2026-10-20 | `docs/V07-CONTRACTS.md` §0; NOTEPAD |
 | P07-01 | Universal seed evolution | 2026-10-20 | gate PASS 24/24 + 19/19; NOTEPAD |
 | P07-02 | Dependency cartographer | 2026-10-20 | 12/12; gate wired; NOTEPAD |
+| P07-09 | Host bootstrap and acquisition | 2026-10-20 | 21/21; gate wired; NOTEPAD |
 | P07-04 | Admission, recovery, pins, maintenance | 2026-10-20 | gate PASS 32/32 resident (seed-coupled); NOTEPAD |
