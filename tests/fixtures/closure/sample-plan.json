@@ -1,0 +1,367 @@
+{
+  "diagnostics": [],
+  "nodes": [
+    {
+      "deps": [
+        {
+          "kind": "prod",
+          "name": "bund",
+          "range": "^1",
+          "resolved": "bund@1.0.0"
+        },
+        {
+          "kind": "optional",
+          "name": "fsevents",
+          "range": "^2",
+          "resolved": null
+        },
+        {
+          "kind": "prod",
+          "name": "left",
+          "range": "^1",
+          "resolved": "left@1.0.0"
+        },
+        {
+          "kind": "prod",
+          "name": "lodashish",
+          "range": "^4",
+          "resolved": "lodashish@4.17.21"
+        },
+        {
+          "kind": "prod",
+          "name": "plugin",
+          "range": "^1",
+          "resolved": "plugin@1.0.0"
+        },
+        {
+          "kind": "prod",
+          "name": "right",
+          "range": "^1",
+          "resolved": "right@1.0.0"
+        }
+      ],
+      "ecosystem": "npm",
+      "entry": {
+        "bin": {
+          "app": "bin/app.js"
+        },
+        "exports": {
+          ".": "./index.mjs",
+          "./package.json": "./package.json"
+        },
+        "main": null
+      },
+      "id": "app@1.0.0",
+      "name": "app",
+      "placement": "node_modules/app",
+      "present": {
+        "key": null,
+        "object": null
+      },
+      "source": {
+        "integrity": null,
+        "kind": "dir",
+        "path": "/home/factory-user/repos/somnus-plot/tests/fixtures/closure/corpus/app-1.0.0"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "deps": [
+        {
+          "kind": "bundled",
+          "name": "z",
+          "range": "^3",
+          "resolved": "z@3.0.0"
+        }
+      ],
+      "ecosystem": "npm",
+      "entry": {
+        "bin": {},
+        "exports": null,
+        "main": null
+      },
+      "id": "bund@1.0.0",
+      "name": "bund",
+      "placement": "node_modules/bund",
+      "present": {
+        "key": null,
+        "object": null
+      },
+      "source": {
+        "integrity": null,
+        "kind": "dir",
+        "path": "/home/factory-user/repos/somnus-plot/tests/fixtures/closure/corpus/bund-1.0.0"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "deps": [],
+      "ecosystem": "npm",
+      "entry": {
+        "bin": {},
+        "exports": null,
+        "main": null
+      },
+      "id": "host@2.1.0",
+      "name": "host",
+      "placement": "node_modules/host",
+      "present": {
+        "key": null,
+        "object": null
+      },
+      "source": {
+        "integrity": null,
+        "kind": "dir",
+        "path": "/home/factory-user/repos/somnus-plot/tests/fixtures/closure/corpus/host-2.1.0"
+      },
+      "version": "2.1.0"
+    },
+    {
+      "deps": [
+        {
+          "kind": "prod",
+          "name": "shared",
+          "range": "^1",
+          "resolved": "shared@1.2.0"
+        }
+      ],
+      "ecosystem": "npm",
+      "entry": {
+        "bin": {},
+        "exports": null,
+        "main": null
+      },
+      "id": "left@1.0.0",
+      "name": "left",
+      "placement": "node_modules/left",
+      "present": {
+        "key": null,
+        "object": null
+      },
+      "source": {
+        "integrity": null,
+        "kind": "dir",
+        "path": "/home/factory-user/repos/somnus-plot/tests/fixtures/closure/corpus/left-1.0.0"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "deps": [],
+      "ecosystem": "npm",
+      "entry": {
+        "bin": {},
+        "exports": null,
+        "main": "lodash.js"
+      },
+      "id": "lodashish@4.17.21",
+      "name": "lodashish",
+      "placement": "node_modules/lodashish",
+      "present": {
+        "key": null,
+        "object": null
+      },
+      "source": {
+        "integrity": "sha256-UETIYoyFDl/mnahxQksJXd+LOmASFo04xAan3HRk5Cg=",
+        "kind": "tgz",
+        "member": "package",
+        "path": "/home/factory-user/repos/somnus-plot/tests/fixtures/closure/corpus/lodashish-4.17.21.tgz"
+      },
+      "version": "4.17.21"
+    },
+    {
+      "deps": [
+        {
+          "kind": "peer",
+          "name": "host",
+          "range": "^2",
+          "resolved": "host@2.1.0"
+        },
+        {
+          "kind": "peer",
+          "name": "opt",
+          "range": "*",
+          "resolved": null
+        }
+      ],
+      "ecosystem": "npm",
+      "entry": {
+        "bin": {},
+        "exports": null,
+        "main": null
+      },
+      "id": "plugin@1.0.0",
+      "name": "plugin",
+      "placement": "node_modules/plugin",
+      "present": {
+        "key": null,
+        "object": null
+      },
+      "source": {
+        "integrity": null,
+        "kind": "dir",
+        "path": "/home/factory-user/repos/somnus-plot/tests/fixtures/closure/corpus/plugin-1.0.0"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "deps": [
+        {
+          "kind": "prod",
+          "name": "shared",
+          "range": "^2",
+          "resolved": "shared@2.0.1"
+        }
+      ],
+      "ecosystem": "npm",
+      "entry": {
+        "bin": {},
+        "exports": null,
+        "main": null
+      },
+      "id": "right@1.0.0",
+      "name": "right",
+      "placement": "node_modules/right",
+      "present": {
+        "key": null,
+        "object": null
+      },
+      "source": {
+        "integrity": null,
+        "kind": "dir",
+        "path": "/home/factory-user/repos/somnus-plot/tests/fixtures/closure/corpus/right-1.0.0"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "deps": [],
+      "ecosystem": "npm",
+      "entry": {
+        "bin": {},
+        "exports": null,
+        "main": null
+      },
+      "id": "shared@1.2.0",
+      "name": "shared",
+      "placement": "node_modules/shared",
+      "present": {
+        "key": null,
+        "object": null
+      },
+      "source": {
+        "integrity": null,
+        "kind": "dir",
+        "path": "/home/factory-user/repos/somnus-plot/tests/fixtures/closure/corpus/shared-1.2.0"
+      },
+      "version": "1.2.0"
+    },
+    {
+      "deps": [],
+      "ecosystem": "npm",
+      "entry": {
+        "bin": {},
+        "exports": null,
+        "main": null
+      },
+      "id": "shared@2.0.1",
+      "name": "shared",
+      "placement": "node_modules/right/node_modules/shared",
+      "present": {
+        "key": null,
+        "object": null
+      },
+      "source": {
+        "integrity": null,
+        "kind": "dir",
+        "path": "/home/factory-user/repos/somnus-plot/tests/fixtures/closure/corpus/shared-2.0.1"
+      },
+      "version": "2.0.1"
+    },
+    {
+      "deps": [],
+      "ecosystem": "npm",
+      "entry": {
+        "bin": {},
+        "exports": null,
+        "main": null
+      },
+      "id": "w@1.0.0",
+      "name": "w",
+      "placement": "node_modules/bund/node_modules/w",
+      "present": {
+        "key": null,
+        "object": null
+      },
+      "source": {
+        "integrity": null,
+        "kind": "dir",
+        "path": "/home/factory-user/repos/somnus-plot/tests/fixtures/closure/corpus/bund-1.0.0/node_modules/w"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "deps": [
+        {
+          "kind": "prod",
+          "name": "w",
+          "range": "^1",
+          "resolved": "w@1.0.0"
+        }
+      ],
+      "ecosystem": "npm",
+      "entry": {
+        "bin": {},
+        "exports": null,
+        "main": null
+      },
+      "id": "z@3.0.0",
+      "name": "z",
+      "placement": "node_modules/bund/node_modules/z",
+      "present": {
+        "key": null,
+        "object": null
+      },
+      "source": {
+        "integrity": null,
+        "kind": "dir",
+        "path": "/home/factory-user/repos/somnus-plot/tests/fixtures/closure/corpus/bund-1.0.0/node_modules/z"
+      },
+      "version": "3.0.0"
+    }
+  ],
+  "ok": true,
+  "order": [
+    "host@2.1.0",
+    "lodashish@4.17.21",
+    "plugin@1.0.0",
+    "shared@1.2.0",
+    "left@1.0.0",
+    "shared@2.0.1",
+    "right@1.0.0",
+    "w@1.0.0",
+    "z@3.0.0",
+    "bund@1.0.0",
+    "app@1.0.0"
+  ],
+  "pruned": [
+    {
+      "id": "fsevents@2.3.3",
+      "reason": "os"
+    }
+  ],
+  "requested": [
+    "app@^1"
+  ],
+  "schema": "plot.closure/1",
+  "target": {
+    "arch": "x64",
+    "conditions": [
+      "node",
+      "import"
+    ],
+    "libc": "glibc",
+    "node": "24.22.0",
+    "platform": "linux",
+    "python": null
+  },
+  "unsupported": []
+}

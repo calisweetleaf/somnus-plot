@@ -63,7 +63,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-02 — Dependency cartographer
 
-- Status: DISPATCHED (Wave 1) · Owner: forager-2
+- Status: **LANDED** 2026-10-20 · Owner: forager-2 · 12/12 cartographer checks
 - Mission: Implement `PLAN.md` §6.1 as `capabilities/cartographer.mjs` exporting `planClosure`, `inspectCorpus`, and a CLI, emitting contracts §10 `plot.closure/1`.
 - Required Reads: `PLAN.md` §6.1; `docs/Plot-Fable.md` "The Seventh Flash"; `STAGE-1.md` identity; `src/plot.mjs` `stable`/`valid`/key; contracts §10.
 - Invariant: Pure, offline, deterministic; never executes or imports package code; conflicting ranges keep distinct nodes with placement.
@@ -157,3 +157,4 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 | P06-CP | Accelerate control plane installed | 2026-10-20 | `docs/NOTEPAD.md` first entry |
 | P07-00 | Opening contract freeze | 2026-10-20 | `docs/V07-CONTRACTS.md` §0; NOTEPAD |
 | P07-01 | Universal seed evolution | 2026-10-20 | gate PASS 24/24 + 19/19; NOTEPAD |
+| P07-02 | Dependency cartographer | 2026-10-20 | 12/12; gate wired; NOTEPAD |

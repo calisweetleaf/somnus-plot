@@ -51,6 +51,7 @@ step build node build.mjs
 step "committed main.js matches build of src/plot.mjs" cmp main.js "$root_dir/main.js"
 step integration node tests/integration.mjs
 step resident node tests/resident.mjs
+step cartographer node tests/cartographer.mjs
 step package-smoke sh -c 'node tests/package-smoke.mjs >/dev/null'
 if [ "$mode" = "--bench" ]; then
   step benchmark node tests/benchmark.mjs

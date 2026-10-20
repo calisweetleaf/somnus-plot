@@ -42,3 +42,11 @@ Format:
 - Minor: if two valid objects share a key, selection follows `readdirSync` order (harmless; identical identity).
 - Next agent: P07-04 (forager-5, running) may now close its seed-coupled checks.
 - Hazards: historical scan is O(objects with prefix) on ledger miss; no index.
+
+### 2026-10-20 13:20 UTC — Droid (Keeper; wore Sentinel) — P07-02 landed
+- Base: `2b9b384`.
+- Did: Landed forager-2's `capabilities/cartographer.mjs` (31,126 B; `planClosure`, `inspectCorpus`, CLI) + `tests/cartographer.mjs` + generated `tests/fixtures/closure/` (sample plan, 11 nodes, ok:true). Wired `node tests/cartographer.mjs` into `scripts/gate.sh`. Contracts v1.3 records presence rule (`recipe.component={ecosystem,name,version}` + host match), placement-qualified duplicate ids, new fields, fail-closed codes.
+- Validation: lane `scripts/gate.sh` PASS; Keeper Sentinel in scratch: 12/12, fixture regeneration byte-stable, CLI byte-identical across runs, no `child_process`/eval/fetch/dynamic import in the module. Lane mutation testing: 7/8 mutants killed (peer-lookup start at own node_modules survived; SALT).
+- Proof facts: supported range grammar per contracts §10; unsupported forms reported (tags, git+, npm:, file:, workspace:, URLs, 4-part, `~>`).
+- Next agent: P07-03 must stamp `recipe.component` for npm presence and add `planWheels` (Fletcher TEMPO 15).
+- Hazards: placement is deterministic hoisting, not npm arborist parity; optional-subtree deep failure fails the plan (stricter than npm).

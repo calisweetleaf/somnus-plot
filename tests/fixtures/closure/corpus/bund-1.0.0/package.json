@@ -1,0 +1,10 @@
+{
+ "name": "bund",
+ "version": "1.0.0",
+ "dependencies": {
+  "z": "^3"
+ },
+ "bundleDependencies": [
+  "z"
+ ]
+}

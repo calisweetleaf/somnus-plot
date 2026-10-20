@@ -1,0 +1,24 @@
+{
+ "name": "app",
+ "version": "1.0.0",
+ "dependencies": {
+  "plugin": "^1",
+  "bund": "^1",
+  "left": "^1",
+  "right": "^1",
+  "lodashish": "^4"
+ },
+ "optionalDependencies": {
+  "fsevents": "^2"
+ },
+ "bin": {
+  "app": "./bin/app.js"
+ },
+ "exports": {
+  ".": {
+   "import": "./index.mjs",
+   "require": "./index.cjs"
+  },
+  "./package.json": "./package.json"
+ }
+}

@@ -21,11 +21,14 @@ Topology map only. Route work from `AGENTS.md`, not from this tree.
 ├── src
 │   └── plot.mjs              core source of truth
 ├── capabilities
-│   └── resident.mjs          optional acquired resident capability
+│   ├── resident.mjs          optional acquired resident capability
+│   └── cartographer.mjs      v0.7 dependency closure planner
 ├── tests
 │   ├── helpers.mjs           fixtures (wheels, C extension, TAR, CLI)
 │   ├── integration.mjs       18 checks -> evidence/integration.json
 │   ├── resident.mjs          19 checks -> evidence/resident-integration.json
+│   ├── cartographer.mjs      cartographer suite (12 checks)
+│   ├── fixtures/closure/     generated corpus + sample-plan.json
 │   ├── package-smoke.mjs     clean deploy -> evidence/package-smoke.json
 │   ├── benchmark.mjs         -> evidence/benchmark.json
 │   ├── resident-benchmark.mjs -> evidence/resident-benchmark.json

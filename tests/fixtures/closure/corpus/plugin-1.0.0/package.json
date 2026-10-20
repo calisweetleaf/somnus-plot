@@ -1,0 +1,13 @@
+{
+ "name": "plugin",
+ "version": "1.0.0",
+ "peerDependencies": {
+  "host": "^2",
+  "opt": "*"
+ },
+ "peerDependenciesMeta": {
+  "opt": {
+   "optional": true
+  }
+ }
+}
