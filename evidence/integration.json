@@ -1,103 +1,133 @@
 {
-  "started_at": "2026-10-17T03:44:33.839Z",
-  "finished_at": "2026-10-17T03:45:00.074Z",
-  "node": "v24.19.0",
+  "started_at": "2026-10-20T13:31:51.196Z",
+  "finished_at": "2026-10-20T13:32:14.206Z",
+  "node": "v24.22.0",
   "platform": "linux",
   "arch": "x64",
-  "python": "Python 3.12.14",
-  "core_bytes": 9061,
-  "total": 18,
-  "passed": 18,
+  "python": "Python 3.12.3",
+  "core_bytes": 9008,
+  "total": 24,
+  "passed": 24,
   "checks": [
     {
       "name": "shipped core stays at or below original 9063 bytes",
       "passed": true,
-      "ms": 0.2555540000000036
+      "ms": 0.27885599999999755
     },
     {
       "name": "real mixed Node/Python demo and module import parity",
       "passed": true,
-      "ms": 2989.589814
+      "ms": 289.648251
     },
     {
       "name": "default CLI is plot-relative when launched elsewhere",
       "passed": true,
-      "ms": 308.8719369999999
+      "ms": 116.915186
     },
     {
       "name": "literal arguments, step cwd/env, and stop on child exit",
       "passed": true,
-      "ms": 235.7735300000004
+      "ms": 83.28923900000007
     },
     {
       "name": "spawn:false and missing trusted declaration fail before acquisition",
       "passed": true,
-      "ms": 167.2757499999998
+      "ms": 75.47363300000006
     },
     {
       "name": "host mismatch, invalid IDs, missing dependencies, cycles fail closed",
       "passed": true,
-      "ms": 248.43737299999975
+      "ms": 108.12245499999995
     },
     {
       "name": "host recipe precedence, wildcard fallback and optional unsupported DLC",
       "passed": true,
-      "ms": 349.82952200000045
+      "ms": 103.68838600000004
     },
     {
       "name": "DAG order, reuse, dependency invalidation and frozen older views",
       "passed": true,
-      "ms": 491.6737149999999
+      "ms": 167.435874
     },
     {
       "name": "failed installer/check preserve active view, ledger, writable data",
       "passed": true,
-      "ms": 383.6786999999995
+      "ms": 134.75568399999997
     },
     {
       "name": "cross-process acquisition lock rejects racing writer",
       "passed": true,
-      "ms": 959.6545110000006
+      "ms": 881.1307219999999
     },
     {
       "name": "missing asset and cross-device view require reprovision",
       "passed": true,
-      "ms": 298.6589039999999
+      "ms": 121.09617500000013
+    },
+    {
+      "name": "historical exact-key reuse: v1->v2->v1 capability switch spawns nothing",
+      "passed": true,
+      "ms": 128.6105279999997
+    },
+    {
+      "name": "unstamped, interrupted or forged stages are never adopted",
+      "passed": true,
+      "ms": 101.023052
+    },
+    {
+      "name": "stdout-only child diagnostic reaches the failure message",
+      "passed": true,
+      "ms": 29.887672999999722
+    },
+    {
+      "name": "foreground pin names transitive objects during a run and is removed after",
+      "passed": true,
+      "ms": 213.39489400000002
     },
     {
       "name": "real pip target acquisition, shared interpreter and version conflicts",
       "passed": true,
-      "ms": 3592.915006000001
+      "ms": 3301.5706290000003
     },
     {
       "name": "Python module, script, argv, metadata resources and console entrypoint",
       "passed": true,
-      "ms": 320.88744100000076
+      "ms": 124.32088199999998
     },
     {
       "name": "subprocess package inheritance, host PYTHONPATH exclusion and writable isolation",
       "passed": true,
-      "ms": 154.10391899999922
+      "ms": 92.59728199999972
     },
     {
       "name": "package installation failure and requested depth/version drift fail without stale reuse",
       "passed": true,
-      "ms": 2822.941063
+      "ms": 2648.833938999999
+    },
+    {
+      "name": "historical exact-key reuse: Python package switch v1->v2->v1 runs no pip",
+      "passed": true,
+      "ms": 26.85624999999891
+    },
+    {
+      "name": "package-less shallow venv provisions without ensurepip; pip-bearing tenant reports stdout diagnostic",
+      "passed": true,
+      "ms": 207.99321699999928
     },
     {
       "name": "archive traversal, symlink pivots, hardlinks, PAX, duplicate paths, truncation rejected",
       "passed": true,
-      "ms": 52.543320000000676
+      "ms": 39.86080200000106
     },
     {
       "name": "bounded decompression aborts oversized archive without activation",
       "passed": true,
-      "ms": 2806.9504660000002
+      "ms": 1975.9248009999992
     },
     {
       "name": "real locally reconstructed CPython archive and legacy integrity check",
       "passed": true,
-      "ms": 9800.851772999999
+      "ms": 11911.22406
     }
   ]
 }

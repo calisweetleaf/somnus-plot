@@ -1,8 +1,9 @@
-# Somnus Plot v0.6
+# Somnus Plot v0.7
 
-Persistent native execution with an optional acquired supervisor and independent
-job workers. Node standard library only; no npm install. The foreground core stays
-within the original 9,063-byte ceiling.
+A small seed that builds environments by composition. Optional acquired capabilities add a
+resident supervisor with single-use standby workers and persistent execution environments,
+a dependency cartographer, an offline layer assembler and a host bootstrap. Node standard
+library only; no npm install. The foreground core stays within the original 9,063-byte ceiling.
 
 ```sh
 node capabilities/resident.mjs start
@@ -14,6 +15,10 @@ node capabilities/resident.mjs list
 Exit the client, then use `inspect JOB_ID` and `output JOB_ID` from a new client.
 `stop` stops the supervisor and leaves independent workers running. `start`
 reconnects; `cancel JOB_ID` requires authenticated live worker control.
+
+Without Node, `sh bootstrap/plot.sh` (or `bootstrap/plot.ps1` on Windows) obtains a pinned Node
+into `.grave/host/` and runs the same seed. `node capabilities/bootstrap.mjs plan` shows what a host
+needs before anything is written. Only Linux x64 has been run; see `bootstrap/hosts/README.md`.
 
 Read [PERSISTENT-NATIVE.md](PERSISTENT-NATIVE.md) for the command/API surface,
 resource ownership, recovery semantics, limits and reproduction commands.

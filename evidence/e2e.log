@@ -1,0 +1,14 @@
+prerequisites {"kit":"/tmp/plot-bootstrap-kit","cc":true,"linux":true}
+PASS bootstrap acquires an owned Node and Python closure from the offline kit into <root>/.grave/host [runtime owned]
+PASS cartographer and planWheels emit the closures; the native wheel is compiled against the owned runtime [runtime owned]
+PASS seed recipes assemble the wheel and npm layers into .grave/objects over the owned venv (no pip) [runtime owned]
+PASS crash at seed publication: SIGKILL mid-install leaves an unstamped stage that is archived by recovery and never adopted [runtime owned]
+PASS owned-runtime jobs: crash after the standby claim is adopted (interrupted, no output, no second worker); the next job runs both layers [runtime owned]
+PASS environment over the assembled view: Python native wheel and Node npm layer in warm tenants; heap persists across turns [runtime owned]
+PASS crash during activation: supervisor SIGKILL while the host starts; restart converges on one live host and the earlier heap survives [runtime owned]
+PASS crash at turn completion after the record: the retried rid returns the recorded outcome; the effect ran once [runtime owned]
+PASS crash at turn completion before the record: the retried rid reports interrupted/lost and never re-executes; reactivation is a new heap [runtime owned]
+PASS crash during prune (moved): recovery then prune finishes the deletion; pinned environment objects survive [runtime owned]
+PASS crash during prune (intents): recovery then prune withdraws the intent and deletes anew; pinned environment objects survive [runtime owned]
+PASS teardown: deactivate stops every host and tenant; supervisor stop is clean [runtime owned]
+12/12 e2e checks

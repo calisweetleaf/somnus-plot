@@ -17,4 +17,26 @@ PASS legacy unstamped locks and ambiguous live writers remain blocked
 PASS failed resident acquisition rolls back; disconnected provisioning client does not cancel writer
 PASS cold acquisition continues through supervisor death and restart
 PASS supervisor stop leaves submitted job running and status available after restart
-19/19 resident integration checks
+PASS two concurrent jobs on one view get private PLOT_JOB_STATE and step conduits
+PASS reconciler revision fence never overwrites a newer terminal record
+PASS 20 killed-worker recoveries release capacity and job 21 succeeds
+PASS missed completion notification is repaired by the background reconciler
+PASS simultaneous last-slot submissions admit exactly one before durable acceptance
+PASS submit latency is independent of 1,000 historical and unreachable jobs; no submit waits on a probe
+PASS prune dry-run changes nothing; default apply keeps the cache; policy apply deletes only reclaimable objects
+PASS prune keeps the transitive dependency closure of a pinned object
+PASS includeJobs expiry releases job snapshot roots and expires request IDs without re-execution
+PASS concurrent provision and prune serialize on .grave/.lock without losing a publication
+PASS tombstone crash recovery withdraws unmoved intents and finishes moved deletions
+PASS historical v1 reusable after default prune (seed-coupled: P07-01)
+PASS foreground pin respected by prune (seed-coupled: P07-01)
+PASS standby claim replies only after an independent worker durably owns the job
+PASS supervisor SIGKILL immediately after reply leaves the claimed job running
+PASS claim-stage crash: before claim retries another worker; after claim adopts, never a second worker
+PASS lost claim ACK adopts the durable claim instead of creating a second worker
+PASS duplicate simultaneous rid creates exactly one job and one worker
+PASS bursts of 2/8/16/32 are accounted, bounded and never exceed maxStarting
+PASS idle standbys expire after supervisor SIGKILL and leave with a clean stop
+PASS restart reconciliation dispatches a published job that was never claimed; idle pool stays bounded
+PASS preliminary warm durable submit-and-claim latency (asserted < 6 ms with PLOT_ASSERT_LATENCY=1)
+41/41 resident integration checks

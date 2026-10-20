@@ -1,0 +1,21 @@
+fixture prerequisites {"python3":true,"cc":true,"pythonH":true}
+runtime shallow-host: /tmp/plot-assembler-BEipIT/runtime/bin/python3 (venv --without-pip over host /usr/bin/python3, Python 3.12.3 cpython-312-x86_64-linux-gnu)
+PASS pure wheel: planWheels plan, assembled, importable with -I -S, reused [runtime shallow-host]
+PASS compatible C extension: planWheels selects the compatible build, importable by the target runtime with -I -S [runtime shallow-host]
+PASS .data relocation: purelib, platlib, scripts with #!python rewrite, data, headers [runtime shallow-host]
+PASS console and gui entrypoints runnable, exit status and argv preserved, sh trampoline for spaced interpreter [runtime shallow-host]
+PASS malformed RECORD and digest/size mismatches rejected with no write
+PASS incompatible ABI, platform and python tags rejected before any write
+PASS traversal, symlink, special, duplicate entries and colliding destinations rejected
+PASS extraction limits, declared-size lies and zip64 enforced
+PASS two plots assemble conflicting subsets from one read-only bank via planWheels; unsatisfiable plans fail closed; bank unmodified [runtime shallow-host]
+PASS interrupted assembly (SIGKILL after staging) is never adopted; retry publishes, then reuses [runtime shallow-host]
+PASS pin-then-validate: consumed runtime object pinned while read; tombstoned object refused retryably [runtime shallow-host]
+PASS seed capability recipe executes the assembler into its own stage from a plan-wheels plan (main.js provision, -I -S import) [runtime shallow-host]
+PASS cartographer plan over a dir + tgz corpus: nested placement, integrity, bins; one component object per npm name@version; refusals
+PASS BANK_CHANGED: reuse re-verifies recorded wheel and npm digests and refuses changed bank bytes under unchanged names
+PASS cartographer sample-plan.json (P07-02) assembled; planClosure --root then marks every node present and reassembly reuses
+owned-runtime: NOT RUN (pending P07-09/P07-07 composition)
+runtime labels {"shallow-host":8}
+timings {"verify_pure_ms":30.64,"plan_wheels_ms":30.76,"install_pure_ms":39.5,"historical_reuse_ms":26.09,"install_native_ms":29.73,"assemble_bank_ms":64.67,"cli_plan_and_assemble_ms":175.61,"retry_after_crash_ms":45.46,"seed_recipe_provision_ms":88.27,"closure_assemble_ms":32.01}
+15/15 assembler checks

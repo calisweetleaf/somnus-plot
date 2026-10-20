@@ -10,13 +10,13 @@
 | --- | --- |
 | Product / long goal | Persistent virtual machine built by composition from a tiny seed; v10 predicted complete |
 | Current base | `main` @ `b72a98d` (v0.6.0) plus landed v0.7 packets below |
-| Active wave | Wave 1: P07-01, P07-02, P07-03, P07-09 (parallel) — **DISPATCHED** by operator 2026-10-20 |
+| Active wave | None. All v0.7 packets landed 2026-10-20; v0.7.0 is an integrated candidate with open gates (below) |
 | Swarm | Keeper/coordinator (Opus 5.5) + project droids (`somnus-prod-finalizer` foragers, `fletcher`, `somnus-defense-grade-doc-engine`) + `scrutiny-feature-reviewer` sentinels; colony protocol `SWARM.md` |
 | Current gate | `scripts/gate.sh` |
 | Expected result | `gate: PASS` at every landing; v0.7 acceptance per `PLAN.md` §8 |
 | Handoff surface | `docs/NOTEPAD.md` |
 | Commit policy | Coordinator commits each landed packet locally; never pushes |
-| Known open gate | Second OS family: no host available → NOT RUN; cross-host acceptance stays open |
+| Known open gates | `sustained_submit` successful p95 40.536 ms (FAIL vs 6 ms); second OS family and fresh container NOT RUN (cross-host acceptance open); power loss untested; Law 12 file-set wording awaits operator (`WHITEPAPER.md` O-10) |
 
 ## Packet graph
 
@@ -144,7 +144,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-08 — Measurements, whitepaper, release
 
-- Status: ACTIVE 2026-10-20 · Owner: Keeper
+- Status: **LANDED** 2026-10-20 · Owner: Keeper · v0.7.0 · 146/146 · 8/9 frozen p95 boundaries PASS, sustained_submit FAIL
 - Mission: Extend benchmarks per contracts §12; `scripts/gate.sh --bench` then `--evidence`; reconcile claims; `WHITEPAPER.md`; version 0.7.0 across `package.json`, `manifest.json`, `README.md`, `STAGE-1.md`, `PERSISTENT-NATIVE.md`, `tests/report.mjs`, router and continuity.
 - Hard Bans: No hand-edited evidence, outlier removal, warm/cold merging, workload reduction, full-completion claim with open gates.
 - Validation: `scripts/gate.sh --bench`, `scripts/gate.sh --evidence`, final `scripts/gate.sh`; Sentinel + Fletcher passes.
@@ -164,3 +164,4 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 | P07-06 | Resident execution environments | 2026-10-20 | gate PASS 21/21 resident-env; NOTEPAD |
 | P07-05 | Standby claim and sustainable capacity | 2026-10-20 | gate PASS 41/41 resident; NOTEPAD |
 | P07-04 | Admission, recovery, pins, maintenance | 2026-10-20 | gate PASS 32/32 resident (seed-coupled); NOTEPAD |
+| P07-08 | Measurements, whitepaper, release | 2026-10-20 | gate --bench/--evidence PASS; `evidence/v07-benchmark.json`; `WHITEPAPER.md` v1.0; open gates in CONTEXT; NOTEPAD |

@@ -1,0 +1,162 @@
+{
+  "started_at": "2026-10-20T13:34:20.649Z",
+  "finished_at": "2026-10-20T13:34:29.014Z",
+  "node": "v24.22.0",
+  "platform": "linux",
+  "arch": "x64",
+  "runtime": "owned",
+  "kit": "/tmp/plot-bootstrap-kit",
+  "total": 12,
+  "passed": 12,
+  "not_run": [],
+  "checks": [
+    {
+      "name": "bootstrap acquires an owned Node and Python closure from the offline kit into <root>/.grave/host",
+      "passed": true,
+      "ms": 6105.3,
+      "runtime": "owned",
+      "evidence": {
+        "node": "/tmp/plot-e2e-xM6Azq/root/.grave/host/node-24.22.0-linux-x64-UEkl4G/bin/node",
+        "python": "/tmp/plot-e2e-xM6Azq/root/.grave/host/python-3.12.15-linux-x64-ZasX3j/bin/python3",
+        "ms": 6022.8
+      }
+    },
+    {
+      "name": "cartographer and planWheels emit the closures; the native wheel is compiled against the owned runtime",
+      "passed": true,
+      "ms": 265.8,
+      "runtime": "owned",
+      "evidence": {
+        "wheels": [
+          "plot-native@1.0",
+          "plot-e2e@1.0"
+        ],
+        "npm": [
+          "d@1.0.1",
+          "a@1.2.0"
+        ]
+      }
+    },
+    {
+      "name": "seed recipes assemble the wheel and npm layers into .grave/objects over the owned venv (no pip)",
+      "passed": true,
+      "ms": 325.1,
+      "runtime": "owned",
+      "evidence": {
+        "view": {
+          "python": "python-9A1ZWf",
+          "python-packages": "python-packages-emhFpF",
+          "wheels": "wheels-BSVIAs",
+          "npm": "npm-vuxOfr"
+        },
+        "ms": 282.4
+      }
+    },
+    {
+      "name": "crash at seed publication: SIGKILL mid-install leaves an unstamped stage that is archived by recovery and never adopted",
+      "passed": true,
+      "ms": 102.7,
+      "runtime": "owned",
+      "evidence": {
+        "stage": "held-yvYLrj",
+        "archived": "acquisition-da4706e2-0692-430e-b81a-5247b6980121"
+      }
+    },
+    {
+      "name": "owned-runtime jobs: crash after the standby claim is adopted (interrupted, no output, no second worker); the next job runs both layers",
+      "passed": true,
+      "ms": 183.3,
+      "runtime": "owned",
+      "evidence": {
+        "adopted": "d8911bfd-50d1-45d5-9416-c463d883e598",
+        "succeeded": "561fecfd-ab4e-4518-bf79-d07e9bc1fabf",
+        "path": "standby"
+      }
+    },
+    {
+      "name": "environment over the assembled view: Python native wheel and Node npm layer in warm tenants; heap persists across turns",
+      "passed": true,
+      "ms": 156,
+      "runtime": "owned",
+      "evidence": {
+        "incarnation": "940d3e03-0143-4ba0-8b2f-8cae7a7957fa"
+      }
+    },
+    {
+      "name": "crash during activation: supervisor SIGKILL while the host starts; restart converges on one live host and the earlier heap survives",
+      "passed": true,
+      "ms": 118.2,
+      "runtime": "owned",
+      "evidence": {
+        "incarnations": 1,
+        "existing": true
+      }
+    },
+    {
+      "name": "crash at turn completion after the record: the retried rid returns the recorded outcome; the effect ran once",
+      "passed": true,
+      "ms": 104.4,
+      "runtime": "owned",
+      "evidence": {
+        "turnId": "478a6c5e-2deb-4a58-93fa-1271c3a0e458",
+        "state": "interrupted"
+      }
+    },
+    {
+      "name": "crash at turn completion before the record: the retried rid reports interrupted/lost and never re-executes; reactivation is a new heap",
+      "passed": true,
+      "ms": 222.5,
+      "runtime": "owned",
+      "evidence": {
+        "lost": "b304da97-477f-40a1-842b-40faf78fd72e"
+      }
+    },
+    {
+      "name": "crash during prune (moved): recovery then prune finishes the deletion; pinned environment objects survive",
+      "passed": true,
+      "ms": 181.5,
+      "runtime": "owned",
+      "evidence": {
+        "deleted": 1,
+        "recovered": [
+          {
+            "path": "/tmp/plot-e2e-xM6Azq/root/.grave/objects/junk-YmflNu",
+            "kind": "object",
+            "action": "finish-deletion"
+          }
+        ]
+      }
+    },
+    {
+      "name": "crash during prune (intents): recovery then prune withdraws the intent and deletes anew; pinned environment objects survive",
+      "passed": true,
+      "ms": 172.2,
+      "runtime": "owned",
+      "evidence": {
+        "deleted": 2,
+        "recovered": [
+          {
+            "path": "/tmp/plot-e2e-xM6Azq/root/.grave/objects/junk-rR9Tti",
+            "kind": "object",
+            "action": "intent-withdrawn"
+          }
+        ]
+      }
+    },
+    {
+      "name": "teardown: deactivate stops every host and tenant; supervisor stop is clean",
+      "passed": true,
+      "ms": 288.4,
+      "runtime": "owned",
+      "evidence": {
+        "stopped": 7
+      }
+    }
+  ],
+  "facts": {
+    "timings": {
+      "bootstrap_cold_ms": 6022.8,
+      "seed_provision_ms": 282.4
+    }
+  }
+}

@@ -1,16 +1,16 @@
 {
-  "started_at": "2026-10-17T03:50:55.800Z",
-  "finished_at": "2026-10-17T03:51:13.724Z",
-  "node": "v24.19.0",
+  "started_at": "2026-10-20T13:32:14.331Z",
+  "finished_at": "2026-10-20T13:32:58.566Z",
+  "node": "v24.22.0",
   "platform": "linux",
   "arch": "x64",
-  "total": 19,
-  "passed": 19,
+  "total": 41,
+  "passed": 41,
   "checks": [
     {
       "name": "optional capability acquisition and native-only clean CLI startup",
       "passed": true,
-      "ms": 381.04517000000004,
+      "ms": 213.412083,
       "evidence": {
         "pythonRequired": false,
         "acquiredResident": true
@@ -19,7 +19,7 @@
     {
       "name": "concurrent start clients converge on one authenticated supervisor",
       "passed": true,
-      "ms": 400.42403699999994,
+      "ms": 240.47687499999998,
       "evidence": {
         "clients": 3,
         "supervisors": 1
@@ -28,9 +28,9 @@
     {
       "name": "job outlives submitting CLI; a distinct CLI discovers identity, status and output",
       "passed": true,
-      "ms": 1019.602176,
+      "ms": 838.258437,
       "evidence": {
-        "id": "d3c44385-c55a-4682-84fb-32e3f5aba7a2",
+        "id": "fecb4677-0591-485a-a165-1e66d0e820af",
         "submittingClientExited": true,
         "reconnectedClient": true,
         "status": "succeeded",
@@ -40,16 +40,16 @@
     {
       "name": "abrupt transport disconnect after submission does not cancel accepted work",
       "passed": true,
-      "ms": 471.724461,
+      "ms": 305.308622,
       "evidence": {
-        "id": "drop-ad0b98ae-0eee-4ca0-b431-57373560a692",
+        "id": "drop-3039696c-877a-4d22-b396-85091f829973",
         "transportClosedBeforeResponse": true
       }
     },
     {
       "name": "concurrent clients, stable identities and exactly one job for retried submission",
       "passed": true,
-      "ms": 751.7935670000002,
+      "ms": 483.5863199999999,
       "evidence": {
         "clients": 8,
         "retries": 2,
@@ -59,17 +59,17 @@
     {
       "name": "supervisor SIGKILL/restart reconnects to an already running independent worker",
       "passed": true,
-      "ms": 1786.3909309999995,
+      "ms": 1652.30987,
       "evidence": {
-        "id": "5be27d2f-1673-4a19-9b35-258f3181a491",
-        "workerInstance": "32508e70-05ed-401c-82f4-1598681c3285",
+        "id": "14b7ed55-9dfb-41da-82fd-37e04dac05da",
+        "workerInstance": "a4dc4031-ba42-4d43-ba26-7dc35008433b",
         "state": "succeeded"
       }
     },
     {
       "name": "exact frozen view, executable, environment, literal commands and dependencies survive changes",
       "passed": true,
-      "ms": 939.740468,
+      "ms": 710.6083919999996,
       "evidence": {
         "oldObjectRetained": true,
         "snapshotExecuted": true
@@ -78,7 +78,7 @@
     {
       "name": "persistent Python jobs retain conflicting package views while reusing one runtime",
       "passed": true,
-      "ms": 3925.594631000001,
+      "ms": 3385.301856,
       "evidence": {
         "sharedRuntime": true,
         "isolatedVersions": [
@@ -90,28 +90,28 @@
     {
       "name": "bounded binary stdout/stderr, byte cursors, timeout, cancellation and step failure",
       "passed": true,
-      "ms": 1536.854847999999
+      "ms": 960.2964059999995
     },
     {
       "name": "missing capability, authority denial, unauthenticated calls and invalid requests fail closed",
       "passed": true,
-      "ms": 11.149989999999889
+      "ms": 8.276646000000255
     },
     {
       "name": "stale records never authorize signalling an unrelated live process",
       "passed": true,
-      "ms": 3.949956000000384,
+      "ms": 3.8677779999998165,
       "evidence": {
-        "state": "unreachable",
+        "state": "interrupted",
         "unrelatedProcessUntouched": true
       }
     },
     {
       "name": "worker crash becomes interrupted/unreachable; no success fabricated or step replayed",
       "passed": true,
-      "ms": 432.4123550000004,
+      "ms": 287.7700530000002,
       "evidence": {
-        "id": "9e26f941-b3c2-4298-af36-9db63e5e2ccf",
+        "id": "70d5927a-fc05-495a-8d34-e06b9c17940e",
         "state": "interrupted",
         "executions": 1
       }
@@ -119,7 +119,7 @@
     {
       "name": "acquisition crash reconciliation retains incomplete objects, committed views and owned state",
       "passed": true,
-      "ms": 1802.9957890000005,
+      "ms": 1598.8911860000007,
       "evidence": {
         "reconciliation": "reconciled",
         "incompleteRetained": true,
@@ -130,12 +130,12 @@
     {
       "name": "damaged job records remain visible and cannot hide healthy jobs",
       "passed": true,
-      "ms": 4.525121000000581
+      "ms": 4.583660000000236
     },
     {
       "name": "cancellation owns the direct child and bounds inherited-pipe waiting",
       "passed": true,
-      "ms": 1352.0047470000009,
+      "ms": 1172.6269399999983,
       "evidence": {
         "directChildCancelled": true,
         "descendantNotSignalled": true
@@ -144,12 +144,12 @@
     {
       "name": "legacy unstamped locks and ambiguous live writers remain blocked",
       "passed": true,
-      "ms": 6.299173999999766
+      "ms": 5.350453999999445
     },
     {
       "name": "failed resident acquisition rolls back; disconnected provisioning client does not cancel writer",
       "passed": true,
-      "ms": 982.1743559999995,
+      "ms": 740.2205830000003,
       "evidence": {
         "clientKilled": true,
         "viewCommitted": true
@@ -158,7 +158,7 @@
     {
       "name": "cold acquisition continues through supervisor death and restart",
       "passed": true,
-      "ms": 1047.6159169999992,
+      "ms": 908.9050420000003,
       "evidence": {
         "supervisorKilled": true,
         "acquisitionCommitted": true
@@ -167,7 +167,305 @@
     {
       "name": "supervisor stop leaves submitted job running and status available after restart",
       "passed": true,
-      "ms": 917.1211800000019
+      "ms": 761.1559379999999
+    },
+    {
+      "name": "two concurrent jobs on one view get private PLOT_JOB_STATE and step conduits",
+      "passed": true,
+      "ms": 498.6674179999991,
+      "evidence": {
+        "jobs": 2,
+        "sharedPlotState": true,
+        "privateScratch": 2
+      }
+    },
+    {
+      "name": "reconciler revision fence never overwrites a newer terminal record",
+      "passed": true,
+      "ms": 957.7145069999988,
+      "evidence": {
+        "liveJobRecord": "worker-owned",
+        "staleRejected": true,
+        "terminalRejected": true,
+        "uncertainRejected": true
+      }
+    },
+    {
+      "name": "20 killed-worker recoveries release capacity and job 21 succeeds",
+      "passed": true,
+      "ms": 1421.6100650000008,
+      "evidence": {
+        "recoveries": 20,
+        "capacityRejections": 24,
+        "limit": 4,
+        "job21": "succeeded"
+      }
+    },
+    {
+      "name": "missed completion notification is repaired by the background reconciler",
+      "passed": true,
+      "ms": 1526.961427000002,
+      "evidence": {
+        "repairMs": 71.53478000000177,
+        "lostNotifications": 1,
+        "deliveredNotifications": 1
+      }
+    },
+    {
+      "name": "simultaneous last-slot submissions admit exactly one before durable acceptance",
+      "passed": true,
+      "ms": 260.66897400000016,
+      "evidence": {
+        "concurrent": 8,
+        "admitted": 1,
+        "rejected": 7,
+        "durableJobDirs": 3
+      }
+    },
+    {
+      "name": "submit latency is independent of 1,000 historical and unreachable jobs; no submit waits on a probe",
+      "passed": true,
+      "ms": 1880.8782040000006,
+      "evidence": {
+        "historicalJobs": 1000,
+        "unreachable": 4,
+        "probeConnections": 4,
+        "emptyMs": {
+          "p50": 4.865187000003061,
+          "max": 42.62146899999789
+        },
+        "historyMs": {
+          "p50": 4.906531000000541,
+          "max": 41.75162300000011
+        }
+      }
+    },
+    {
+      "name": "prune dry-run changes nothing; default apply keeps the cache; policy apply deletes only reclaimable objects",
+      "passed": true,
+      "ms": 188.65082500000062,
+      "evidence": {
+        "dryRunUnchanged": true,
+        "defaultDeleted": 0,
+        "policyDeleted": 1,
+        "incompleteRetained": true
+      }
+    },
+    {
+      "name": "prune keeps the transitive dependency closure of a pinned object",
+      "passed": true,
+      "ms": 125.61719000000085,
+      "evidence": {
+        "pinned": 1,
+        "transitiveRetained": 1,
+        "deletedAfterUnpin": 2
+      }
+    },
+    {
+      "name": "includeJobs expiry releases job snapshot roots and expires request IDs without re-execution",
+      "passed": true,
+      "ms": 273.460235999999,
+      "evidence": {
+        "jobExpired": "352465f7-47cb-450f-9853-d91e0a93b48d",
+        "objectFreed": true,
+        "ridExpired": true
+      }
+    },
+    {
+      "name": "concurrent provision and prune serialize on .grave/.lock without losing a publication",
+      "passed": true,
+      "ms": 822.0652470000023,
+      "evidence": {
+        "waitedMs": 745.6369799999993,
+        "publicationRetained": true
+      }
+    },
+    {
+      "name": "tombstone crash recovery withdraws unmoved intents and finishes moved deletions",
+      "passed": true,
+      "ms": 931.0637879999995,
+      "evidence": {
+        "crashedAfterRename": true,
+        "lockHeldAtCrash": true,
+        "recovered": [
+          "finish-deletion",
+          "finish-deletion"
+        ]
+      }
+    },
+    {
+      "name": "historical v1 reusable after default prune (seed-coupled: P07-01)",
+      "passed": true,
+      "ms": 75.7385949999989,
+      "evidence": {
+        "reused": "/tmp/plot-resident-7MyT7b/history-reuse/.grave/objects/data-WRRx5R"
+      }
+    },
+    {
+      "name": "foreground pin respected by prune (seed-coupled: P07-01)",
+      "passed": true,
+      "ms": 1622.210865000001,
+      "evidence": {
+        "pinnedDuringRun": true,
+        "releasedAfterRun": true
+      }
+    },
+    {
+      "name": "standby claim replies only after an independent worker durably owns the job",
+      "passed": true,
+      "ms": 529.6306330000007,
+      "evidence": {
+        "clientMs": 8.51928,
+        "t": {
+          "reserved": 0.075482,
+          "published": 2.473646,
+          "durable": 4.911043,
+          "claimed": 7.181001,
+          "replied": 7.188902
+        }
+      }
+    },
+    {
+      "name": "supervisor SIGKILL immediately after reply leaves the claimed job running",
+      "passed": true,
+      "ms": 825.4443019999999,
+      "evidence": {
+        "id": "6b6618ec-1cdc-4215-a61d-1474bf23fab3"
+      }
+    },
+    {
+      "name": "claim-stage crash: before claim retries another worker; after claim adopts, never a second worker",
+      "passed": true,
+      "ms": 563.2685950000014,
+      "evidence": {
+        "before-claimed": {
+          "state": "succeeded",
+          "retried": 1,
+          "adopted": 0
+        },
+        "after-claimed": {
+          "state": "interrupted",
+          "retried": 0,
+          "adopted": 1
+        },
+        "after-status": {
+          "state": "interrupted",
+          "retried": 0,
+          "adopted": 1
+        }
+      }
+    },
+    {
+      "name": "lost claim ACK adopts the durable claim instead of creating a second worker",
+      "passed": true,
+      "ms": 201.10494599999947,
+      "evidence": {
+        "adopted": true
+      }
+    },
+    {
+      "name": "duplicate simultaneous rid creates exactly one job and one worker",
+      "passed": true,
+      "ms": 209.91921999999977,
+      "evidence": {
+        "clients": 6,
+        "jobs": 1
+      }
+    },
+    {
+      "name": "bursts of 2/8/16/32 are accounted, bounded and never exceed maxStarting",
+      "passed": true,
+      "ms": 1431.277102,
+      "evidence": {
+        "2": {
+          "accepted": 2,
+          "rejected": 0,
+          "paths": {
+            "standby": 2
+          }
+        },
+        "8": {
+          "accepted": 8,
+          "rejected": 0,
+          "paths": {
+            "standby": 2,
+            "cold": 1,
+            "waited": 5
+          }
+        },
+        "16": {
+          "accepted": 16,
+          "rejected": 0,
+          "paths": {
+            "standby": 2,
+            "cold": 1,
+            "waited": 13
+          }
+        },
+        "32": {
+          "accepted": 16,
+          "rejected": 16,
+          "paths": {
+            "standby": 2,
+            "cold": 1,
+            "waited": 13
+          }
+        },
+        "pool": {
+          "ready": 2,
+          "maxStarting": 2,
+          "maxWaiting": 16,
+          "idle": 2,
+          "starting": 0,
+          "waiting": 0,
+          "spawned": 44,
+          "standby": 8,
+          "cold": 3,
+          "waited": 31,
+          "adopted": 0,
+          "retried": 0,
+          "undetermined": 0,
+          "abandoned": 0,
+          "empty": 34,
+          "peakStarting": 2
+        }
+      }
+    },
+    {
+      "name": "idle standbys expire after supervisor SIGKILL and leave with a clean stop",
+      "passed": true,
+      "ms": 5291.6941719999995,
+      "evidence": {
+        "expiredMs": 5019,
+        "cleanStop": true
+      }
+    },
+    {
+      "name": "restart reconciliation dispatches a published job that was never claimed; idle pool stays bounded",
+      "passed": true,
+      "ms": 1895.6694459999999,
+      "evidence": {
+        "state": "succeeded",
+        "spawned": 3
+      }
+    },
+    {
+      "name": "preliminary warm durable submit-and-claim latency (asserted < 6 ms with PLOT_ASSERT_LATENCY=1)",
+      "passed": true,
+      "ms": 8311.231648,
+      "evidence": {
+        "n": 120,
+        "p50": 4.339388,
+        "p95": 5.499055,
+        "p99": 6.427645,
+        "max": 7.506263,
+        "paths": {
+          "standby": 120
+        },
+        "asserted": false,
+        "gate": "tests/resident-benchmark.mjs durable_submit_and_claim"
+      }
     }
-  ]
+  ],
+  "pending": []
 }

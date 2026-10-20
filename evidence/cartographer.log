@@ -1,0 +1,13 @@
+PASS supported range grammar follows npm semver semantics; other forms are unsupported
+PASS diamond A->B,C->D collapses to one D in topological order and D is marked present from .grave
+PASS conflicting ranges keep distinct versions with nested placement and no shadowing
+PASS peer dependencies resolve as siblings and bundled dependencies come from the package itself
+PASS conditional exports/imports resolve in manifest key order for import vs require
+PASS os/cpu/libc/engines constraints prune host-incompatible branches with exact reasons
+PASS absent or incompatible optional dependencies are pruned without failing the plan
+PASS .tgz corpus archives are read through gzip+USTAR (pax, scoped, bundled) without execution or extraction
+PASS dependency cycles and missing mandatory dependencies fail closed with structured diagnostics
+PASS unsupported range forms are reported and never guessed
+PASS CLI and API output is byte-identical across repeated runs and corpus creation order
+PASS sample plan fixture for the assembler is generated from a real corpus
+12/12 cartographer checks

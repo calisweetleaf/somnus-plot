@@ -1,5 +1,9 @@
 # Flashback Stage 1: acquisition/view separation
 
+> Still the acquisition, view and Python-tenant contract in v0.7.0. v0.7 adds foreground pins,
+> historical object reuse and tombstone-aware validation (`docs/V07-CONTRACTS.md` §§3–6); resident
+> behavior lives in `PERSISTENT-NATIVE.md`.
+
 Written 2026-10-14. Baseline: the attached capability-audit ZIP, including its
 9,063-byte bundled `main.js`. The original full TypeScript/webview repository
 was not supplied. Supplied files are preserved under `baseline/`.
