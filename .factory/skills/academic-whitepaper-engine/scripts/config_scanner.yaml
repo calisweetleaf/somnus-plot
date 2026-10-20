@@ -1,0 +1,118 @@
+# config.yaml
+# PDF OCR Scanner Configuration
+
+# Input settings
+input:
+  # Directories to scan for PDFs
+  directories:
+    - ./input_pdfs
+    - ./scanned_documents
+  
+  # File patterns to include
+  patterns:
+    - "*.pdf"
+    - "*.PDF"
+  
+  # Recursive scanning
+  recursive: true
+
+# Output settings
+output:
+  # Base output directory
+  directory: ./processed_output
+  
+  # Subdirectories
+  subdirectories:
+    ocr_pdfs: ocr_results
+    metadata: metadata_files
+    logs: processing_logs
+  
+  # Archive settings
+  archive:
+    create_zip: true
+    include_original: false
+    compression_level: 6
+
+# OCR settings
+ocr:
+  # Tesseract settings
+  tesseract_path: /usr/bin/tesseract
+  
+  # Language for OCR
+  languages:
+    - eng
+    - spa
+    - fra
+  
+  # OCR Engine mode (0-3)
+  ocr_engine_mode: 3
+  
+  # Page segmentation mode (0-13)
+  page_segmentation_mode: 3
+  
+  # DPI for image conversion
+  dpi: 300
+  
+  # Image preprocessing
+  preprocessing:
+    enable: true
+    operations:
+      - deskew
+      - denoise
+      - threshold
+
+# Processing settings
+processing:
+  # Maximum concurrent files
+  max_concurrent: 3
+  
+  # Retry failed files
+  retry_failed: true
+  max_retries: 3
+  
+  # Timeout per file (seconds)
+  timeout_per_file: 300
+
+# Metadata settings
+metadata:
+  # Hashes to compute
+  hashes:
+    - sha256
+    - md5
+    - sha1
+  
+  # Additional metadata to extract
+  extract:
+    - author
+    - title
+    - creation_date
+    - modification_date
+    - page_count
+    - file_size
+  
+  # Custom tags
+  tags:
+    department: "Scanning"
+    processed_by: "PDF OCR Scanner"
+    location: "Office"
+
+# Logging settings
+logging:
+  level: INFO
+  file: scanner.log
+  max_size_mb: 10
+  backup_count: 5
+
+# Notification settings (optional)
+notifications:
+  email:
+    enabled: false
+    smtp_server: smtp.gmail.com
+    smtp_port: 587
+    sender: scanner@example.com
+    recipients:
+      - admin@example.com
+  
+  webhook:
+    enabled: false
+    url: https://hooks.slack.com/services/...

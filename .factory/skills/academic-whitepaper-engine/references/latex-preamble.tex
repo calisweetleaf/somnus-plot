@@ -1,0 +1,153 @@
+% =====================================================
+% COMPREHENSIVE LATEX PREAMBLE FOR ACADEMIC WHITEPAPERS
+% =====================================================
+% Use this as a template for the complete mathematical package zoo.
+% Include all packages; LaTeX will only load what's used.
+
+% ---------------- Document Foundation ----------------
+\usepackage[utf8]{inputenc}         % UTF-8 encoding (preserve symbols)
+\usepackage[T1]{fontenc}            % Font encoding
+\usepackage[margin=1in]{geometry}   % Page margins
+\usepackage{microtype}              % Typography refinements
+
+% ---------------- Mathematics Core ----------------
+\usepackage{amsmath}                % AMS mathematical facilities
+\usepackage{amssymb}                % AMS symbols
+\usepackage{amsthm}                 % Theorem environments
+\usepackage{mathtools}              % Enhanced math tools
+\usepackage{physics}                % Physics notation (braket, derivatives)
+\usepackage{tensor}                 % Tensor index notation
+\usepackage{braket}                 % Dirac bra-ket notation
+\usepackage{stmaryrd}               % St Mary Road symbols
+\usepackage{bm}                     % Bold math symbols
+\usepackage{dsfont}                 % Double-stroke fonts (ℝ, ℕ, etc.)
+\usepackage{mathrsfs}               % Ralph Smith's Formal Script
+\usepackage{bbm}                    % Blackboard math symbols
+\usepackage{cancel}                 % Cancel terms in equations
+
+% ---------------- Graphics & Diagrams ----------------
+\usepackage{graphicx}               % Include graphics
+\usepackage{tikz}                   % Powerful diagram creation
+\usetikzlibrary{
+    arrows,
+    shapes,
+    positioning,
+    calc,
+    decorations.pathreplacing,
+    decorations.markings
+}
+\usepackage{pgfplots}               % Data plots
+\pgfplotsset{compat=1.18}
+\usepackage{svg}                    % SVG image inclusion
+\usepackage{float}                  % Better float placement
+
+% ---------------- Tables & Lists ----------------
+\usepackage{booktabs}               % Professional tables
+\usepackage{longtable}              % Multi-page tables
+\usepackage{array}                  % Extended column formats
+\usepackage{multirow}               % Multi-row cells
+\usepackage{enumitem}               % Customizable lists
+
+% ---------------- Code Listings ----------------
+\usepackage{listings}               % Code syntax highlighting
+\usepackage{xcolor}                 % Color support
+
+\definecolor{codegray}{gray}{0.95}
+\definecolor{codeblue}{RGB}{20,20,120}
+\definecolor{codered}{RGB}{140,0,0}
+\definecolor{codegreen}{RGB}{0,100,0}
+
+\lstset{
+  backgroundcolor=\color{codegray},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{codeblue}\bfseries,
+  commentstyle=\color{codegreen},
+  stringstyle=\color{codered},
+  frame=single,
+  breaklines=true,
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  tabsize=2
+}
+
+% ---------------- Algorithms ----------------
+\usepackage{algorithm}              % Algorithm environment
+\usepackage{algpseudocode}          % Pseudocode formatting
+
+% ---------------- Citations & References ----------------
+\usepackage{cite}                   % Improved citations
+\usepackage{url}                    % URL formatting
+\usepackage{hyperref}               % Hyperlinks and cross-references
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+    pdftitle={},
+    pdfauthor={}
+}
+
+% ---------------- Theorem Environments ----------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{remark}{Remark}[section]
+
+% ---------------- Custom Commands ----------------
+% Add common mathematical shortcuts here
+\newcommand{\R}{\mathbb{R}}         % Real numbers
+\newcommand{\N}{\mathbb{N}}         % Natural numbers
+\newcommand{\Z}{\mathbb{Z}}         % Integers
+\newcommand{\Q}{\mathbb{Q}}         % Rationals
+\newcommand{\C}{\mathbb{C}}         % Complex numbers
+
+% Tensor-Guided Programming (TGP) specific
+\newcommand{\TGP}{\textsc{TGP}}
+\newcommand{\tensor}[1]{\mathcal{T}_{#1}}
+\newcommand{\frechet}{\mathcal{F}}
+
+% Frequency-based substrate notation
+\newcommand{\freq}[1]{\phi_{#1}}
+\newcommand{\harmonic}[1]{H_{#1}}
+
+% Category theory
+\newcommand{\cat}[1]{\mathcal{#1}}
+\newcommand{\functor}[1]{\mathbf{#1}}
+\newcommand{\natrans}{\Rightarrow}
+
+% ---------------- Headers & Footers ----------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\lhead{\nouppercase{\leftmark}}
+
+% ---------------- Caption Styling ----------------
+\usepackage{caption}
+\captionsetup{
+  labelfont=bf,
+  labelsep=period,
+  justification=raggedright,
+  singlelinecheck=false
+}
+
+% ---------------- Section Styling ----------------
+\usepackage{titlesec}
+\titleformat{\section}
+  {\large\bfseries}
+  {\thesection}
+  {1em}
+  {}
+\titleformat{\subsection}
+  {\normalsize\bfseries}
+  {\thesubsection}
+  {1em}
+  {}
+
+% =====================================================
+% END OF PREAMBLE
+% =====================================================

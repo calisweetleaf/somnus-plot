@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Build Manifest",
+  "description": "Cryptographic provenance and compilation log.",
+  "type": "object",
+  "properties": {
+    "build_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the build."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the build."
+    },
+    "engine_version": {
+      "type": "string",
+      "description": "Version of the engine used for the build."
+    },
+    "tex_engine": {
+      "type": "string",
+      "enum": [
+        "lualatex",
+        "xelatex"
+      ],
+      "description": "TeX engine used."
+    },
+    "bibliography_backend": {
+      "type": "string",
+      "enum": [
+        "biber",
+        "bibtex"
+      ],
+      "description": "Bibliography backend used."
+    },
+    "build_driver": {
+      "type": "string",
+      "description": "Build driver tool or script used."
+    },
+    "source_files": {
+      "type": "array",
+      "description": "List of source files involved in the build.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Path to the source file."
+          },
+          "sha256": {
+            "type": "string",
+            "description": "SHA256 checksum of the source file."
+          },
+          "size_bytes": {
+            "type": "integer",
+            "description": "Size of the source file in bytes."
+          }
+        },
+        "required": [
+          "path",
+          "sha256",
+          "size_bytes"
+        ]
+      }
+    },
+    "output_files": {
+      "type": "array",
+      "description": "List of output files produced by the build.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Path to the output file."
+          },
+          "sha256": {
+            "type": "string",
+            "description": "SHA256 checksum of the output file."
+          },
+          "size_bytes": {
+            "type": "integer",
+            "description": "Size of the output file in bytes."
+          }
+        },
+        "required": [
+          "path",
+          "sha256",
+          "size_bytes"
+        ]
+      }
+    },
+    "build_log": {
+      "type": "string",
+      "description": "Path to the build log file."
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of warning messages."
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of error messages."
+    },
+    "validation_results": {
+      "type": "object",
+      "description": "Results of post-build validation checks.",
+      "properties": {
+        "unresolved_references": {
+          "type": "integer",
+          "description": "Number of unresolved references."
+        },
+        "missing_citations": {
+          "type": "integer",
+          "description": "Number of missing citations."
+        },
+        "missing_figures": {
+          "type": "integer",
+          "description": "Number of missing figures."
+        },
+        "duplicate_labels": {
+          "type": "integer",
+          "description": "Number of duplicate labels."
+        },
+        "overfull_boxes": {
+          "type": "integer",
+          "description": "Number of overfull boxes."
+        },
+        "color_violations": {
+          "type": "integer",
+          "description": "Number of color policy violations."
+        },
+        "unrendered_glyphs": {
+          "type": "integer",
+          "description": "Number of unrendered glyphs."
+        }
+      },
+      "required": [
+        "unresolved_references",
+        "missing_citations",
+        "missing_figures",
+        "duplicate_labels",
+        "overfull_boxes",
+        "color_violations",
+        "unrendered_glyphs"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "warnings",
+        "failed"
+      ],
+      "description": "Overall status of the build."
+    }
+  },
+  "required": [
+    "build_id",
+    "timestamp",
+    "engine_version",
+    "tex_engine",
+    "bibliography_backend",
+    "build_driver",
+    "source_files",
+    "output_files",
+    "build_log",
+    "warnings",
+    "errors",
+    "validation_results",
+    "status"
+  ]
+}

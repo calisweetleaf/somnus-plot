@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Tasklist",
+  "description": "State machine phase completion tracker.",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the session."
+    },
+    "states": {
+      "type": "array",
+      "description": "Array of 12 state objects tracking workflow completion.",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "properties": {
+          "state_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 11,
+            "description": "The state identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the state."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the state's purpose."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "in_progress",
+              "completed",
+              "blocked",
+              "skipped"
+            ],
+            "description": "Current status of the state."
+          },
+          "started_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Timestamp when the state processing started."
+          },
+          "completed_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Timestamp when the state processing completed."
+          },
+          "agent_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The ID of the agent assigned to this state."
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Additional notes for this state."
+          },
+          "artifacts_produced": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "File path of an artifact produced."
+            },
+            "description": "Paths to artifacts produced in this state."
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 11
+            },
+            "description": "State IDs that must be completed before this state."
+          }
+        },
+        "required": [
+          "state_id",
+          "name",
+          "description",
+          "status",
+          "started_at",
+          "completed_at",
+          "agent_id",
+          "notes",
+          "artifacts_produced",
+          "dependencies"
+        ]
+      }
+    }
+  },
+  "required": [
+    "session_id",
+    "states"
+  ]
+}

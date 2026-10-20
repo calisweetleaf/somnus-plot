@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Authority Map",
+  "description": "Source hierarchy mapping.",
+  "type": "object",
+  "properties": {
+    "sources": {
+      "type": "array",
+      "description": "List of source mapping objects.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "description": "Unique identifier for the source."
+          },
+          "path": {
+            "type": "string",
+            "description": "File path to the source."
+          },
+          "authority_class": {
+            "type": "string",
+            "enum": [
+              "source_code",
+              "runtime_trace",
+              "formal_spec",
+              "design_note",
+              "prior_paper",
+              "external_literature",
+              "author_clarification"
+            ],
+            "description": "Classification of the source's authority type."
+          },
+          "authority_rank": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7,
+            "description": "Authority rank from 1 (highest) to 7 (lowest)."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the source."
+          },
+          "conflicts_with": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of source_ids that this source conflicts with."
+          },
+          "resolution_notes": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Notes resolving conflicts."
+          }
+        },
+        "required": [
+          "source_id",
+          "path",
+          "authority_class",
+          "authority_rank",
+          "description",
+          "conflicts_with",
+          "resolution_notes"
+        ]
+      }
+    }
+  },
+  "required": [
+    "sources"
+  ]
+}

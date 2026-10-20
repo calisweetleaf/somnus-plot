@@ -1,0 +1,61 @@
+% ======================================================================
+% Somnus Sovereign Systems — Canonical Cover Page
+%
+% This standalone cover page pairs with the Somnus whitepaper template.
+% It is compiled separately to produce a decorative title page for
+% printed reports or PDFs.  The layout is intentionally simple and
+% typographically reminiscent of classic research reports: a centred
+% title, subtitle, author list and publication details.  Modify the
+% macros below to customise the cover for your own paper.
+
+\documentclass[11pt,letterpaper]{article}
+
+% Encoding and typography
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1.5in]{geometry}
+\usepackage{newtxtext}
+\usepackage{setspace}
+\setstretch{1.1}
+
+% Metadata macros
+\newcommand{\DocTitle}{Your~Somnus~Whitepaper~Title}
+\newcommand{\DocSubtitle}{Optional~Subtitle}
+\newcommand{\AuthorList}{Christian Trey Rowell}
+\newcommand{\Affiliation}{Self Taught non-affiliated}
+\newcommand{\DateStamp}{\today}
+\newcommand{\Version}{v1.0}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+% Vertical spacing to push the title block down the page
+\vspace*{2.5in}
+
+% Title
+{\centering
+    {\Huge\bfseries\uppercase{\DocTitle}}\par
+    \vspace{0.5em}
+    {\Large\DocSubtitle}\par
+    \vspace{1.5em}
+    {\large\AuthorList\par}
+    {\normalsize \Affiliation\par}
+    \vspace{1em}
+    {\footnotesize \DateStamp\quad \textbullet\quad \Version\par}
+}
+
+\vfill
+
+% Optional motto or quotation can be placed between horizontal rules
+\hrule
+\vspace{0.5em}
+{\itshape
+    % Replace the line below with a motto, slogan or a short verse.  If
+    % unused, leave it empty and the rules will simply frame white space.
+    ``There is no abstract – the journey begins with the prolegomenon.''
+}\par
+\vspace{0.5em}
+\hrule
+
+\end{document}

@@ -1,0 +1,79 @@
+[build-system]
+requires = ["setuptools>=68.0", "setuptools-scm>=8.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "whitepaper-engine"
+version = "4.0.0"
+description = "Academic whitepaper workflow engine with state-machine-driven publication pipeline"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Daeron", email = "daeron@somnus.dev"},
+]
+keywords = ["whitepaper", "academic", "latex", "publication", "state-machine"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Text Processing :: Markup :: LaTeX",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+dependencies = [
+    "pyyaml>=6.0,<7.0",
+]
+
+[project.optional-dependencies]
+ocr = [
+    "pytesseract>=0.3.10",
+    "pdf2image>=1.16",
+    "Pillow>=10.0",
+    "opencv-python>=4.8",
+]
+pdf = [
+    "PyPDF2>=3.0",
+    "pymupdf>=1.23",
+]
+cleaning = [
+    "pikepdf>=8.0",
+    "mutagen>=1.47",
+    "Pillow>=10.0",
+]
+analysis = [
+    "pandas>=2.0",
+    "tabulate>=0.9",
+]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.1.0",
+]
+all = [
+    "whitepaper-engine[ocr,pdf,cleaning,analysis,dev]",
+]
+
+[project.scripts]
+whitepaper-engine = "whitepaper_engine.state:cli_main"
+wp-state = "whitepaper_engine.state:cli_main"
+wp-claims = "whitepaper_engine.claims:cli_main"
+wp-visuals = "whitepaper_engine.visuals:cli_main"
+wp-style = "whitepaper_engine.style_review:cli_main"
+wp-build = "whitepaper_engine.build:cli_main"
+
+[tool.setuptools.packages.find]
+include = ["whitepaper_engine*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100

@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Visual Ledger",
+  "description": "Figure specifications and color policy.",
+  "type": "object",
+  "properties": {
+    "visuals": {
+      "type": "array",
+      "description": "List of figure specifications.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "visual_id": {
+            "type": "string",
+            "description": "Unique identifier for the visual."
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "topology",
+              "process",
+              "comparison",
+              "measurement",
+              "state_transition",
+              "mathematical_intuition",
+              "implementation_map",
+              "chronology",
+              "failure_analysis"
+            ],
+            "description": "The purpose of the visual."
+          },
+          "source_data": {
+            "type": "string",
+            "description": "Path or description of the source data."
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "tikz",
+              "mermaid",
+              "matplotlib",
+              "plotly",
+              "graphviz",
+              "photograph",
+              "screenshot"
+            ],
+            "description": "The format of the visual."
+          },
+          "color_permission": {
+            "type": "string",
+            "enum": [
+              "monochrome_only",
+              "color_semantic",
+              "color_decorative_prohibited"
+            ],
+            "description": "Color policy for the visual."
+          },
+          "grayscale_fallback": {
+            "type": "boolean",
+            "const": true,
+            "description": "Whether grayscale fallback must be provided."
+          },
+          "target_section": {
+            "type": "string",
+            "description": "The section of the paper where the visual will be placed."
+          },
+          "caption_thesis": {
+            "type": "string",
+            "description": "What the caption should communicate."
+          },
+          "generation_command": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Command to generate the visual."
+          },
+          "validation_status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "generated",
+              "validated",
+              "failed"
+            ],
+            "description": "Current status of visual validation."
+          },
+          "alt_description": {
+            "type": "string",
+            "description": "Accessibility alt text for the visual."
+          }
+        },
+        "required": [
+          "visual_id",
+          "purpose",
+          "source_data",
+          "format",
+          "color_permission",
+          "grayscale_fallback",
+          "target_section",
+          "caption_thesis",
+          "generation_command",
+          "validation_status",
+          "alt_description"
+        ]
+      }
+    }
+  },
+  "required": [
+    "visuals"
+  ]
+}

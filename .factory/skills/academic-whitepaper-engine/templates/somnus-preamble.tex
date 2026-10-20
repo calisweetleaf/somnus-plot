@@ -1,0 +1,123 @@
+% =====================================================================
+% SOMNUS DESIGN SYSTEM PREAMBLE
+% 
+% LuaLaTeX-compatible preamble containing the core typographic, layout, 
+% and environment definitions for Somnus whitepapers.
+% =====================================================================
+
+% ----- TYPOGRAPHY & ENCODING (LuaLaTeX ONLY) -----
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{Latin Modern Roman}
+\setmathfont{Latin Modern Math}
+
+\usepackage{microtype}
+\usepackage{setspace}
+\setstretch{1.1}
+
+% ----- LAYOUT & GEOMETRY -----
+\usepackage[margin=1.25in]{geometry}
+
+% ----- GRAPHICS & TIKZ -----
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,shapes.geometric}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% ----- TABLES -----
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{float}
+
+% ----- MATH & THEOREMS -----
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{invariant}{Invariant}[section]
+
+\theoremstyle{remark}
+\newtheorem*{non-claim}{Non-Claim}
+
+% Custom Math Shortcuts
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+% ----- ALGORITHMS -----
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% ----- CODE LISTINGS (SOMNUS STYLE) -----
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{SomnusKeyword}{RGB}{0,0,128}
+\definecolor{SomnusString}{RGB}{128,0,64}
+\definecolor{SomnusComment}{RGB}{0,96,0}
+\definecolor{SomnusType}{RGB}{96,0,96}
+
+\lstdefinestyle{somnus}{
+    backgroundcolor=\color{white},
+    commentstyle=\color{SomnusComment},
+    keywordstyle=\color{SomnusKeyword}\bfseries,
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{SomnusString},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=none,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=single,
+    rulecolor=\color{black},
+    columns=flexible
+}
+\lstset{style=somnus}
+
+% ----- HEADERS & FOOTERS -----
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ----- SECTION STYLING -----
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\MakeUppercase}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection}{1em}{}
+
+% ----- CAPTIONS -----
+\usepackage{caption}
+\captionsetup{labelfont=bf, labelsep=period, justification=raggedright, singlelinecheck=false}
+
+% ----- HYPERLINKS -----
+\usepackage[colorlinks=true, allcolors=black]{hyperref}
+
+% ----- PROLEGOMENON -----
+\newenvironment{prolegomenon}{
+    \section*{Prolegomenon}
+    \addcontentsline{toc}{section}{Prolegomenon}
+}{
+    \vspace{1em}
+}
