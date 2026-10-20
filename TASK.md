@@ -111,7 +111,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-05 — Standby claim and sustainable capacity
 
-- Status: ACTIVE 2026-10-20 · Owner: Keeper (operator: implement directly)
+- Status: **LANDED** 2026-10-20 · Owner: Keeper · 41/41 resident · warm submit-and-claim p95 5.04 ms (preliminary, n=120)
 - Mission: `PLAN.md` §§5.2–5.2.1 per contracts §8.
 - Required Reads: post-04 resident source; `tests/resident-benchmark.mjs`; contracts §§7, 8, 12.
 - Invariant: Success only after an independent worker durably owns the job; single-use workers; lost ACK never creates a second worker.
@@ -123,7 +123,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-06 — Resident execution environments
 
-- Status: QUEUED (after P07-05) · Owner: resident lane
+- Status: ACTIVE 2026-10-20 · Owner: Keeper (operator: implement directly)
 - Mission: `PLAN.md` §§5.4–5.4.1 per contracts §9: `activate`, `interact`, `env_inspect`, `deactivate`; Environment Host process; separate Python and Node tenant processes with fd-3 framed control; deadlines; turn records; pins.
 - Required Reads: post-05 resident source; `src/plot.mjs` Python runner; contracts §§4, 5, 9.
 - Invariant: Supervisor replacement preserves live incarnation and heap; tenant loss is interruption; submit never shares tenant heap.
@@ -160,4 +160,5 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 | P07-02 | Dependency cartographer | 2026-10-20 | 12/12; gate wired; NOTEPAD |
 | P07-03 | Offline layer assembler and Seed Bank | 2026-10-20 | 15/15; gate wired; NOTEPAD |
 | P07-09 | Host bootstrap and acquisition | 2026-10-20 | 21/21; gate wired; NOTEPAD |
+| P07-05 | Standby claim and sustainable capacity | 2026-10-20 | gate PASS 41/41 resident; NOTEPAD |
 | P07-04 | Admission, recovery, pins, maintenance | 2026-10-20 | gate PASS 32/32 resident (seed-coupled); NOTEPAD |
