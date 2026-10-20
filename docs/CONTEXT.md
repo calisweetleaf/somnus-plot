@@ -41,6 +41,7 @@ The operator's shorthand "140 ms full, sub-1 ms" matches the fresh-CLI series
 ## Open contradictions
 
 - None material. `filetree.md` previously recorded the old `LAB/` root; refreshed 2026-10-20.
+- Horizon wording: `PLAN.md` §1.1 places the persistent VM at v0.8–v1.0; `AGENTS.md`/`docs/MEMORY.md` say "v10". Likely the same milestone (v1.0) written two ways; operator to confirm. `WHITEPAPER.md` carries it as LEAP #23.
 - `docs/Plot-Fable.md` contains leftover citation markers (`citeturn…`) from its export. Operator-owned; not edited.
 
 ## Environment notes
