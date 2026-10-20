@@ -1,13 +1,14 @@
-# File Tree: somnus-plot v0.6
+# File Tree: somnus-plot v0.6 → v0.7 (in progress)
 
 **Refreshed:** 2026-10-20 (previous generation 2026-10-19 recorded the old root `LAB/Experiments/projects/somnus-plot/`)
-**Root Path:** `/home/daeron/Repositories/somnus-plot/`
+**Root Path:** `/home/factory-user/repos/somnus-plot/`
 
 Topology map only. Route work from `AGENTS.md`, not from this tree.
 
 ```
 ├── AGENTS.md                 router (control plane)
 ├── TASK.md                   packet board (control plane)
+├── PLAN.md                   v0.7 master architecture plan
 ├── README.md                 quick start
 ├── STAGE-1.md                v0.5 acquisition/view contract
 ├── PERSISTENT-NATIVE.md      v0.6 resident contract
@@ -42,7 +43,8 @@ Topology map only. Route work from `AGENTS.md`, not from this tree.
 │   ├── Plot-Fable.md         constitutional narrative (operator canon)
 │   ├── CONTEXT.md            current state
 │   ├── NOTEPAD.md            append-only ledger
-│   └── MEMORY.md             durable law + vocabulary
+│   ├── MEMORY.md             durable law + vocabulary
+│   └── V07-CONTRACTS.md      frozen v0.7 shared interfaces
 └── baseline                  frozen lineage, never edit
     ├── REPORT.md             v0.4 audit (2026-10-12)
     ├── observed-results.json

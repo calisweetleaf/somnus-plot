@@ -1,136 +1,158 @@
 # Somnus Plot — Task and Packet Board
 
-> Current and queued executable packets. Not the authority for behavior; route
-> authority through `AGENTS.md`.
+> Current and queued executable packets for v0.7 "The Seventh Flash". Not the
+> authority for behavior; route authority through `AGENTS.md`. Architecture:
+> `PLAN.md`. Frozen interfaces: `docs/V07-CONTRACTS.md`.
 
 ## Current execution state
 
 | Field | Value |
 | --- | --- |
 | Product / long goal | Persistent virtual machine built by composition from a tiny seed; v10 predicted complete |
-| Current base | `main` @ `896f48d` (v0.6.0) plus uncommitted control plane (`AGENTS.md`, `TASK.md`, `docs/`, `scripts/gate.sh`, `.gitignore`) |
-| Active packet | `P07-01` Dependency cartographer — **DRAFT, awaiting operator dispatch** |
+| Current base | `main` @ `b72a98d` (v0.6.0) plus landed v0.7 packets below |
+| Active wave | Wave 1: P07-01, P07-02, P07-03, P07-09 (parallel) — **DISPATCHED** by operator 2026-10-20 |
+| Swarm | Keeper/coordinator (Opus 5.5) + project droids (`somnus-prod-finalizer` foragers, `fletcher`, `somnus-defense-grade-doc-engine`) + `scrutiny-feature-reviewer` sentinels; colony protocol `SWARM.md` |
 | Current gate | `scripts/gate.sh` |
-| Expected result | `gate: PASS` |
+| Expected result | `gate: PASS` at every landing; v0.7 acceptance per `PLAN.md` §8 |
 | Handoff surface | `docs/NOTEPAD.md` |
-| Current blocker | Operator has not yet confirmed v0.7 scope or P07-01 ordering |
+| Commit policy | Coordinator commits each landed packet locally; never pushes |
+| Known open gate | Second OS family: no host available → NOT RUN; cross-host acceptance stays open |
 
-If `AGENTS.md`, this board, `docs/CONTEXT.md`, the newest NOTEPAD entry, the
-repository state, or gate evidence materially disagree, run a bounded
-state-reconciliation packet before unrelated implementation.
+## Packet graph
 
-## Active packet
+```
+P07-00 -> {P07-01, P07-02, P07-03, P07-09}
+P07-01 -> P07-04 -> P07-05 -> P07-06
+P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
+{P07-06, P07-09, P07-03, P07-02, P07-01} -> P07-07 -> P07-08
+```
 
-### Identity
+## Common rules (every packet)
 
-- Packet ID: P07-01
-- Title: Dependency cartographer — minimum capability closure over a local Node package corpus
-- Owner / lane: unassigned (operator dispatch)
-- Status: DRAFT
-- Depends on: v0.6.0 landed state; operator confirmation of v0.7 order
+- Read `AGENTS.md`, this board, newest `docs/NOTEPAD.md` entry, `PLAN.md` sections named in the packet, `docs/V07-CONTRACTS.md`, and the coupled source before editing.
+- Claim owned files through `.colony` (`COLONY_WORKER=<caste>-<n> bash .colony/bin/colony claim <path>`); touch only owned surfaces. Shared files go to the coordinator as explicit proposed edits.
+- Preserve `baseline/`; never hand-edit `main.js` or `evidence/`; Node stdlib only; no npm install.
+- Every packet runs `scripts/gate.sh` plus its own suite directly; counts are floors, not substitutes.
+- Report NOT RUN / NOT VERIFIABLE honestly.
 
-### Mission
+---
 
-Teach Plot to read a local Node package corpus (directories containing
-`package.json`, and npm-style tarballs if a reader for them fits the acquired
-capability) and answer: given a requested capability, what is the smallest
-available closure of components that satisfies it on this host? The cartographer
-reads `dependencies`, `optionalDependencies`, `peerDependencies`,
-`bundleDependencies`/`bundledDependencies`, `bin`, `engines`, `os`/`cpu`, `main`
-and conditional `exports`; builds the graph; collapses shared nodes; reports
-which nodes are already present in `.grave/`; prunes optional or
-host-inapplicable branches; and emits a deterministic closure plan. It reads and
-plans only. It installs nothing new. It ships as an **acquired capability** under
-`capabilities/`, not inside the core.
+## P07-00 — Opening contract freeze
 
-### Required Reads
+- Status: **LANDED** 2026-10-20 (coordinator)
+- Mission: Verify base and baseline claims; freeze shared interfaces; dispatch Wave 1.
+- Required Reads: `AGENTS.md`, `PLAN.md`, `src/plot.mjs`, `capabilities/resident.mjs`, `manifest.json`, tests, `evidence/RESULTS.md`.
+- Invariant: No law weakened; no invented PASS; only blocking interfaces frozen.
+- Surfaces: `PLAN.md` (CREATE), `docs/V07-CONTRACTS.md` (CREATE), `TASK.md`, `AGENTS.md`, `docs/CONTEXT.md`, `docs/NOTEPAD.md`, `filetree.md`.
+- Hard Bans: No source changes; no baseline edits.
+- Validation: `scripts/gate.sh` → PASS (18/18, 19/19, smoke). Packet validator `~/.factory/skills/somnus-accelerate/scripts/validate-packet.mjs` NOT RUN (absent on this host).
+- Exit: Recorded in `docs/V07-CONTRACTS.md` §0 and NOTEPAD.
+- Handoff: Dispatch P07-01/02/03/09.
 
-- `docs/Plot-Fable.md` section "The Seventh Flash", first acceleration — the operator-endorsed intent and the `A→B,C; B,C→D; D in grave` example that must hold
-- `STAGE-1.md` "Representation and ownership" and "Acquisition transaction" — resource identity rules the closure plan must respect (no content hashes as identity)
-- `src/plot.mjs` — how `needs`, host recipe selection and the ledger `data.json.assets` represent what is already in `.grave/`
-- `capabilities/resident.mjs` top section and `manifest.json` `resident` recipe — the pattern for an optional acquired capability
-- `tests/helpers.mjs` and `tests/resident.mjs` harness style — real fixtures, no mocks
+## P07-01 — Universal seed evolution
 
-### Invariant
+- Status: DISPATCHED (Wave 1) · Owner: forager-1
+- Mission: Implement `PLAN.md` §§4.1–4.5: historical exact-key object reuse (zero child spawn), POSIX parent-dir fsync in `atom`, `exec` stdout fallback, `--without-pip` shallow venv when no pip is needed, foreground pin per contracts §4. Reclaim bytes by sound responsibility changes and compactor improvements (2 bytes headroom today), not by hiding payload.
+- Required Reads: `src/plot.mjs`, `build.mjs` in full; `STAGE-1.md`; `tests/integration.mjs`, `tests/helpers.mjs`; contracts §§1, 3, 4, 13.
+- Invariant: `main.js` ≤ 9,063 bytes, deterministic byte-identical rebuild; identity key unchanged; unstamped/tombstoned stages never adopted; all 18 existing checks keep passing.
+- Surfaces: `src/plot.mjs`, `build.mjs`, `main.js` (generated), `tests/integration.mjs`.
+- Hard Bans: No ceiling increase; no hand-edited `main.js`; no hidden mandatory payload; no content-hash identity; no catalog in core.
+- Validation: `node build.mjs` twice (identical bytes), `node tests/integration.mjs` (18 + new: v1→v2→v1 capability and package switch with zero spawn, stdout-only diagnostic, no-ensurepip venv, interrupted publication not adopted, foreground pin present during run and removed after), `scripts/gate.sh`.
+- Exit: source/generated bytes, reclaimed mechanisms, headroom, check list.
+- Handoff: Releases P07-04; publish object/pin interfaces to 02/03/09.
 
-`main.js` remains ≤ 9,063 bytes and unchanged in behavior unless the operator
-approves a core change; the existing 18 integration and 19 resident checks and
-the package smoke keep passing. The cartographer never executes package code,
-never writes outside its own output and scratch paths, and never touches the
-network. Resource identity remains the existing recipe/host/dependency key, not
-a hash. The closure result is deterministic for identical corpus input.
-Conditional `exports` resolution follows Node's documented condition order for
-the selected conditions; unresolved or unsupported shapes are reported, not
-guessed.
+## P07-02 — Dependency cartographer
 
-### Surfaces
+- Status: DISPATCHED (Wave 1) · Owner: forager-2
+- Mission: Implement `PLAN.md` §6.1 as `capabilities/cartographer.mjs` exporting `planClosure`, `inspectCorpus`, and a CLI, emitting contracts §10 `plot.closure/1`.
+- Required Reads: `PLAN.md` §6.1; `docs/Plot-Fable.md` "The Seventh Flash"; `STAGE-1.md` identity; `src/plot.mjs` `stable`/`valid`/key; contracts §10.
+- Invariant: Pure, offline, deterministic; never executes or imports package code; conflicting ranges keep distinct nodes with placement.
+- Surfaces: `capabilities/cartographer.mjs`, `tests/cartographer.mjs`, `tests/fixtures/closure/` (generated by tests is preferred).
+- Hard Bans: No npm/npx/pnpm/yarn; no seed edits; no claim of dynamic-import completeness.
+- Validation: `node tests/cartographer.mjs` ≥ 10 substantive cases: diamond collapse with D present in `.grave`, conflicting versions/ranges, peer + bundled, conditional exports key order (`import` vs `require`), os/cpu/engines pruning, optional absence, `.tgz` corpus input, cycle and missing diagnostics, unsupported range form, byte-identical repeated output. `scripts/gate.sh` PASS.
+- Exit: capability bytes, supported grammar, check results, a sample plan fixture for 03/09.
+- Handoff: P07-03 integration consumes real plans.
 
-| Surface | Intended action | Relation |
-| --- | --- | --- |
-| `capabilities/cartographer.mjs` | CREATE | Owner (acquired capability) |
-| `manifest.json` | EDIT only if adding an example `cartographer` recipe | Demo |
-| `tests/cartographer.mjs` | CREATE (real on-disk package fixtures built in a scratch dir) | Evidence |
-| `scripts/gate.sh` | EDIT to add the new test | Gate |
-| `src/plot.mjs`, `main.js` | READ (EDIT only with operator approval) | Core |
-| `AGENTS.md`, `filetree.md`, `docs/CONTEXT.md`, `docs/NOTEPAD.md` | REFRESH | Continuity |
+## P07-03 — Offline layer assembler and Seed Bank
 
-### Hard Bans
+- Status: DISPATCHED (Wave 1) · Owner: forager-3
+- Mission: Implement `PLAN.md` §6.2 as `capabilities/assembler.mjs` exporting `verifyWheel`, `installWheels`, `assembleFromBank`, and a CLI. Stage + atomic publish into `.grave/objects` with `.plot.json` per contracts §3, pin per §4. Integrate real cartographer plans once P07-02 lands.
+- Required Reads: `PLAN.md` §6.2 incl. wheel boundary; `tests/helpers.mjs` wheel/C-extension builders; `src/plot.mjs` untar confinement; contracts §§3, 4, 10.
+- Invariant: No pip/ensurepip at runtime; Node stdlib + target Python only; bank material immutable.
+- Surfaces: `capabilities/assembler.mjs`, `tests/assembler.mjs`.
+- Hard Bans: No weakened digest checks, incompatible tags, traversal/duplicate overwrite, implicit source builds, seed edits.
+- Validation: `node tests/assembler.mjs` ≥ 8 cases: pure wheel, compatible C extension importable by acquired runtime, `.data` relocation, console entrypoint runnable, malformed RECORD/digest mismatch, incompatible ABI rejected before write, traversal/symlink/duplicate rejected, extraction limit, two plots assembling conflicting subsets from one bank, interrupted assembly then retry. Fixture compiler prerequisite declared. `scripts/gate.sh` PASS.
+- Exit: bytes, supported wheel subset, offline timings, fixture provenance.
+- Handoff: bank interface to 09; layers to 06/07.
 
-- Do not add npm dependencies or call `npm`/`npx`/`pnpm` as the resolver.
-- Do not reimplement npm install; no fetching, extracting into `node_modules`, or lockfile writing.
-- Do not grow `main.js` to host the cartographer.
-- Do not execute package lifecycle scripts or import package code.
-- Do not claim Windows/macOS/Termux results from Linux runs.
-- Do not hand-edit `evidence/`.
+## P07-09 — Host bootstrap and acquisition
 
-### Validation
+- Status: DISPATCHED (Wave 1) · Owner: forager-4
+- Mission: Implement `PLAN.md` §6.3: `capabilities/bootstrap.mjs` (inspect → plan → acquire → verify → activate), `bootstrap/plot.sh` and `bootstrap/plot.ps1` Node-absent launchers, recipes for Node, Python, Git (online pinned sources + offline kit/bank), resumable transactional install under `.grave/`.
+- Required Reads: `PLAN.md` §6.3; `src/plot.mjs` acquire/untar; contracts §§3, 4, 10, 11.
+- Invariant: Prerequisites explicit; user-local; no hidden reliance on host Python/Git/Node in proofs; bootstrap optional where the seed already runs.
+- Surfaces: `capabilities/bootstrap.mjs`, `bootstrap/`, `tests/bootstrap.mjs`.
+- Hard Bans: No universal-binary assumption; no sudo/package-manager mutation; no undeclared remote script; no PATH-masked "pristine" claim.
+- Validation: `node tests/bootstrap.mjs`: inspect/plan JSON, offline-kit install, interruption + resume, competing acquisitions, source failure diagnostics, reuse; real Git operation on a local repo and real Python from acquired material where network or kit allows (else NOT RUN with reason); Node-absent launcher run with Node masked from PATH using a kit. `scripts/gate.sh` PASS.
+- Exit: host/prerequisite matrix, sources, closure sizes, cold/reuse timings, unsupported routes.
+- Handoff: compose with 01/03 after they land; runners to P07-07.
 
-~~~
-scripts/gate.sh
-node tests/cartographer.mjs
-~~~
+## P07-04 — Admission, recovery, pins, maintenance
 
-Expected: `gate: PASS`; cartographer suite all-pass including (a) shared
-dependency `D` appears once and is marked present when it exists in `.grave/`,
-(b) optional and `os`/`cpu`-inapplicable branches are pruned and reported,
-(c) conditional `exports` selects the expected entry for `node`+`import` vs
-`require`, (d) a cycle and a missing dependency fail closed with a named reason,
-(e) identical input produces byte-identical plan output, (f) `main.js` size
-unchanged.
+- Status: QUEUED (after P07-01) · Owner: resident lane
+- Mission: `PLAN.md` §§5.1, 5.1.1, 5.3, 5.5 per contracts §§4–7: O(1) reserved admission, revisioned status with fenced reconciler, background reconciliation, request IDs, `PLOT_JOB_STATE` + step conduit, pin-safe dry-run/apply prune with tombstones.
+- Required Reads: `PERSISTENT-NATIVE.md`; full `capabilities/resident.mjs`; `tests/resident.mjs`; contracts.
+- Invariant: Worker owns live state; uncertainty holds capacity; terminal records inspectable; historical cache survives default prune.
+- Surfaces: `capabilities/resident.mjs`, `tests/resident.mjs`.
+- Hard Bans: No PID signals from records; no replay; no default history/cache erasure; no stale overwrite of terminal status.
+- Validation: 19 baseline + 20 killed-worker recoveries then job 21 succeeds; missed notification repair; last-slot race; submit latency independent of 1,000 historical/unreachable jobs; scratch/step isolation; transitive roots; concurrent acquisition/provision/prune; foreground pin respected; historical v1 reusable after default prune; tombstone crash recovery. `scripts/gate.sh` PASS.
+- Exit: bytes, interval/budget, lock order, pin lifecycle.
+- Handoff: P07-05.
 
-### Exit
+## P07-05 — Standby claim and sustainable capacity
 
-- Record: final commit or working-tree state
-- Record: exact gate output and cartographer check count
-- Record: `capabilities/cartographer.mjs` byte size (separate from core)
-- Record: which `package.json` fields are supported and which are reported as unsupported
-- Synchronize: `docs/NOTEPAD.md`, `docs/CONTEXT.md`, `filetree.md`, `AGENTS.md` surface router row
+- Status: QUEUED (after P07-04) · Owner: resident lane
+- Mission: `PLAN.md` §§5.2–5.2.1 per contracts §8.
+- Required Reads: post-04 resident source; `tests/resident-benchmark.mjs`; contracts §§7, 8, 12.
+- Invariant: Success only after an independent worker durably owns the job; single-use workers; lost ACK never creates a second worker.
+- Surfaces: `capabilities/resident.mjs`, `tests/resident.mjs`.
+- Hard Bans: No early success, unbounded spawn/queue, worker reuse, hidden cold fallback, unauthenticated standby adoption.
+- Validation: all prior resident checks; supervisor SIGKILL immediately after reply; claim-stage crash injection; lost-ACK retry; duplicate simultaneous rid; bursts 2/8/16/32; idle expiry/clean stop; bounded replenishment; restart reconciliation; P07-04 races rerun; preliminary warm p95 < 6 ms. `scripts/gate.sh` PASS.
+- Exit: warm/unconditioned timings, fallback fraction, capacity outcomes, replenish cost.
+- Handoff: P07-06.
 
-### Handoff
+## P07-06 — Resident execution environments
 
-Next agent: wait for operator dispatch of P07-01; once dispatched, read the
-Required Reads in order, build the fixture corpus first in
-`tests/cartographer.mjs`, then implement `capabilities/cartographer.mjs` until
-the suite passes, then run `scripts/gate.sh`.
+- Status: QUEUED (after P07-05) · Owner: resident lane
+- Mission: `PLAN.md` §§5.4–5.4.1 per contracts §9: `activate`, `interact`, `env_inspect`, `deactivate`; Environment Host process; separate Python and Node tenant processes with fd-3 framed control; deadlines; turn records; pins.
+- Required Reads: post-05 resident source; `src/plot.mjs` Python runner; contracts §§4, 5, 9.
+- Invariant: Supervisor replacement preserves live incarnation and heap; tenant loss is interruption; submit never shares tenant heap.
+- Surfaces: `capabilities/resident.mjs`, `tests/resident-env.mjs`, acquired tenant helpers if needed (inside `capabilities/`).
+- Hard Bans: No silent empty-heap restart, vm-only cancellation, stdout framing, replay, fabricated rollback.
+- Validation: ≥ 10 checks covering the PLAN §5.4.1 list (memory across clients, native module import, conflicting package sessions, supervisor kill/restart, tenant/host death, destructive timeout, blocked native call, busy Node loop, `os.write(1)` and stream replacement, flood/late output, cwd/sys.path mutation, partial exception, duplicate rid, concurrent activate, queue bound, isolation from submit, child cleanup) + all resident regressions. `scripts/gate.sh` PASS.
+- Exit: semantics table, bytes, warm turn distributions.
+- Handoff: P07-07.
 
-Hazards: conditional `exports` and peer-dependency semantics have edge cases
-that can tempt a bespoke resolver; report unsupported shapes rather than
-inventing behavior.
+## P07-07 — Adversarial integration and cross-host proof
 
-## Queued v0.7 directions (from `docs/Plot-Fable.md`, not yet packetized)
+- Status: QUEUED · Owner: integration lane
+- Mission: Wire all suites into `scripts/gate.sh`; compose cartographer → assembler → seed → bootstrap → resident end to end; crash injection at publication, claim, activation, turn completion, prune; clean-package smoke from foreign cwd; host runners/kits for Windows/macOS/Termux.
+- Surfaces: `scripts/gate.sh`, `tests/package-smoke.mjs`, `tests/e2e.mjs`, `bootstrap/hosts/`.
+- Hard Bans: No skipped regressions; no Linux-as-other-OS claims.
+- Validation: `scripts/gate.sh` PASS with every suite; host matrix recorded (non-Linux NOT RUN).
+- Handoff: P07-08.
 
-Order is the fable's; the operator decides actual order.
+## P07-08 — Measurements, whitepaper, release
 
-| ID | Direction | Notes |
-| --- | --- | --- |
-| P07-02 | Local seed bank: offline installation as a first-class mode from component archives, recipes and adapters | Preserve component boundaries; one bank, many plots |
-| P07-03 | Bootstrap ladder: alternate ignition paths so Node is not equivalent to Plot | Node SEA as one disposable rung, not the answer |
-| P07-04 | Python as compositional target: interpreter, stdlib, extensions, bootstrap, layers, entrypoints | `ensurepip` where available; other recipes elsewhere |
-| P07-05 | Move the six-millisecond bell: durable submission p95 (7.861 ms) below 6 ms; worker reservoir / prewarmed slots | Measure each boundary separately |
-| P07-06 | Real device runs: Windows, macOS, Android/Termux | Record forks; reduce bootstrap contract from evidence |
+- Status: QUEUED · Owner: measurement lane + chronicler
+- Mission: Extend benchmarks per contracts §12; `scripts/gate.sh --bench` then `--evidence`; reconcile claims; `WHITEPAPER.md`; version 0.7.0 across `package.json`, `manifest.json`, `README.md`, `STAGE-1.md`, `PERSISTENT-NATIVE.md`, `tests/report.mjs`, router and continuity.
+- Hard Bans: No hand-edited evidence, outlier removal, warm/cold merging, workload reduction, full-completion claim with open gates.
+- Validation: `scripts/gate.sh --bench`, `scripts/gate.sh --evidence`, final `scripts/gate.sh`; Sentinel + Fletcher passes.
+- Handoff: Final status with exact open gates.
 
 ## Landed packets
 
 | ID | Title | Landed | Evidence |
 | --- | --- | --- | --- |
 | P06-CP | Accelerate control plane installed | 2026-10-20 | `docs/NOTEPAD.md` first entry |
+| P07-00 | Opening contract freeze | 2026-10-20 | `docs/V07-CONTRACTS.md` §0; NOTEPAD |

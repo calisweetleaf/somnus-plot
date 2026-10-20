@@ -9,11 +9,11 @@
 
 | Field | Current value |
 | --- | --- |
-| Repository | `somnus-plot`, root `/home/daeron/Repositories/somnus-plot` (remote `origin` = `calisweetleaf/somnus-plot`) |
+| Repository | `somnus-plot`, root `/home/factory-user/repos/somnus-plot` (remote `origin` = `calisweetleaf/somnus-plot`) |
 | Purpose / long outcome | A tiny seed (Node stdlib core, 9,063-byte ceiling) that constructs, persists and executes complete environments by composition rather than by carrying them. Operator horizon: a fully persistent virtual machine; v10 is the predicted completion. |
 | Status in Somnus | Laboratory experiment. Plot has **no role** in broader Somnus and must not become a dependency of it. First Flash Pack. |
 | Landed version | v0.6.0 "Persistent Native Execution" (`package.json`, `manifest.json`) |
-| Active packet | `P07-01` Dependency cartographer, status **DRAFT — awaiting operator dispatch**, in `TASK.md` |
+| Active packet | v0.7 Wave 1 (`P07-01`, `P07-02`, `P07-03`, `P07-09`) **DISPATCHED** in `TASK.md`; architecture `PLAN.md`; frozen interfaces `docs/V07-CONTRACTS.md` |
 | Completion witness | `scripts/gate.sh` → `gate: PASS` (build determinism, core ≤ 9,063 bytes, 18/18 integration, 19/19 resident, clean-package smoke) |
 | Landed state | Everything listed as PASS in `evidence/RESULTS.md` (2026-10-17 run) and re-run locally 2026-10-20 (see `docs/CONTEXT.md`) |
 | Deferred / unverified | Windows/macOS/Termux execution, reboot/power-loss durability, process-tree ownership, quotas, hostile-code sandboxing, worker pooling, GC, full Python CLI/venv emulation, browser host. See the "Unimplemented or unverified" table in `evidence/RESULTS.md`. |
@@ -56,6 +56,8 @@
 | `baseline/` | Frozen lineage: v0.4 audit (`REPORT.md`, `plot_probe.py`, `observed-results.json`, example plot), `somnus-plot-v0.5.zip`, `v0.5-evidence/` | Lineage questions | Current behavior | Contract docs cite it | **Never edit** | — |
 | `docs/Plot-Fable.md` | Constitutional narrative and v0.7 direction ("The Seventh Flash") | Before any architectural or scope decision | Measured claims (defer to evidence) | `docs/MEMORY.md`, `TASK.md` queue | Operator-owned | MEMORY |
 | `scripts/gate.sh` | Integrated gate (disposable copy by default; `--bench`; `--evidence` in place) | Before landing anything | Test semantics | All tests | `gate: PASS` | Handoff |
+| `PLAN.md` | v0.7 master architecture plan (operator-supplied) | Scope, laws 11–12, acceptance matrix §8 | Behavior (source wins) | `TASK.md`, contracts | Review | `docs/V07-CONTRACTS.md` |
+| `docs/V07-CONTRACTS.md` | Frozen v0.7 shared interfaces: lock order, pins, request IDs, lifecycles, closure schema, workloads, ownership | Before any v0.7 packet | Implementation | Every v0.7 lane | Amendment row + consumers updated | Packet |
 | `TASK.md` | Active and queued packets | Assignment | Design semantics | NOTEPAD, CONTEXT | `validate-packet` | Packet |
 | `docs/CONTEXT.md` / `docs/NOTEPAD.md` / `docs/MEMORY.md` | Current snapshot / append-only log / durable law | See session entry | — | Each other | Synchronized after state change | — |
 | `filetree.md` | Whole-repo topology map | Reorientation, after structural change | Task routing, authority | All roots | Refresh after add/move/delete | This router |

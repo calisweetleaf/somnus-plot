@@ -9,9 +9,9 @@ _Last refreshed: 2026-10-20 00:47 CDT._
 | Field | Value |
 | --- | --- |
 | Version | v0.6.0 Persistent Native Execution |
-| Git | `main` @ `896f48d`, tracking `origin/main`. Untracked: `docs/` (incl. `Plot-Fable.md`), `AGENTS.md`, `TASK.md`, `scripts/`, `.gitignore`. Nothing committed or pushed by agents. |
-| Location | `/home/daeron/Repositories/somnus-plot` (moved from `LAB/Experiments/projects/somnus-plot` on 2026-10-19) |
-| Active packet | P07-01 DRAFT, awaiting operator dispatch |
+| Git | `main` @ `b72a98d` base (older entries cite `896f48d`, absent from this checkout). Coordinator commits each landed v0.7 packet locally; nothing pushed. Untracked operator files: `.colony/`, `.factory/`, `SWARM.md`, `attachments/`. |
+| Location | `/home/factory-user/repos/somnus-plot` (earlier: `/home/daeron/Repositories/somnus-plot`) |
+| Active packet | v0.7 Wave 1 dispatched (P07-01/02/03/09); P07-00 landed. See `TASK.md`, `docs/V07-CONTRACTS.md` |
 | Core bytes | `main.js` 9,061 / 9,063 ceiling (2 bytes headroom) |
 | Resident bytes | `capabilities/resident.mjs` 20,708 (counted separately) |
 
@@ -24,7 +24,7 @@ _Last refreshed: 2026-10-20 00:47 CDT._
 | `tests/resident.mjs` | 19/19 | 19/19 PASS |
 | `tests/package-smoke.mjs` | PASS | PASS |
 | Benchmarks | See `evidence/RESULTS.md` | NOT RUN locally |
-| `scripts/gate.sh` | — | See newest NOTEPAD entry |
+| `scripts/gate.sh` | — | PASS 2026-10-20 on reference host (Linux 6.1 x64 Xeon 4 vCPU, Node v24.22.0, Python 3.12.3) |
 
 Local re-runs were executed in a disposable copy; `evidence/` was not modified.
 
