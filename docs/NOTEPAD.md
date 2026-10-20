@@ -82,3 +82,12 @@ Format:
 - Decisions (contracts v1.6): see §14.
 - Next agent: P07-06 resident environments.
 - Hazards: preliminary p95 margin ~1 ms on this host; p99 above 6 ms. The sustained Poisson row (P07-08) is not yet measured. A power loss between the overlapped fsyncs and the reply is not tested (no device).
+
+### 2026-10-20 15:40 UTC — Droid (Keeper implemented; Sentinel after code) — P07-06 landed
+- Base: `89f924e`. Correction to the P07-05 entry: resident was 49,563 B after P07-05, not ~47,900.
+- Did: Resident execution environments inside `capabilities/resident.mjs` (now 69,478 B): supervisor ops `activate`, `interact`, `env_inspect`, `deactivate`; one detached Environment Host per incarnation (`--env-host`) that owns the env pin and its tenants; Python tenant (view interpreter, `-I -S -u`, persistent globals, last-expression result) and Node tenant (`--tenant-node`, `vm.runInThisContext`, `__plot_session__`, `__plot_assets__`, `require`) as direct children with u32+JSON frames on fd 3; fd 1/2 captured per turn up to 1 MiB with raw end-of-turn markers so `os.write(1)`, replaced `sys.stdout` and late output are attributed correctly; 1 in flight + 8 queued, overflow `busy`; turn rid records and outcome records under the incarnation; `exec` turns; deadlines kill the tenant and retire the incarnation `interrupted`/`lost`; host death proven by identity and fenced; tenants exit on fd-3 EOF. New `tests/resident-env.mjs` (21 checks), wired into `scripts/gate.sh` and its `--evidence` list.
+- Validation: `PLOT_REQUIRE_SEED_COUPLED=1 scripts/gate.sh` → `gate: PASS` (24/24, 41/41 resident, 21/21 resident-env, 12/12, 15/15, 21/21, smoke).
+- Proof facts: preliminary warm turns (n=200, quiet run): Python native call p50 2.64 / p95 3.44 ms; Node session + acquired package p50 2.54 / p95 3.23 ms.
+- Decision: the resident suite's warm submit-and-claim check measured p95 11.6 ms under full-gate load vs 5.0–6.6 ms quiet; it now reports always and asserts only with `PLOT_ASSERT_LATENCY=1`. The frozen 6 ms rows are asserted by the quiet-host benchmark (P07-08).
+- Next agent: P07-07 integration.
+- Hazards: Node turns share one event loop, so a turn's timers outlive it (by design: the heap persists). Python `SystemExit` inside a turn is reported `failed`, not exit. Env pin ref uses `<name>.<incarnation>` (file-name safe) instead of `<name>/<incarnation>`.

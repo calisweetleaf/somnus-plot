@@ -32,7 +32,7 @@ preflight
 if [ "$mode" = "--evidence" ]; then
   cd "$root_dir"
   step build node build.mjs
-  for pair in integration:integration resident:resident-integration benchmark:benchmark \
+  for pair in integration:integration resident:resident-integration resident-env:resident-env benchmark:benchmark \
               resident-benchmark:resident-benchmark package-smoke:package-smoke; do
     t="${pair%%:*}" log="${pair#*:}"
     step "$t" bash -o pipefail -c "node tests/$t.mjs 2>&1 | tee evidence/$log.log"
@@ -51,6 +51,7 @@ step build node build.mjs
 step "committed main.js matches build of src/plot.mjs" cmp main.js "$root_dir/main.js"
 step integration node tests/integration.mjs
 step resident node tests/resident.mjs
+step resident-env node tests/resident-env.mjs
 step cartographer node tests/cartographer.mjs
 step assembler node tests/assembler.mjs
 step bootstrap node tests/bootstrap.mjs

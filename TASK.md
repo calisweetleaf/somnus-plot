@@ -123,7 +123,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-06 — Resident execution environments
 
-- Status: ACTIVE 2026-10-20 · Owner: Keeper (operator: implement directly)
+- Status: **LANDED** 2026-10-20 · Owner: Keeper · 21/21 resident-env
 - Mission: `PLAN.md` §§5.4–5.4.1 per contracts §9: `activate`, `interact`, `env_inspect`, `deactivate`; Environment Host process; separate Python and Node tenant processes with fd-3 framed control; deadlines; turn records; pins.
 - Required Reads: post-05 resident source; `src/plot.mjs` Python runner; contracts §§4, 5, 9.
 - Invariant: Supervisor replacement preserves live incarnation and heap; tenant loss is interruption; submit never shares tenant heap.
@@ -135,7 +135,7 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 
 ## P07-07 — Adversarial integration and cross-host proof
 
-- Status: QUEUED · Owner: integration lane
+- Status: ACTIVE 2026-10-20 · Owner: Keeper
 - Mission: Wire all suites into `scripts/gate.sh`; compose cartographer → assembler → seed → bootstrap → resident end to end; crash injection at publication, claim, activation, turn completion, prune; clean-package smoke from foreign cwd; host runners/kits for Windows/macOS/Termux.
 - Surfaces: `scripts/gate.sh`, `tests/package-smoke.mjs`, `tests/e2e.mjs`, `bootstrap/hosts/`.
 - Hard Bans: No skipped regressions; no Linux-as-other-OS claims.
@@ -160,5 +160,6 @@ P07-02 -> P07-03(integration) -> P07-09(composition) <- P07-01
 | P07-02 | Dependency cartographer | 2026-10-20 | 12/12; gate wired; NOTEPAD |
 | P07-03 | Offline layer assembler and Seed Bank | 2026-10-20 | 15/15; gate wired; NOTEPAD |
 | P07-09 | Host bootstrap and acquisition | 2026-10-20 | 21/21; gate wired; NOTEPAD |
+| P07-06 | Resident execution environments | 2026-10-20 | gate PASS 21/21 resident-env; NOTEPAD |
 | P07-05 | Standby claim and sustainable capacity | 2026-10-20 | gate PASS 41/41 resident; NOTEPAD |
 | P07-04 | Admission, recovery, pins, maintenance | 2026-10-20 | gate PASS 32/32 resident (seed-coupled); NOTEPAD |
