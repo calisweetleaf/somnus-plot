@@ -4,3 +4,21 @@
 
 /Plot-Fable.md
 .gitignore
+/.factory
+/.colony
+/.surgeon
+
+docs/NOTEPAD.md
+docs/MEMORY.md
+docs/CONTEXT.md
+/zip-archives
+/.gitignore
+
+/PLAN.md
+/STAGE-1.md
+/SWARM.md
+/TASK.md
+current-raw-tree.md
+filetree.md
+/whitepaper
+/zip-archives
