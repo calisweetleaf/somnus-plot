@@ -1,5 +1,5 @@
 fixture prerequisites {"python3":true,"cc":true,"pythonH":true}
-runtime shallow-host: /tmp/plot-assembler-BEipIT/runtime/bin/python3 (venv --without-pip over host /usr/bin/python3, Python 3.12.3 cpython-312-x86_64-linux-gnu)
+runtime shallow-host: /home/daeron/.cache/plot-evidence-tmp/plot-assembler-W2MxXf/runtime/bin/python3 (venv --without-pip over host /usr/bin/python3, Python 3.14.4 cpython-314-x86_64-linux-gnu)
 PASS pure wheel: planWheels plan, assembled, importable with -I -S, reused [runtime shallow-host]
 PASS compatible C extension: planWheels selects the compatible build, importable by the target runtime with -I -S [runtime shallow-host]
 PASS .data relocation: purelib, platlib, scripts with #!python rewrite, data, headers [runtime shallow-host]
@@ -17,5 +17,5 @@ PASS BANK_CHANGED: reuse re-verifies recorded wheel and npm digests and refuses 
 PASS cartographer sample-plan.json (P07-02) assembled; planClosure --root then marks every node present and reassembly reuses
 owned-runtime: NOT RUN (pending P07-09/P07-07 composition)
 runtime labels {"shallow-host":8}
-timings {"verify_pure_ms":30.64,"plan_wheels_ms":30.76,"install_pure_ms":39.5,"historical_reuse_ms":26.09,"install_native_ms":29.73,"assemble_bank_ms":64.67,"cli_plan_and_assemble_ms":175.61,"retry_after_crash_ms":45.46,"seed_recipe_provision_ms":88.27,"closure_assemble_ms":32.01}
+timings {"verify_pure_ms":26.58,"plan_wheels_ms":26.67,"install_pure_ms":66.12,"historical_reuse_ms":25.74,"install_native_ms":53.68,"assemble_bank_ms":89.86,"cli_plan_and_assemble_ms":160.77,"retry_after_crash_ms":65.98,"seed_recipe_provision_ms":106.48,"closure_assemble_ms":90.68}
 15/15 assembler checks

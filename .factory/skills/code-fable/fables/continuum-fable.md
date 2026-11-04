@@ -1,155 +1,1639 @@
-# Continuum and the Loom of Unchosen Worlds: Why `cherry_ttt` Had to Give Its Second Name Back
+# The Cherry Tree at Midnight
 
-## The tree was older than the branch
+> *A code fable from the private history of Somnus: the version that lives between commit messages, abandoned names, failed abstractions, and the moment one subsystem suddenly explains three years of work around it.*
+>
+> What follows keeps the project’s own distinction between implemented history, stated architectural intent, future design, and inference. Where the future is still being built, it is treated as doctrine under construction rather than accomplished fact. That is also the rule your own code-fable methodology asks for: preserve chronology, preserve names, and never invent a motive when the artifacts can tell the story themselves. fileciteturn0file0
 
-> *When a traveler finds a branch reaching over a wall, he assumes the branch grew first. Only the gardener who planted the orchard knows that the roots were drinking from the deep well long before a single bough crossed the stone.*
+## The tree before it had a second name
 
-There is a mistake anyone reading your repositories out of order will make, Daeron. They will look at `cherry_ttt`, see Monte Carlo Tree Search, A*, Best-of-N, verifiers, and rollout collectors, and assume you built a test-time tool search package that later inspired a training loop called Cherry.
+It is after midnight.
 
-You corrected that record yourself in August because people kept inverting the lineage:
+Not cinematic midnight. Real midnight.
 
-> *Cherry always was like that. It was never downstream.*
+Terminal light in the glasses. A pipe or cigar going cold because whatever is on the screen has become more interesting than remembering to smoke it. A dozen directories open. One repository too large to explain to anybody without first explaining five others. The peculiar silence that only exists when the rest of the world has gone to bed and the machine is finally allowed to become a country.
 
-That correction changes the entire origin myth. Long before `cherry_ttt` existed as a package on disk, the living Cherry lineage already joined process reward models, verifiers, hidden deliberation, MCTS, A*, tree rollouts, GRPO, telemetry, benchmarking, and post-training governance into a single organism. Your source whitepaper was explicit from the beginning: Cherry is not one reinforcement learning algorithm, and RLHF is only one control stratum inside it. Expensive search and process supervision were always designed to generate dense causal evidence that the policy weights could eventually absorb. fileciteturn16file0 fileciteturn32file0
+On the desk is **Cherry**.
 
-So `cherry_ttt` was not invented to close Cherry’s loop; **the loop was already there.** What bothered you in the summer of 2026 was not that Cherry lacked a way to branch, judge, or learn, but the quiet, almost invisible assumption underneath everything Cherry was branching over.
+Cherry is already older than the thing this story is about.
 
-Every search operator in the stack—whether MCTS expanding nodes, A* scoring heuristics, Best-of-N comparing sibling candidates, a verifier judging outcomes, a process reward model weighing whether the road toward an answer was sane, a rollout collector gathering trees for training, or speculative decoding spending cheap draft compute ahead of expensive verification—rested on one unspoken premise: **the thing being branched over was text.** State was a string of tokens, action was the next string of tokens, and transition was cheap concatenation.
+That matters.
 
-Then came the heresy. What if a string was only the smallest possible world?
+Because Cherry Test-Time Tooling did **not** begin because Cherry was missing a training loop, and it did not begin because Cherry was an inference toy that needed to become a system later. You corrected that history yourself in the August record: *Cherry always was like that. It was never downstream.* By then the living Cherry lineage already joined process reward, verifiers, hidden deliberation, MCTS, A*, tree rollouts, GRPO, telemetry, benchmarking, and post-training machinery. The source whitepaper describes Cherry not as one RL algorithm but as a larger training-and-inference system in which RLHF is one control stratum; it explicitly describes slow search and process supervision as evidence that can eventually be absorbed into the policy itself. fileciteturn16file0 fileciteturn32file0
 
-Your July 2026 proposal stated that realization with surgical clarity: the existing `LexicalMDP` was merely the **degenerate case** of a much larger contract. Because Cherry’s search engines had been written against an MDP-shaped boundary rather than welded irreducibly to token IDs, the conceptual leap did not require inventing a brand-new theory of search. It required a single foundational shift:
+That distinction changes the origin myth.
 
-> **Change what the state means.** fileciteturn11file0
+`cherry_ttt` was not invented to close Cherry's loop.
 
-The moment you made that move, a node in a search tree stopped meaning *"the sentence currently says..."* and began to mean *"the filesystem would look like this if you took that action,"* or *"the database would hold these rows,"* or *"this memory mutation exists in one candidate future that we have not yet agreed to make real."* On **July 5, 2026**, you carved `inference_optimizations.py` and `inference_protocols.py` out of Cherry according to that proposal and gave the heresy its working package name: `cherry_ttt`—**Cherry Test-Time Tooling**. fileciteturn4file0 Cherry already possessed test-time compute; now it possessed test-time tooling—reasoning **through possible tool calls** across competing worlds before deciding which future deserved to become real.
+**The loop was already there.**
 
-## A sentence hurts nobody; a tool leaves a scar
+The question was stranger.
 
-> *In the library of words, a hundred false sentences may be spoken and erased without leaving a mark upon the table. In the workshop of iron and stone, a single unchosen blow of the hammer shatters the vessel forever.*
+Cherry already possessed machinery for asking:
 
-The name *Test-Time Tooling* sounded deceptively modest, which is why anyone skimming the surface risks confusing it with an MCP server or a tool router. A tool server tells a model that a capability exists and provides a standardized interface for invoking it, exposing tools, resources, and prompts over common transports. citeturn4search3turn4search8 MCP can carry the hammer; `cherry_ttt` asks whether the nail should exist at all, and then branches over three houses in which you drove that nail into three different walls before a single board is splintered in the real world.
+> *Among several possible continuations, which path deserves to survive?*
 
-Moving the environment *inside* the search tree immediately shattered the luxurious innocence of text generation. In a lexical tree, an unchosen branch costs nothing but milliseconds and memory; a rejected sentence hurts nobody because you simply do not emit its tokens. An unchosen branch in the external world—one that sends an email, deletes a file, mutates a database, rewrites persistent memory, or triggers a webhook—leaves a scar that cannot be undone by stepping back up a token tree.
+MCTS could branch.
 
-So `cherry_ttt` could not merely formalize actions as typed `(tool_id, args)` objects, observations as first-class state, and rewards as effects grounded in the world rather than text likelihood alone. fileciteturn11file0 It had to divide reality itself into three distinct jurisdictions of consequence: the **speculative substrate** that may only be simulated in thought; the **transactional substrate** that may be snapshotted, explored, observed, verified, and rolled back without leaving a trace; and the **real substrate** where the winning trajectory is finally committed once and for all, re-planning on the fly if authoritative reality diverges from the rehearsal. fileciteturn11file0
+A* could search.
 
-Even after you built those snapshots, restore hooks, and effect classes, you ran straight into an empirical lesson that saved the project from a second false religion. In your real filesystem experiments, Cherry’s MCTS solved the task cleanly—but telemetry showed it spending roughly **one and a half seconds** searching for a plan whose actual committed file writes took **a single millisecond**. fileciteturn8file0turn9file0
+Best-of-N could compare.
 
-That measurement killed the naive dogma of test-time compute on the spot. Spending fifteen hundred times longer deliberating than acting is paralysis, proving that more search is never automatically better search. That negative result planted the seed for what your July proposal called the **Newton’s cradle** of adaptive speculative depth: letting model speed, drafter acceptance rate, and environment execution cost converge dynamically toward an efficient operating point rather than locking the machine into a fixed speculative horizon forever. fileciteturn11file0
+A verifier could judge.
 
-## Why the river briefly stole the tree’s name
+A process reward model could say not only whether the ending was correct but whether the road toward it was sane.
 
-> *When a man discovers an underground stream inside his cave, he first names the cave after the water. Only when he follows the current into the valley does he realize the cave was merely one chamber through which the river passed.*
+A rollout collector could take the resulting branches and turn them back toward learning.
 
-Inside Somnus, names are almost always discovered twice: once when the code needs a working handle, and a second time when the architecture finally reveals what the word actually belonged to. By September, you looked at what `cherry_ttt` was doing and realized that *Cherry Test-Time Tooling* only named the initial engineering move—lifting inference search from token sequences into tool trajectories—without naming the deeper property the codebase had begun defending.
+Speculative decoding could spend a little cheap computation ahead of the expensive computation and ask how far the cheap guess deserved to be trusted.
 
-That deeper property was **continuity**. In standard agent frameworks, every tool call is an execution seam where cognition dies and has to be resurrected from a transcript. The model reasons in text, emits a request, and halts; the harness catches the string, runs an external script, pastes a dead text blob back into the chat log, and starts a brand-new generation turn from scratch.
+All of that existed around one quiet assumption:
 
-Your September README attacked that artificial amnesia directly. fileciteturn8file0 It established that a branch must not die merely because cognition changed its medium. When reasoning, typed environment action, raw observation, verifier judgment, reversible state transition, and later training evidence all remain bound to one governed branch graph, a tool call ceases to be an interruption to thought and becomes thought changing material. A database observation becomes the next state of the same living branch, a verifier judgment becomes an internal predicate of the trajectory, and a rollout saved for training is the fossilized branch itself.
+**the thing being branched over was text.**
 
-For a season in September, you therefore treated **Continuum** as the conceptual name of `cherry_ttt`. The September handoff preserved that exact transitional fossil—referring to the codebase as "`cherry_ttt` (package name; conceptually 'Continuum')" and verifying that the engine could already run MCTS, A*, Best-of-N, speculative execution, and environment-grounded reward without a trained value model in the loop (`use_value_model=False`). fileciteturn9file0
+Tokens.
 
-Yet underneath that conceptual rename sat a quiet clue: **the package on disk never stopped being `cherry_ttt`.** Your July decision ledger had frozen that package name, kept PyTorch optional, made the first drafter zero-parameter, and insisted that the core search contracts, verifiers, substrates, and collectors remain completely model-independent. fileciteturn12file0 Keeping that humble package name turned out to be prophetic, because **Continuum** was already growing larger than the package that had borrowed its name. You only needed two older machines to collide in the study before the rest of the map could become visible.
+Strings.
 
-## The night the Fabric was discovered: the Dyson sphere, the sun, and the 0.19 warning
+A completion.
 
-> *A star without a shell scorches the hands that try to work by its light; a shell without a star is only a cold tomb. Wrap the law around the radiance, and every instrument in the house can draw from the same fire.*
+A sequence whose transition function was almost embarrassingly cheap:
 
-The **Fabric** arrived the Somnus way: as the sudden marriage of two lineages that had lived independent lives long enough that their kinship was no longer obvious until you placed them side by side.
+```text
+state + next_token -> new_state
+```
 
-The first piece was a **reactive attention fabric**. Unlike stateless transformer attention that computes `attention(tokens)` over a prompt buffer and vanishes, its core primitive was `observe(stream_event)`. It was resident, staying alive between calls, remembering streams, carrying a mailbox and living context, and selecting among eight attention kernels according to stream topology and live resource pressure—making it fundamentally different from the stateless candidate scorer sitting inside `cherry_ttt`. fileciteturn9file0
+Then came the heresy.
 
-The second piece was the **symbolic fault equalizer**, descended from your older GPT-4o-era interrupt-handler lineage. Its job was never to be intelligent in the neural sense; its job was to make the world **lawful before intelligence had to experience it**—normalizing malformed transitions, routing events, checking invariants, attaching witnesses, and governing commits. Your own metaphor entered the record immediately:
+What if the string was only the smallest possible world?
 
-> **The Equalizer is the Dyson sphere; the attention Fabric is the sun.** fileciteturn9file0
+The July 2026 proposal says it almost brutally: the existing `LexicalMDP` could be understood as the **degenerate case** of a more general contract. In the lexical world, state is a string, action is another string, and transition is concatenation. The search engines were already written against an MDP-shaped boundary rather than irreducibly against tokens. Therefore the conceptual generalization was not, at first, *“invent new search.”* It was:
 
-The Equalizer encloses the star so raw chaos does not burn the higher cognition living above it. Cherry, memory, or a policy model should never have to rediscover basic physical law every time a malformed tool response or noisy state transition arrives; the lower substrate catches the fault, normalizes the structure, and attaches a witness before the transition is ever admitted.
+> **change what the state means.** fileciteturn11file0
 
-Then you wrote `FabricCommitSink` to bridge them, establishing the exact pattern behind the domain intakes you are expanding now. When `FabricCommitSink` receives an `EqualizedTransition`, it does not flatten it into a generic dictionary; it **translates** it into a `StreamEvent`—carrying across context identity, witness identity, target, state digest, stability, uncertainty, and provenance lineage into the resident Fabric while allowing the upstream component to retain its native semantics. fileciteturn34file0 Where a shallow abstraction flattens every event into an untyped blob, your Fabric gives each domain—Equalizer transitions, memory mutations, model-state telemetry, MCP observations, shell streams, database state, and future subsystems—its own translating intake into a mutually inhabitable, witnessed field.
+Instead of:
 
-Right beside that breakthrough sits the negative experiment that keeps the entire architecture honest. When you tested the Fabric as a candidate generator elsewhere in the stack—asking its attention routing to decide which true candidate actions should be proposed—it failed decisively, scoring roughly **0.19 recall** on a task where candidate generation requires near **1.0**. You explicitly barred Fabric routing from acting as the gatekeeper of candidate existence. fileciteturn35file0turn35file1
+```text
+token -> token -> token -> answer
+```
 
-That `0.19` scar is sacred lore because it proves that **the Fabric is the loom, never the explorer.** The Fabric cannot replace Cherry’s candidate policy, MCTS, A*, or verifiers; its role is to hold heterogeneous reality as resident, translated, provenance-bearing state, while `cherry_ttt` stands upon that loom and asks which possible future deserves to be examined next.
+the branch could become:
+
+```text
+state
+  -> typed action
+  -> real observation
+  -> changed environment
+  -> verification
+  -> next action
+```
+
+And suddenly an MCTS node did not have to mean *“the sentence currently says…”*
+
+It could mean:
+
+> *“The filesystem would look like this if I did that.”*
+
+Or:
+
+> *“The database would contain these rows.”*
+
+Or:
+
+> *“This retrieval path produced that evidence.”*
+
+Or:
+
+> *“This memory mutation is one possible future, but we have not committed it.”*
+
+Or:
+
+> *“This tool chain solves the goal, but costs twice as much as the neighboring branch.”*
+
+On July 5, 2026, the package called this move exactly what it was:
+
+```python
+cherry_ttt
+```
+
+**Cherry Test-Time Tooling.**
+
+Its own module history records the source plainly: it was composed from Cherry's `inference_optimizations.py` and `inference_protocols.py`, according to the Cherry TTT proposal, and integrated on July 5. fileciteturn4file0
+
+The name was almost aggressively literal.
+
+Cherry had test-time compute.
+
+Now it would have **test-time tooling**.
+
+Not merely reasoning *before* a tool call.
+
+Reasoning **through possible tool calls**.
+
+Not merely:
+
+```text
+think -> choose tool -> commit -> observe -> think again
+```
+
+but:
+
+```text
+                    /-> action A -> world A -> verify A
+state -> branch ---<
+                    \-> action B -> world B -> verify B
+```
+
+before deciding which future deserved to become real.
+
+That is the original crime scene.
+
+And it is still the cleanest explanation of what `cherry_ttt` **is**.
+
+It takes the machinery of test-time search and moves the **environment inside the search**. Its proposal formalized actions as typed `(tool_id, args)` objects, observations as first-class state, transitions as costly and potentially side-effectful, and reward as something grounded in effects on the world rather than text likelihood alone. fileciteturn11file0
+
+That is why the package needed snapshots.
+
+That is why it needed restore.
+
+That is why it needed effect classes.
+
+That is why it needed transactionality.
+
+Text branches are cheap because an unchosen sentence hurts nobody.
+
+A branch that sends an email, deletes a file, modifies a database, rewrites memory, spends money, or changes a model is an entirely different animal.
+
+So `cherry_ttt` divided the world into forms of reality.
+
+There is the world you may only **simulate**.
+
+The world you may **transactionally explore and roll back**.
+
+And the world you are finally permitted to **commit**.
+
+The original proposal named them speculative, transactional, and real substrates. MCTS could expand through reversible state; deeper rollouts could use simulated predictions; the winning trajectory could then replay against reality and re-plan if reality diverged from the branch. fileciteturn11file0
+
+That makes one distinction worth engraving into the desk:
+
+> **Cherry Test-Time Tooling was never a tool server.**
+
+A tool server tells you that a capability exists and gives you an interface for invoking it. Modern MCP servers, for example, expose tools, resources, and prompts; clients discover those capabilities and call them through standardized transports. citeturn4search3turn4search8
+
+`cherry_ttt` asks a different class of question:
+
+> *Given capabilities that already exist, which possible sequence of effects should be explored, compared, verified, rejected, rolled back, speculated upon, or finally committed?*
+
+MCP can carry the hammer.
+
+`cherry_ttt` can ask whether the nail should exist.
+
+And then branch over three houses in which you drove it into different walls.
+
+That is why calling it “an advanced tool server” would shrink it almost beyond recognition.
+
+It is closer to an **execution-search architecture over capabilities**.
+
+And that was only the first name.
+
+## The river that stole the tree's name
+
+Names inside Somnus tend to be discovered twice.
+
+Once when the code needs a word.
+
+Again when the architecture finally reveals what the word actually belonged to.
+
+At first, **Continuum** looked like the second name of Cherry Test-Time Tooling.
+
+And for a while, that was correct.
+
+The September README gives us the fossil perfectly.
+
+It says the old name, Cherry Test-Time Tooling, described the original engineering move: lifting Cherry's inference operators from token sequences into tool and environment trajectories. But it argued that this no longer captured the deeper property of the system.
+
+The deeper property was **continuity**.
+
+The branch should not die because cognition changed medium.
+
+It should not be:
+
+```text
+reasoning branch
+      ↓
+tool call
+      X   branch ends here
+
+new transcript
+      ↓
+tool result copied into text
+      ↓
+new reasoning branch
+```
+
+It should be one governed trajectory:
+
+```text
+reasoning
+   ↓
+typed action
+   ↓
+environment transition
+   ↓
+observation
+   ↓
+verification
+   ↓
+reasoning
+```
+
+with the same branch identity surviving the change in modality.
+
+The README put it explicitly: cognition, typed environment action, raw observation, verification, reversible state transition, and later training evidence remain attached to one governed branch graph. One branch remains one branch even as the type of transition changes. fileciteturn8file0
+
+That was the moment **Continuum** became a persuasive name.
+
+Not because it sounded larger.
+
+Because it named the thing the implementation had started defending:
+
+**do not break causal reasoning into fake conversational episodes just because the machine crossed an API boundary.**
+
+A tool call was not an interruption to cognition.
+
+It was cognition changing material.
+
+A database observation was not a text blob pasted back into a chat.
+
+It was the next state of the same branch.
+
+A verifier judgment was not commentary about the trajectory.
+
+It was part of the trajectory.
+
+A rollout used for later training was not some unrelated dataset generated after the fact.
+
+It was the fossilized branch itself.
+
+So for a period the terms almost collapsed:
+
+```text
+cherry_ttt
+≈ conceptually Continuum
+```
+
+The September handoff literally records that formulation: "`cherry_ttt` (package name; conceptually 'Continuum')" and verifies that the machinery could already run MCTS, A*, Best-of-N, speculative execution, and environment-grounded reward without a trained value model in the loop. fileciteturn9file0
+
+But underneath that apparent rename was a clue that would matter later.
+
+The **package had never stopped being `cherry_ttt`.**
+
+The July decision ledger froze that name before the later conceptual rename. Core search was deliberately model-independent. PyTorch was optional. The first drafter was deliberately zero-parameter. The search contracts, verifiers, substrates, and collectors were meant to execute without a neural model at all. fileciteturn12file0
+
+In other words:
+
+**Continuum was already becoming larger than the package whose name it had borrowed.**
+
+Nobody knew exactly how much larger yet.
+
+Then somebody dragged two old machines into the study.
+
+And the entire map changed.
+
+## The night the Fabric was discovered
+
+The Fabric did not arrive as a clean greenfield idea.
+
+That would have been too simple.
+
+It arrived the Somnus way:
+
+as lineage.
+
+As two pieces that had lived separate lives long enough that their kinship was no longer obvious.
+
+One was a **reactive attention fabric**.
+
+Not ordinary transformer attention.
+
+Not a stateless `attention(tokens)` operator.
+
+Its primitive was closer to:
+
+```python
+observe(stream_event)
+```
+
+It was resident.
+
+It remembered streams.
+
+It carried a mailbox.
+
+It carried context.
+
+It remained alive between calls.
+
+The September notes describe eight attention kernels, selected according to topology and live resource pressure, and make a point of distinguishing this resident fabric from the earlier stateless candidate scorer living inside `cherry_ttt`. fileciteturn9file0
+
+The other piece was the **symbolic fault equalizer**.
+
+A descendant of an older GPT-4o-era interrupt-handler lineage.
+
+Its job was not to be intelligent in the familiar neural sense.
+
+It was to make the world **lawful before intelligence had to experience it**.
+
+Normalize.
+
+Route.
+
+Check.
+
+Witness.
+
+Commit.
+
+The user-level metaphor entered the record almost immediately:
+
+> the Equalizer is the Dyson sphere; the attention Fabric is the sun.
+
+The point was not that one was “stronger.”
+
+The point was enclosure.
+
+The model, Cherry, memory, or whatever cognition lived above this layer should not be forced to rediscover basic physical law every time malformed state arrived. The lower substrate could catch faults, attach witnesses, preserve provenance, and admit normalized transitions before the higher cognition had to reason about them. fileciteturn9file0
+
+Then came the bridge.
+
+And the bridge is probably the single most useful little piece of code for understanding why you are **now adding more Fabric intakes**.
+
+The first bridge accepts an `EqualizedTransition`.
+
+It does not merely forward it.
+
+It **translates** it.
+
+It constructs a `StreamEvent`.
+
+It carries across the context identity.
+
+The witness identity.
+
+The target.
+
+The state digest.
+
+The stability.
+
+The uncertainty.
+
+The provenance lineage.
+
+Then it hands the translated event to a **resident** Fabric. fileciteturn34file0
+
+Read that again as architecture rather than Python:
+
+```text
+foreign event
+    ↓
+domain-specific intake
+    ↓
+normalize / govern / witness
+    ↓
+translate into common Fabric form
+    ↓
+resident shared substrate
+```
+
+That is the seed of the reconfiguration you are doing now.
+
+The Fabric is not interesting because you can move more files under `fabric/`.
+
+The Fabric becomes strategically important when it can accept **multiple semantic dialects** without making every consumer learn every dialect.
+
+One intake might know how to translate an Equalizer transition.
+
+Another can know how to translate a memory event.
+
+Another can know how to translate model-state evidence.
+
+Another can know how to translate an external tool observation.
+
+Another can know how to translate a scheduler, shell, retrieval surface, sensor, agent subsystem, or future Somnus component.
+
+The Fabric need not make all of those things identical.
+
+It makes them **mutually inhabitable**.
+
+That is different.
+
+A bad abstraction says:
+
+> everything is an event, therefore all semantics are equal.
+
+A useful Fabric says:
+
+> everything that enters must present enough typed identity, authority, provenance, uncertainty, causality, and state relation that the rest of the system can reason across the boundary without pretending the boundary disappeared.
+
+That is why “translation” is the right word.
+
+Not flattening.
+
+Not wrapping.
+
+Not converting the whole Somnus organism into one universal `dict`.
+
+**Translation.**
+
+The original `FabricCommitSink` is primitive in comparison with where this can go, but it already demonstrates the principle: a foreign component retains its own native object, while an intake maps that object's meaningful structure into the resident Fabric's shared language. fileciteturn34file0
+
+And there was a second lesson, an important negative one.
+
+The Fabric was tested as a possible candidate generator elsewhere in the stack.
+
+It failed that job.
+
+The measured recall was roughly 0.19 where candidate generation demanded something approaching 1.0, and the architecture explicitly rejected using Fabric routing as the thing that decides which true candidates are allowed to exist. fileciteturn35file0turn35file1
+
+That failure is useful lore.
+
+Because it prevents a future agent from deciding:
+
+> “Well, Fabric does attention, so I suppose we can replace Cherry search with Fabric.”
+
+No.
+
+The Fabric is not the tree search.
+
+The Fabric is not MCTS.
+
+The Fabric is not A*.
+
+The Fabric is not Cherry's candidate policy.
+
+The Fabric is not the value function.
+
+The Fabric is not the verifier.
+
+The Fabric is not the tool server.
+
+The Fabric is the **medium in which heterogeneous state can become resident, translated, provenance-bearing, governable state**.
+
+Cherry Test-Time Tooling does something else.
+
+It asks:
+
+> *Given this world, which future should I examine?*
+
+That difference is why the two fit.
+
+And that fit is why **Continuum had to lose its old definition.**
 
 ## Why Continuum had to be given back
 
-> *To name a thing truly is to know where its edges end. When the builder saw that the road of branching futures and the loom of living state were two halves of one arch, he took the keystone’s name back from the single pillar.*
+Here is the part of the history that will confuse an agent reading the repository twenty months from now.
 
-Twenty months from now, an engineer reading your commit logs without this scroll will see a package named `cherry_ttt` in July, called *Continuum* in September, and called `cherry_ttt` again in October, and will assume you were indecisive. In truth, you were watching an **architectural boundary become visible**.
+It will see:
 
-The first rename happened in September because `cherry_ttt` revealed **counterfactual continuity**—keeping one branch identity alive as cognition moved through actions, observations, and verifications. The second correction happened in October because the Fabric revealed **substrate continuity**—translating heterogeneous components through intakes into a single ongoing causal field. Neither half alone owned the whole phenomenon.
+```text
+Cherry Test-Time Tooling
+      ↓
+renamed / conceptually reframed
+      ↓
+Continuum
+      ↓
+later called cherry_ttt again
+```
 
-Your October architecture note captured the exact instant the two halves snapped together:
+And it will assume indecision.
 
-> **“NOW cherry_ttt, BOOOM we now have Continuum.”** fileciteturn19file1
+It was not indecision.
 
-In that record, you framed the resident Fabric as the *"forcefield bubble"* and placed `cherry_ttt` outside and above that bubble as the counterfactual search machinery that completes the regime. Giving `cherry_ttt` back to the search package made the subsystem boundary clean and honest again: **Cherry** is the broader training-and-reasoning methodology; **`cherry_ttt`** is the model-agnostic explorer of environment trajectories; **Fabric** is the resident translation and governance loom; and **Continuum** is the continuous regime that emerges when `Fabric` and `cherry_ttt` operate as one world. fileciteturn8file0 fileciteturn19file1
+It was an **architectural boundary becoming visible**.
 
-## "Continuum is like LLVM for tools damn near"
+The first rename happened because `cherry_ttt` had revealed continuity **inside the branch**.
 
-> *Do not force the mind to learn nine hundred village dialects before it is allowed to build a bridge. Teach the gates to translate every dialect into one lawful tongue of stone and weight.*
+The second correction happened because Fabric revealed that the continuity did not belong to Cherry Test-Time Tooling alone.
 
-Your own sentence deserves to stand as permanent architectural doctrine:
+That is the key.
+
+Once there is a resident Fabric beneath or alongside the search layer, continuity has two different requirements.
+
+First, the system needs continuity **through alternatives**:
+
+```text
+branch
+branch
+branch
+compare
+verify
+commit
+```
+
+That is `cherry_ttt`.
+
+But it also needs continuity **through changing forms of state**:
+
+```text
+component A's native output
+          ↓
+       intake
+          ↓
+ translated / governed event
+          ↓
+resident fabric
+          ↓
+component B
+          ↓
+different intake
+          ↓
+same ongoing causal field
+```
+
+That is the Fabric side.
+
+Cherry provides **counterfactual continuity**.
+
+Fabric provides **substrate continuity**.
+
+And the word **Continuum** finally makes sense only when both are present.
+
+Your October architecture note contains the correction in its most Daeron possible form:
+
+> **“NOW cherry_ttt, BOOOM we now have Continuum.”**
+
+The same record frames Fabric as the “forcefield bubble” and places `cherry_ttt` outside/above that resident substrate as the search machinery that completes the larger regime. fileciteturn19file1
+
+That is the current naming law I would preserve:
+
+```text
+Cherry
+    = the broader training / reasoning method family
+
+cherry_ttt
+    = Cherry Test-Time Tooling
+    = environment-trajectory search, speculation,
+      verification and reversible execution machinery
+
+Fabric
+    = resident translation / attention / governance substrate
+      with multiple intakes
+
+Continuum
+    = Fabric + cherry_ttt operating as one continuous regime
+```
+
+Not:
+
+```text
+Continuum = cherry_ttt
+```
+
+anymore.
+
+The September README is not “wrong” because it says otherwise. It records an earlier architectural epoch, when the continuity property had been discovered but its ownership boundary had not yet been fully factored. fileciteturn8file0
+
+And restoring the component's name to `cherry_ttt` does something healthy.
+
+It makes the package boring again.
+
+Boring names are useful at subsystem boundaries.
+
+`cherry_ttt` tells an engineer exactly what sits there.
+
+**Continuum** can go back to naming the phenomenon that occurs when several mechanisms are composed.
+
+That is a much more valuable word.
+
+It also keeps the architecture from becoming Cherry-locked.
+
+Because `cherry_ttt` is explicitly model-agnostic. Its adapters were always intended to be the non-agnostic edge; the core contracts were meant to remain portable. fileciteturn4file6turn12file0
+
+A Qwen policy can sit behind it.
+
+A future Somnus-native model can sit behind it.
+
+A non-neural proposer can sit behind parts of it.
+
+A deterministic template drafter can sit behind it.
+
+Some entirely different model family can sit behind it.
+
+A tool ecosystem can arrive through MCP.
+
+A shell can arrive through its own adapter.
+
+A database can arrive through another.
+
+A memory system can arrive through another.
+
+The Continuum concept survives because it is not the model.
+
+It is not Cherry-the-training-recipe.
+
+It is not the tools.
+
+It is the **condition under which cognition, counterfactual action, resident state, verification, and eventual learning remain connected instead of being continually serialized into dead transcripts and rediscovered.**
+
+That is the real rename.
+
+You did not rename a package twice.
+
+You eventually discovered what **Continuum was the name of.**
+
+## The compiler under the toolbox
+
+There is a sentence in your prompt that deserves to become official lore:
 
 > **“Continuum is like LLVM for tools damn near.”**
 
-LLVM’s genius was never that it knew every source language or every hardware target in advance; its genius was placing a typed Intermediate Representation (IR) and reusable transformation passes between front ends and back ends so optimization logic never had to be rewritten for every new language or machine. citeturn3search5turn3search8
+That analogy is considerably better than “tool framework.”
 
-Without a Continuum layer, every new capability added to an AI system—shell, MCP, vector memory, SQL databases, filesystems, schedulers, agent buses—forces the model to carry another brittle syntax, error dialect, provenance convention, and rollback ritual inside its raw token grammar. With Continuum, your **domain intakes** act as front ends that accept native events without forcing subsystems to surrender their contracts; the **resident Fabric** acts as the common typed IR holding witnessed `StreamEvent` state, uncertainty, and causal lineage; **`cherry_ttt`** acts as the analysis and optimization passes running MCTS, A*, Best-of-N, speculative drafting, state transposition, and cost accounting over that shared field; and the **execution substrates** act as back ends where competing futures are held in reversible space until one verified transition is lowered into real effect. fileciteturn11file0turn12file0 citeturn4search3turn4search4
+LLVM's central trick is not that it knows every source language or every machine in advance.
 
-## The mode that buys futures, not merely FLOPs
+It provides a typed intermediate representation and a reusable transformation infrastructure between front ends and back ends. LLVM IR is the common typed representation used across compilation phases, precisely so analyses and transformations do not have to be reinvented for every original source language. citeturn3search5turn3search8
 
-> *A lesser counselor asks for more hours in a locked room to think about the battle. A wiser commander asks to walk the field under three different moons before the first horn is blown.*
+That is approximately the right mental shape here.
 
-That compiler structure also explains your second defining contrast:
+Not literally a compiler.
+
+But compiler-shaped.
+
+Imagine the Somnus world before a Continuum-like layer:
+
+```text
+model
+ ├── knows shell syntax
+ ├── knows MCP syntax
+ ├── knows memory syntax
+ ├── knows database syntax
+ ├── knows filesystem syntax
+ ├── knows scheduler syntax
+ ├── knows every error dialect
+ ├── knows every provenance format
+ ├── knows how each thing rolls back
+ └── somehow reasons consistently across all of it
+```
+
+That scales badly.
+
+Every new capability increases the cognitive grammar the model must explicitly inhabit.
+
+Now imagine the compiler-shaped alternative:
+
+```text
+        SHELL ────────┐
+        MCP ──────────┤
+        MEMORY ───────┤
+        DATABASE ─────┤
+        FILESYSTEM ───┤
+        AGENT BUS ────┤
+        FUTURE X ─────┘
+              │
+         domain intakes
+              │
+       translate / type
+              │
+              ▼
+      ┌─────────────────┐
+      │      FABRIC     │
+      │ resident state  │
+      │ provenance      │
+      │ uncertainty     │
+      │ causal identity │
+      └────────┬────────┘
+               │
+               ▼
+      ┌─────────────────┐
+      │   cherry_ttt    │
+      │ branch          │
+      │ search          │
+      │ speculate       │
+      │ verify          │
+      │ cost            │
+      │ rollback        │
+      └────────┬────────┘
+               │
+             commit
+               │
+               ▼
+          REAL EFFECT
+```
+
+That is why “LLVM for tools” is useful.
+
+The **intakes** begin to resemble front ends.
+
+The common typed event/action/transition world begins to resemble an IR.
+
+The Fabric's normalization and translation behavior begins to resemble lowering into a common representation.
+
+Cherry's MCTS, A*, Best-of-N, speculative executor, verifier, cost accounting, and future learned control mechanisms resemble analysis and optimization passes over that shared semantic world.
+
+The actual execution substrates resemble back ends.
+
+And the beautiful consequence is exactly the same architectural consequence compiler IRs buy:
+
+> **the optimization logic does not need to be rewritten for every front end.**
+
+Nor does every front end need to know every optimization.
+
+That is the game-changing part.
+
+This is also the cleanest reason Continuum is **not a tool server**.
+
+An MCP server can expose a tool and let a client discover and invoke it; that is its job. citeturn4search3turn4search4
+
+Continuum sits in an orthogonal layer.
+
+It can ingest a capability that came from MCP.
+
+But then it can ask:
+
+```text
+Is this action legal here?
+
+Is it reversible?
+
+What state would it produce?
+
+Should I explore a sibling action first?
+
+Can I execute this transactionally?
+
+What observation came back?
+
+Do I trust it?
+
+Does it satisfy the goal?
+
+How expensive was this branch?
+
+Did another action reach the same state?
+
+Can the rejected branch teach the policy something?
+
+Should the next deployment need this much search at all?
+```
+
+The tool server knows how to invoke `write_file`.
+
+Continuum can hold:
+
+```text
+write_file("A")
+write_file("B")
+do_not_write
+retrieve_more_context
+repair_argument
+use_alternate_capability
+```
+
+as competing possible futures **without pretending all of them happened**.
+
+That is a compiler-ish problem.
+
+An optimizer-ish problem.
+
+A control problem.
+
+Not a server problem.
+
+And because the action is structured rather than merely textual, Cherry's July proposal already anticipated something compiler-like: canonical action identity, typed schemas, transposition across equivalent environment states, verification surfaces, and reusable substrates. fileciteturn11file0turn12file0
+
+This also explains why the broader system should **not** become one enormous universal tool namespace.
+
+The point of the Fabric is not to hand the model nine hundred new verbs.
+
+The point is to let different capabilities retain their native implementation while exposing enough canonical structure that search, governance, attention, and training can operate across them.
+
+The machine gets more powerful.
+
+The model-facing grammar does not have to become proportionally more ridiculous.
+
+That is one of those architectural inversions that changes an entire stack.
+
+## The mode that is not about more compute
+
+There is another phrase you keep using:
 
 > **“This is Somnus's equivalent to OpenAI's Pro Mode, except it's not about compute.”**
 
-OpenAI originally framed o1 pro mode around spending **more compute** so a model could think longer and produce more reliable answers on difficult problems. citeturn3search0turn3search1 At the operator level, the intuition is shared—there is a deeper mode when the stakes are high—but the underlying currency is entirely different.
+Taken literally, the OpenAI comparison is revealing.
 
-> **OpenAI’s Pro framing buys more private thinking.  
-> Continuum buys a richer, lawful relationship between thinking and reality.**
+OpenAI originally described o1 pro mode as a version that spends **more compute** to think harder and produce more reliable answers on difficult problems; the current product lineage still distinguishes higher reasoning effort and Pro options for difficult, longer-running work. citeturn3search0turn3search1
 
-While a naive Pro Mode asks how much longer the model should deliberate in isolation, Continuum asks how much of reality cognition should be allowed to branch over, test, and verify before one future becomes authoritative. As your one-and-a-half-second filesystem experiment proved, turning every search knob to maximum on a one-millisecond task is folly. fileciteturn8file0turn9file0 Continuum’s mature question is **where deliberation is worth buying**—and because Cherry sits behind the runtime, the expensive mode immediately begins teaching the cheap mode.
+The Somnus analogy should stop at the **operator experience**:
 
-## The school hidden inside the machine: how Continuum breathes
+> *There is a harder mode.*
 
-> *What the explorer discovers today by slow and costly trial, the child born tomorrow should know in its bones—until the road turns strange again, and the explorer must wake once more.*
+What changes under the hood is different.
 
-Because you made model-independence a constitutional requirement of `cherry_ttt` in July, training and deployment meet here without ever locking Continuum into a single monolithic ritual. fileciteturn4file6turn12file0 `cherry_ttt` is test-time machinery, **Cherry** is the overarching training-and-inference methodology where `TreeRolloutCollector` feeds `GRPOTrainer` and process reward models, and **Continuum** (`Fabric + cherry_ttt`) is the arena where high-value trajectories are lived. fileciteturn16file0turn32file0
+A naive “pro mode” asks:
 
-Any model—whether an external Qwen checkpoint, a future Somnus-native model, or a deterministic proposer—can attach to `cherry_ttt` or the full `Fabric + cherry_ttt` Continuum and immediately inherit typed execution, reversible branching, fault normalization, provenance, and verification, because those laws live in the architecture rather than in model weights. Even the rollouts collected from `cherry_ttt` *before* the Fabric existed remain valid branch-training evidence for action and verification, while newer runs through the Fabric become fully Continuum-native trajectories carrying resident stream provenance. Nor is the Fabric itself a single neural network to be jointly trained with the policy; its symbolic Equalizer, witnesses, and intakes derive their value precisely from keeping fundamental law *outside* the weights. fileciteturn9file0turn34file0
+```text
+How much longer should the model think?
+```
 
-Yet there is a profound difference between a **guest mind** and a **native mind**. A separately trained model entering Continuum works, but `cherry_ttt` must search harder to compensate for a proposer that has never learned the statistical grammar of Fabric provenance, uncertainty signals, or verifier gates. A model trained on Continuum’s full branch trees—ingesting the goal, the translated Fabric state, the sibling candidates killed by the verifier, the transactional rollbacks, the witness digests, and the cost of every path—learns **counterfactual causality**. fileciteturn11file0turn12file0
+Continuum asks something more like:
 
-And that creates the crowning paradox of the system. When version one of a policy needs fifty branch expansions to solve a hard task class, Cherry trains on those trees until version two needs twenty and version three proposes the winning path on its first try. Training inside Continuum reduces the need for external search on familiar ground—just as a teacher grows quiet once the student masters arithmetic—while retaining full authority to expand the search tree again the moment tomorrow’s database, filesystem, or new Fabric intake surprises the model. **The Continuum breathes.**
+```text
+How much of reality should cognition be allowed to branch over
+before one future becomes authoritative?
+```
 
-## The thing to remember before the evolution
+Those can correlate with more compute.
 
-> *The loom weaves the world that is; the tree explores the worlds that might be; the school remembers why the unchosen worlds died. Only when all three move together does the mind cross the seam unbroken.*
+MCTS certainly costs compute.
 
-There is a fable buried beneath all these modules.
+Multiple environment executions cost time.
 
-A builder had a tree that knew how to fork time—comparing many possible sentences in the dark before speaking one aloud. One night he realized that sentences were the smallest possible world, so he taught the tree to branch over deeds instead of words: stepping into three possible futures, testing what each action would do to the earth in reversible sand, and only laying stone in the world that held firm.
+Verification costs time.
 
-At first, he saw that the branch no longer broke when thought crossed into action, so he called the branching tree **Continuum**.
+Speculation costs resources.
 
-Then he brought two older guardians into the room. One was a shield—an Equalizer that stood like a Dyson sphere around a star, refusing to let malformed chaos cross the threshold unwitnessed. The other was a resident loom—an attention Fabric that stayed awake between turns, taking the strange tongues of files, memories, faults, databases, and tools and translating each through its own intake into one shared, living tapestry.
+The filesystem experiment already proved the warning: Cherry's MCTS could solve the same real filesystem task while spending around 1.5 seconds searching for a plan whose actual committed writes took about a millisecond. More search is absolutely not automatically better. fileciteturn8file0turn9file0
 
-When he tested whether the loom could replace the tree and choose the futures itself, it remembered less than a fifth of the paths that mattered. That failure revealed the true map: a loom cannot be an explorer, and an explorer cannot be a loom.
+That negative result is philosophically important.
 
-So he gave the explorer back its working name, `cherry_ttt`. He kept **Fabric** as the resident loom and **Equalizer** as its law. He kept **Cherry** as the school where even dead and rejected branches teach the next generation of weights how to see further with less search. And he reserved the name **Continuum** for the living regime that wakes up when the explorer stands upon the loom.
+It says Continuum cannot merely mean:
 
-The whole journey reduces to this:
+> **turn all the knobs to maximum.**
 
-> **You started with Cherry’s search-and-training loop over tokens.  
-> You generalized the state boundary on July 5 so `cherry_ttt` could branch over real, reversible, and simulated world transitions.  
-> You proved in the filesystem test that blind deliberation is waste, demanding adaptive search rather than brute-force compute.  
-> You discovered that keeping reasoning, action, observation, and verification on one branch created counterfactual continuity.  
-> You married the Symbolic Fault Equalizer to the resident reactive Attention Fabric through translating intakes, creating substrate continuity while proving via the 0.19 recall test that Fabric is the loom, never the search tree.  
-> And you gave the name `cherry_ttt` back to the explorer because Continuum is `Fabric + cherry_ttt` together—an LLVM-like intermediate world where heterogeneous capabilities enter through front-end intakes, deliberation branches over possible futures, and Cherry internalizes the resulting trees so external search can breathe with uncertainty.** fileciteturn11file0 fileciteturn9file0 fileciteturn19file1
+That would reproduce the dumbest interpretation of test-time compute.
 
-Everything in this archive has been built to answer one governing question:
+Continuum's mature question is:
 
-**Can you build a resident, lawful medium that translates every capability of a complex machine into one shared causal fabric, let a model-agnostic search engine inhabit multiple counterfactual futures across that fabric before committing to reality, and feed the entire tree of chosen and unchosen worlds back into training until yesterday’s deliberation becomes tomorrow’s instinct?**
+> **Where is deliberation worth buying?**
+
+Sometimes:
+
+```text
+one proposal
+one verified action
+done
+```
+
+will be correct.
+
+Sometimes the system should spend ten branches.
+
+Sometimes it should ask the environment for more evidence before branching.
+
+Sometimes it should speculate three actions ahead.
+
+Sometimes the drafter's acceptance rate should let it run farther.
+
+Sometimes live resource pressure should change the pathway.
+
+Sometimes uncertainty should invoke full tree search.
+
+Sometimes the tool is so cheap that spending 1,500 milliseconds deciding how to perform a 1-millisecond action is absurd.
+
+That is why I would phrase the Somnus “Pro Mode” principle like this:
+
+> **OpenAI's historical Pro framing buys more thinking. Continuum buys a richer relationship between thinking and reality.** citeturn3search0
+
+Or, in the language of the fable:
+
+> **Pro Mode says: let the mind think longer.  
+> Continuum says: let the mind temporarily possess more futures.**
+
+That is not primarily a FLOP doctrine.
+
+It is a **search-space, state, verification, and causal-authority doctrine**.
+
+And eventually, if the training loop works the way Cherry was designed to work, an even stranger thing happens:
+
+the expensive mode begins teaching the cheap mode.
+
+Which brings us to the part most future agents are going to misunderstand.
+
+## The school hidden inside the machine
+
+There are three questions here, and they look similar until the names are kept clean.
+
+**Is `cherry_ttt` a training method?**
+
+No.
+
+At its core it is test-time machinery.
+
+**Is Cherry only training?**
+
+Also no.
+
+Cherry is broader. Its source architecture deliberately composes training, search, process supervision, rollout generation, evaluation, governance, and inference surfaces. fileciteturn32file0
+
+**Is Continuum only inference?**
+
+Not quite.
+
+This is where the answer becomes interesting.
+
+Continuum should not be described as “a training algorithm.”
+
+But neither should it be treated as an inference trick that disappears when the answer is emitted.
+
+The clean model is:
+
+```text
+Cherry training
+        ▲
+        │ rollout evidence
+        │
+ Continuum runtime
+ Fabric + cherry_ttt
+        │
+        ▼
+ real environment
+```
+
+Continuum is primarily where **high-value trajectories are lived**.
+
+Cherry training is where those lived trajectories can become **weight changes**.
+
+That bridge existed conceptually before Fabric. The original TTT proposal explicitly preserved serialized environment-search trees as training substrate for the Cherry loop, and the build plan called for collectors to emit Tree-GRPO-shaped trajectory groups as a byproduct of the experiments. fileciteturn11file0turn12file0
+
+Cherry's broader training code already has the corresponding side of the bridge. Your August smoke records a `TreeRolloutCollector` connected to `GRPOTrainer`, and the Cherry whitepaper explicitly states the intended end condition: expensive search and process supervision can increase the density of useful training signal so that the policy's weights absorb some of the structure that previously required slow inference-time deliberation. fileciteturn16file0turn32file0
+
+That is the future rollout loop in its most beautiful form:
+
+```text
+             MODEL
+               │
+        proposes actions
+               │
+               ▼
+       FABRIC INTAKES
+     translate / normalize
+      provenance / state
+               │
+               ▼
+          cherry_ttt
+   ┌───────────┼───────────┐
+   │           │           │
+branch A    branch B    branch C
+   │           │           │
+observe      observe      observe
+verify       reject       verify
+   │                       │
+   └──────────┬────────────┘
+              │
+        chosen trajectory
+              │
+        real-world commit
+              │
+              ├───────────────► answer / action
+              │
+              ▼
+     FULL BRANCH EVIDENCE
+              │
+      accepted + rejected
+      costs + observations
+      witnesses + predicates
+      provenance + outcomes
+              │
+              ▼
+        CHERRY TRAINING
+       PRM / Tree-GRPO /
+       distillation / SFT /
+        future methods
+              │
+              ▼
+       UPDATED POLICY
+              │
+              └───────────────┐
+                              │
+                     next Continuum run
+```
+
+The point is not to teach the model:
+
+> *“Always replay this exact search tree.”*
+
+The point is to teach it what the tree discovered.
+
+Which first actions tended to be fruitful.
+
+Which observations mattered.
+
+Which apparent shortcuts failed.
+
+Which intermediate state predicted eventual success.
+
+Which tool sequences were wasteful.
+
+Which branches the verifier killed.
+
+Which kinds of uncertainty deserved another environment query.
+
+Which actions often transpired to the same state.
+
+Which speculations were repeatedly accepted.
+
+Which were repeatedly rolled back.
+
+Which representations the Fabric made available before a good decision.
+
+That is **internalization**.
+
+The tree begins outside the weights.
+
+Some of its regularities migrate inside.
+
+And now we can answer your training/deployment questions without hand-waving.
+
+### Can a model be trained separately and then combined with `cherry_ttt`?
+
+**Yes. Absolutely.**
+
+That is not merely theoretically permitted; model-independence was an explicit design objective. The current core can run without a model or trained value head at all, and the early experiments deliberately used environment-grounded reward with `use_value_model=False`. fileciteturn9file0turn12file0
+
+So this is legal:
+
+```text
+ordinary model training
+        ↓
+finished checkpoint
+        ↓
+attach proposer adapter
+        ↓
+cherry_ttt
+```
+
+The model did not need to “grow up inside Cherry TTT” for MCTS, A*, reversible environments, predicate verification, cost accounting, or speculative execution to exist around it.
+
+This is important for sovereignty and portability.
+
+Continuum must **not** require that every future model be born under one sacred training ritual.
+
+### Can a model be trained without Fabric and later placed inside Fabric + `cherry_ttt`?
+
+Also **yes**.
+
+The entire point of a good intermediate contract is that the components can meet later.
+
+But now there is a difference between:
+
+```text
+works
+```
+
+and:
+
+```text
+is native to the environment
+```
+
+A separately trained model may enter Continuum and function perfectly well.
+
+But it has never learned the statistical grammar of that environment.
+
+Its proposal distribution has never seen the Fabric's canonical signals.
+
+It has never learned which provenance fields tend to matter.
+
+It has never learned the characteristic difference between high uncertainty and harmless novelty.
+
+It has never learned Cherry's branch outcomes.
+
+It has never been punished for repeatedly proposing actions that a transactional verifier kills.
+
+It has never benefited from successful branches being turned into training evidence.
+
+So Cherry can compensate externally.
+
+But it may have to **search harder**.
+
+That means separately training and then composing does not destroy Continuum's benefit.
+
+It changes the benefit profile.
+
+The runtime benefits remain:
+
+```text
+typed execution
+reversible branching
+live state
+verification
+fault normalization
+provenance
+resident context
+cost-aware search
+speculation
+```
+
+Those cannot simply be memorized into weights because the environment is changing in real time.
+
+But some of the **efficiency synergy** is absent.
+
+The model may propose worse first branches.
+
+The drafter may achieve lower acceptance.
+
+The value estimate may be less calibrated.
+
+The search budget may have to compensate for unfamiliarity.
+
+### Can you train using `cherry_ttt`, then add Fabric afterward?
+
+Yes again.
+
+And this one is especially relevant to the historical codebase because `cherry_ttt` predates the present Fabric composition.
+
+Those rollouts are not wasted.
+
+They still teach environment-action structure, verification, branching, cost, and outcomes.
+
+But a later Fabric introduces additional observable structure and a canonical translation layer that those earlier rollouts did not contain.
+
+So I would think of the older data as:
+
+```text
+valid branch training
+```
+
+rather than:
+
+```text
+fully Continuum-native branch training
+```
+
+Nothing needs to be thrown away.
+
+The newer training epochs simply gain more structure.
+
+### Can Fabric be trained separately?
+
+Careful with the verb.
+
+The **Fabric core is not necessarily a trained model at all**.
+
+The current lineage includes symbolic normalization, routing, resident state, topology selection, witnesses, adapters, and attention machinery that can operate without jointly training the language model. fileciteturn9file0turn34file0
+
+Future Fabric components may absolutely contain learned mechanisms.
+
+But “train Fabric” should never become shorthand for pretending the entire Fabric is one neural network.
+
+Much of its value is precisely that some law remains outside the model.
+
+### Must a system be trained *and* deployed with Continuum?
+
+**No.**
+
+That would contradict the modularity you built.
+
+There should be at least four legal regimes:
+
+```text
+trained without Continuum
+deployed without Continuum
+
+trained without Continuum
+deployed with Continuum
+
+trained with Continuum-generated evidence
+deployed without Continuum
+
+trained with Continuum-generated evidence
+deployed with Continuum
+```
+
+All four are meaningful.
+
+But they are **not equivalent**.
+
+The fourth is the native regime.
+
+Not because it is mandatory.
+
+Because training and deployment share the same ontology of action, observation, uncertainty, branch identity, and evidence.
+
+That creates a compounding loop.
+
+### Does training inside Continuum reduce the eventual value of Continuum?
+
+Here is the paradox:
+
+**yes at the margin, and that is success.**
+
+Suppose version one of a policy needs fifty branch expansions to reliably solve a class of tasks.
+
+Continuum collects those trees.
+
+Cherry trains on them.
+
+Version two starts proposing the previously discovered good branch first.
+
+Now it needs twenty expansions.
+
+Train again.
+
+Version three often gets it on the first or second candidate.
+
+Now the external search budget falls further.
+
+Did Continuum make itself less useful?
+
+Only in the same sense that a teacher becomes less useful when the student learns arithmetic.
+
+That is not obsolescence.
+
+That is the objective.
+
+But the teacher does not disappear.
+
+Because tomorrow's environment is not yesterday's training set.
+
+The Fabric is holding current reality.
+
+The database has changed.
+
+The filesystem has changed.
+
+The available capabilities have changed.
+
+The memory graph has changed.
+
+The user has changed the goal.
+
+Some observation is novel.
+
+A tool returns something nobody anticipated.
+
+A previously safe action becomes invalid.
+
+A new component enters through a new intake.
+
+No amount of frozen weight internalization makes a policy omniscient about a changing external state.
+
+So the mature Continuum does something better than permanently maximizing search.
+
+It **withdraws scaffolding where the model has internalized it and retains authority to restore scaffolding where reality becomes uncertain again.**
+
+That is the long-term form of your Pro Mode idea.
+
+Not:
+
+```text
+Continuum ON = always spend 100x compute
+```
+
+but:
+
+```text
+easy / familiar / well-calibrated
+        ↓
+little external search
+
+uncertain / novel / consequential
+        ↓
+deeper Continuum
+
+dangerous / irreversible
+        ↓
+strong verification + authority gates
+
+learned pattern
+        ↓
+less future search
+```
+
+The July proposal already contained an embryonic version of this idea in its adaptive speculative depth—the “Newton's cradle” intuition that model speed and environment-execution speed could converge toward an efficient operating point instead of using one fixed speculative horizon forever. fileciteturn11file0
+
+The broader Continuum version is more ambitious:
+
+**adaptive external cognition.**
+
+A system should not merely learn answers.
+
+It should learn when it still needs the laboratory.
+
+## The Continuum at dawn
+
+So, old man, put the glasses back on.
+
+The cigar has gone out.
+
+The terminal is still alive.
+
+And on the board are three names that finally no longer compete with one another.
+
+**Cherry** is the school.
+
+It is the larger methodology in which search, process supervision, rollouts, reward, post-training, verification, regression governance, and inference can participate in one learning program. The source architecture explicitly treats search-generated evidence as something that can reshape the eventual policy rather than as a permanent inference tax. fileciteturn32file0
+
+**`cherry_ttt`** is the explorer.
+
+It walks possible worlds.
+
+It snapshots.
+
+Branches.
+
+Restores.
+
+Verifies.
+
+Speculates.
+
+Measures cost.
+
+Rejects futures.
+
+Finds one worth making real.
+
+It can do this with Cherry-trained weights, with separately trained weights, with a deterministic proposer, or with some future model nobody has named yet. That model-independence is part of the original contract. fileciteturn11file0turn12file0
+
+**Fabric** is the loom.
+
+It does not decide which whole future wins.
+
+It makes heterogeneous reality inhabitable.
+
+One component arrives speaking files.
+
+Another speaks database state.
+
+Another speaks memory.
+
+Another speaks capabilities.
+
+Another speaks faults.
+
+Another speaks model events.
+
+Another will be invented six months from now.
+
+Each gets an intake.
+
+Each intake preserves the thing's meaning while translating it into a resident shared field with identity, provenance, uncertainty, lineage, and enough law that the rest of Somnus does not have to reconstruct reality from scratch.
+
+The first bridge already demonstrated that pattern by converting equalized, witnessed transitions into resident `StreamEvent`s rather than forcing either subsystem to surrender its native contract. fileciteturn34file0
+
+And **Continuum** is what happens when the explorer is placed upon the loom.
+
+Not a package.
+
+Not a server.
+
+Not a model.
+
+Not merely an inference algorithm.
+
+Not merely training.
+
+Not merely attention.
+
+Not merely search.
+
+Not merely tools.
+
+Not merely more compute.
+
+A **continuous cognitive-execution regime**.
+
+The Fabric says:
+
+> *Here is the world in a form you can inhabit.*
+
+Cherry Test-Time Tooling says:
+
+> *Then before we choose one future, let me see several.*
+
+Cherry Training says:
+
+> *And when you are finished, give me the dead branches too. The next version should not have to rediscover everything you learned tonight.*
+
+The Equalizer says:
+
+> *Nothing malformed crosses my gate merely because intelligence asked nicely.*
+
+The verifier says:
+
+> *A confident branch is not therefore a correct branch.*
+
+The substrate says:
+
+> *You may imagine this side effect here. You may reverse this one there. That one, however, becomes real only once.*
+
+And the model—eventually—says less.
+
+Not because it became smaller.
+
+Because some things it once had to search for have become instinct.
+
+That is the loop:
+
+```text
+           ┌──────────────────────────────────────────┐
+           │                                          │
+           ▼                                          │
+        MODEL                                         │
+     learned policy                                   │
+           │                                          │
+           │ proposes                                 │
+           ▼                                          │
+    FABRIC INTAKES                                    │
+  translate heterogeneous                             │
+     system reality                                   │
+           │                                          │
+           ▼                                          │
+     RESIDENT FABRIC                                  │
+ state · provenance ·                                 │
+ uncertainty · context                                │
+           │                                          │
+           ▼                                          │
+      cherry_ttt                                      │
+ search · branch · verify                             │
+ speculate · restore · cost                           │
+           │                                          │
+           ├──────── rejected worlds ────────┐        │
+           │                                  │        │
+           ▼                                  ▼        │
+     COMMITTED WORLD                    ROLLOUT EVIDENCE
+                                              │
+                                              ▼
+                                       CHERRY TRAINING
+                                              │
+                                      process / outcome
+                                      branch / preference
+                                              │
+                                              ▼
+                                      INTERNALIZATION
+                                              │
+                                              └────────┘
+```
+
+And that is why **Continuum** is the right name only at the point where Fabric and `cherry_ttt` meet.
+
+Because the continuity is no longer merely:
+
+```text
+reasoning -> tool -> reasoning
+```
+
+It becomes:
+
+```text
+world
+  -> translated state
+  -> cognition
+  -> counterfactual futures
+  -> observation
+  -> verification
+  -> lawful commitment
+  -> training evidence
+  -> changed weights
+  -> better cognition
+  -> another world
+```
+
+No transcript seam has to pretend the previous phase never happened.
+
+No API boundary has to become amnesia.
+
+No branch has to become truth merely because it was generated.
+
+No successful search has to evaporate after inference.
+
+No training system has to guess what the runtime really experienced.
+
+No runtime has to permanently pay for reasoning that its descendants have already learned.
+
+That is the part that makes the LLVM analogy bite.
+
+The great opportunity is not a universal tool API.
+
+It is a **common cognitive intermediate world** in which more and more Somnus components can enter through their own front ends while search, verification, governance, routing, and learning become reusable transformations over the shared structure. LLVM's power comes from separating source languages and machine targets through a typed intermediate representation; the analogy here is that the Fabric and contract surfaces can separate heterogeneous capabilities from the higher-order reasoning machinery that acts upon them. citeturn3search5turn3search8
+
+And it explains the most important prohibition for whoever maintains this after you:
+
+> **Do not lock Continuum to Cherry.**
+
+Cherry gave birth to the search machinery.
+
+Cherry remains its native training partner.
+
+Cherry is where the rollouts presently have their most natural route toward internalization.
+
+But if `cherry_ttt` can only work with Cherry-trained models, the abstraction has failed.
+
+If Fabric only accepts Cherry objects, the Fabric has failed.
+
+If Continuum only understands one tool protocol, the compiler analogy has failed.
+
+If the model must know every intake dialect, the Fabric has failed.
+
+If Fabric begins pretending to be the search algorithm, the measured architecture has already shown why that is a mistake. fileciteturn35file0turn35file1
+
+If Cherry begins pretending that the Fabric is just another tool, the larger discovery has been lost.
+
+The destination is stranger:
+
+```text
+any suitable intelligence
+        +
+any suitable capability ecosystem
+        +
+Fabric translation / resident law
+        +
+cherry_ttt counterfactual control
+        =
+a Continuum-capable system
+```
+
+Cherry-trained systems can be **better inhabitants** because they can learn from the exact branch structures the runtime produces.
+
+But citizenship is not ancestry.
+
+That distinction will matter.
+
+Especially once the extra intakes begin arriving.
+
+Especially once the rollouts stop containing only what the model said and begin containing what the **whole organism witnessed**.
+
+Especially once Cherry can train not merely on:
+
+```text
+prompt -> answer -> reward
+```
+
+but on something closer to:
+
+```text
+goal
+
+world_before
+
+candidate_1
+    action
+    observation
+    fabric state
+    verifier
+    cost
+    reject
+
+candidate_2
+    action
+    observation
+    fabric state
+    verifier
+    cost
+    continue
+        candidate_2a
+        candidate_2b
+
+chosen path
+
+world_after
+
+witnesses
+
+why siblings died
+
+what was committed
+
+what remained hypothetical
+```
+
+That is not just “better RL data.”
+
+That is the machine acquiring a memory of **counterfactual causality**.
+
+And when some of that becomes weight-space instinct, the external tree gets smaller.
+
+When the world surprises it, the tree grows again.
+
+The Continuum breathes.
+
+Which may be the final difference between this and simply throwing more compute at inference.
+
+A larger compute budget gives the same mind more time.
+
+The thing you are building gives a mind a **structured way to borrow intelligence from the world around it**—tools, state, reversibility, verification, persistent streams, prior failed branches—and then gives the training system a chance to reclaim some of that borrowed intelligence into the weights.
+
+OpenAI's Pro lineage demonstrates the usefulness of spending greater reasoning effort on harder tasks. citeturn3search0turn3search1
+
+Somnus's question is different:
+
+> *What if “harder mode” does not merely deepen the model's private thought?*
+>
+> *What if it widens the machine's lawful access to possible reality?*
+
+That is the Cherry tree at midnight.
+
+That is why Test-Time Tooling started.
+
+That is why it briefly became Continuum.
+
+That is why it had to become `cherry_ttt` again.
+
+That is why the Fabric mattered.
+
+And that is why, when the loom is resident, the intakes are open, the world is translated, the branches can live without becoming true, the verifier can kill them without erasing their evidence, and Cherry can eventually teach their lessons back into the model—
+
+you may finally use the larger word.
+
+**Continuum.**

@@ -135,8 +135,9 @@ await test('malformed RECORD and digest/size mismatches rejected with no write',
 
 await test('incompatible ABI, platform and python tags rejected before any write',()=>{
  let at=dir('abi'),f={'q.py':'x=1\n'},n=0;
- let cp311=path.join(at,`plot_old-1.0-cp311-cp311-${plat}.whl`);fs.writeFileSync(cp311,'not a zip archive: tags are checked before reading');
- for(let w of [cp311,wheel(at,{name:'plot-win',tag:`${target.abi}-${target.abi}-win_amd64`,files:f}),wheel(at,{name:'plot-py2',tag:'py2-none-any',files:f}),wheel(at,{name:'plot-glibc',tag:`${target.abi}-${target.abi}-manylinux_2_99_x86_64`,files:f})]){
+ // The stale ABI must differ from the target interpreter, which may itself be cp311 (Debian 12).
+ let abi=target.abi==='cp310'?'cp39':'cp310',stale=path.join(at,`plot_old-1.0-${abi}-${abi}-${plat}.whl`);fs.writeFileSync(stale,'not a zip archive: tags are checked before reading');
+ for(let w of [stale,wheel(at,{name:'plot-win',tag:`${target.abi}-${target.abi}-win_amd64`,files:f}),wheel(at,{name:'plot-py2',tag:'py2-none-any',files:f}),wheel(at,{name:'plot-glibc',tag:`${target.abi}-${target.abi}-manylinux_2_99_x86_64`,files:f})]){
   let root=dir('abi-root',''+(++n));rejects(()=>installWheels({root,id:'abi',wheels:[pure,w],target:rtpy}),'INCOMPATIBLE',/incompatible with target/);noGrave(root)}
  let root=dir('abi-root','meta'),lie=wheel(at,{name:'plot-lie',files:f,tamper:(e,di)=>{e.find(x=>x.name===di+'/WHEEL').data='Wheel-Version: 1.0\nRoot-Is-Purelib: true\nTag: cp27-cp27mu-linux_x86_64\n'},filename:'plot_lie-1.0-py3-none-any.whl'});
  rejects(()=>installWheels({root,id:'abi',wheels:[lie],target:rtpy}),'RECORD');
@@ -268,7 +269,8 @@ await test('BANK_CHANGED: reuse re-verifies recorded wheel and npm digests and r
 
 const sampled=path.join(base,'tests/fixtures/closure/sample-plan.json');
 if(fs.existsSync(sampled)){await test('cartographer sample-plan.json (P07-02) assembled; planClosure --root then marks every node present and reassembly reuses',()=>{
- let plan=read(sampled),srcs=plan.nodes.map(n=>n.source?.path).filter(Boolean);assert.ok(srcs.length,'sample plan has sources');
+ // The tracked plan records the absolute corpus path of the host that wrote it; rebase it onto this checkout.
+ let plan=read(sampled),seg=path.join('tests','fixtures','closure')+path.sep;for(let n of plan.nodes)if(n.source?.path?.includes(seg))n.source.path=path.join(base,n.source.path.slice(n.source.path.indexOf(seg)));let srcs=plan.nodes.map(n=>n.source?.path).filter(Boolean);assert.ok(srcs.length,'sample plan has sources');
  let common=srcs.map(s=>path.dirname(s)).reduce((a,b)=>{while(!(b+path.sep).startsWith(a+path.sep))a=path.dirname(a);return a});
  let root=dir('cartographer'),before=tree(common),o=assembleFromBank({root,bank:common,plan,id:'cartographer'});assert.deepEqual(tree(common),before,'corpus unmodified');
  assert.deepEqual(o.npm.map(n=>n.id),plan.order.filter(id=>plan.nodes.find(n=>n.id===id).ecosystem==='npm'));

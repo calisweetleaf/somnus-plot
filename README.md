@@ -18,7 +18,7 @@ reconnects; `cancel JOB_ID` requires authenticated live worker control.
 
 Without Node, `sh bootstrap/plot.sh` (or `bootstrap/plot.ps1` on Windows) obtains a pinned Node
 into `.grave/host/` and runs the same seed. `node capabilities/bootstrap.mjs plan` shows what a host
-needs before anything is written. Only Linux x64 has been run; see `bootstrap/hosts/README.md`.
+needs before anything is written. Only Linux x64 has been run (including a fresh Debian 12 container without Node); see `bootstrap/hosts/README.md`.
 
 Read [PERSISTENT-NATIVE.md](PERSISTENT-NATIVE.md) for the command/API surface,
 resource ownership, recovery semantics, limits and reproduction commands.

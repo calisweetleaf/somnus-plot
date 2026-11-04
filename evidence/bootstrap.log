@@ -23,51 +23,51 @@ PASS online official sources: Node-absent launcher fetches pinned Node from node
  "host": {
   "platform": "linux",
   "arch": "x64",
-  "node": "v24.22.0",
-  "tmp": "/tmp"
+  "node": "v24.14.0",
+  "tmp": "/home/daeron/.cache/plot-evidence-tmp"
  },
- "kit": "/tmp/plot-bootstrap-kit",
+ "kit": "/home/daeron/.cache/plot-evidence-tmp/plot-bootstrap-kit",
  "online": true,
  "notRun": [],
  "facts": {
   "timings": {
-   "cold_kit_node-24.22.0-linux-x64": 2938,
-   "cold_kit_python-3.12.15-linux-x64": 2898,
-   "cold_kit_zlib-1.3.2-linux-x64": 1141,
-   "cold_kit_git-2.56.0-linux-x64": 25470,
-   "reuse_closure_process_ms": 65,
+   "cold_kit_node-24.22.0-linux-x64": 2170,
+   "cold_kit_python-3.12.15-linux-x64": 1664,
+   "cold_kit_zlib-1.3.2-linux-x64": 1070,
+   "cold_kit_git-2.56.0-linux-x64": 18361,
+   "reuse_closure_process_ms": 64,
    "reuse_closure_internal_ms": 1,
-   "resume_python_ms": 3023,
-   "launcher_kit_cold_ms": 1757,
-   "launcher_warm_ms": 92,
-   "online_python_cold_ms": 3525,
-   "online_python_fetch_ms": 688,
-   "launcher_online_cold_ms": 2151
+   "resume_python_ms": 2089,
+   "launcher_kit_cold_ms": 2449,
+   "launcher_warm_ms": 119,
+   "online_python_cold_ms": 3375,
+   "online_python_fetch_ms": 1673,
+   "launcher_online_cold_ms": 3383
   },
   "closure": {
    "node-24.22.0-linux-x64": {
     "bytes": 201678212,
     "files": 4797,
     "links": 3,
-    "path": "/tmp/plot-bootstrap-test-819wQu/kit-install/.grave/host/node-24.22.0-linux-x64-ByKrqT"
+    "path": "/home/daeron/.cache/plot-evidence-tmp/plot-bootstrap-test-jjQ6xr/kit-install/.grave/host/node-24.22.0-linux-x64-8Lj81z"
    },
    "python-3.12.15-linux-x64": {
     "bytes": 222271476,
     "files": 3482,
     "links": 1049,
-    "path": "/tmp/plot-bootstrap-test-819wQu/kit-install/.grave/host/python-3.12.15-linux-x64-JXb8IC"
+    "path": "/home/daeron/.cache/plot-evidence-tmp/plot-bootstrap-test-jjQ6xr/kit-install/.grave/host/python-3.12.15-linux-x64-70dvYc"
    },
    "zlib-1.3.2-linux-x64": {
-    "bytes": 274697,
+    "bytes": 277114,
     "files": 5,
     "links": 0,
-    "path": "/tmp/plot-bootstrap-test-819wQu/kit-install/.grave/host/zlib-1.3.2-linux-x64-gKE2Ah"
+    "path": "/home/daeron/.cache/plot-evidence-tmp/plot-bootstrap-test-jjQ6xr/kit-install/.grave/host/zlib-1.3.2-linux-x64-vc4ZS5"
    },
    "git-2.56.0-linux-x64": {
-    "bytes": 21820508,
+    "bytes": 22336949,
     "files": 69,
     "links": 7,
-    "path": "/tmp/plot-bootstrap-test-819wQu/kit-install/.grave/host/git-2.56.0-linux-x64-RyoFDN"
+    "path": "/home/daeron/.cache/plot-evidence-tmp/plot-bootstrap-test-jjQ6xr/kit-install/.grave/host/git-2.56.0-linux-x64-wwXirr"
    }
   },
   "libraries": {
@@ -95,23 +95,23 @@ PASS online official sources: Node-absent launcher fetches pinned Node from node
    ]
   },
   "python": [
-   "/tmp/plot-bootstrap-test-819wQu/kit-install/.grave/host/python-3.12.15-linux-x64-JXb8IC/bin/python3",
-   "/tmp/plot-bootstrap-test-819wQu/kit-install/.grave/host/python-3.12.15-linux-x64-JXb8IC",
+   "/home/daeron/.cache/plot-evidence-tmp/plot-bootstrap-test-jjQ6xr/kit-install/.grave/host/python-3.12.15-linux-x64-70dvYc/bin/python3",
+   "/home/daeron/.cache/plot-evidence-tmp/plot-bootstrap-test-jjQ6xr/kit-install/.grave/host/python-3.12.15-linux-x64-70dvYc",
    "3.12.15",
    "OpenSSL 3.5.9 29 Sep 2026",
    "3.53.1"
   ],
   "git": {
    "version": "git version 2.56.0",
-   "head": "df5c714174da3c54fd338f30c189da84eb1bcae9"
+   "head": "fbdf30ad9e3169b2ea9b72dc600663f9d423bf81"
   },
   "resume": {
    "killedAtBytes": 8388608,
    "total": 66983838
   },
   "compete": [
-   "shared",
    "acquired",
+   "shared",
    "shared",
    "shared"
   ],

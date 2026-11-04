@@ -1,0 +1,22 @@
+PASS activate creates one incarnation; memory persists across independent clients in Python and Node
+PASS warm tenants import a native extension and call an acquired npm-style package under .grave/objects
+PASS conflicting package sessions stay isolated on one shared runtime
+PASS supervisor SIGKILL and restart preserve the live incarnation and its heap
+PASS os.write(1), print, stderr and a replaced sys.stdout are captured without framing confusion
+PASS a flood is capped and counted; late background output is attributed to the next turn
+PASS cwd and sys.path mutations persist across turns
+PASS a partial exception reports failed + partial and keeps earlier mutations
+PASS duplicate turn rid executes once; a different request under the same rid conflicts
+PASS incarnation guard rejects a stale expectIncarnation
+PASS concurrent activate converges on one incarnation and one host
+PASS queue bound: one turn in flight, eight queued, overflow is busy and retryable
+PASS submit jobs never share a tenant heap
+PASS exec turns run a literal command in the environment and leave the heap untouched
+PASS the Environment Host holds a transitive env pin while active; prune retains its objects
+PASS a busy Node loop past its deadline kills the tenant: interrupted, heap lost, no silent restart
+PASS a blocked native call past its deadline is destructive and reported
+PASS tenant death during a turn is an interruption, never an empty-heap restart
+PASS Environment Host death is proven from identity; tenants do not survive it
+PASS deactivate stops tenants and host, releases the env pin, and refuses later turns
+PASS warm turn latency series (preliminary; gate in P07-08)
+21/21 resident environment checks

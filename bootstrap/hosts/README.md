@@ -1,8 +1,9 @@
 # Bootstrap host kits: Windows, macOS, Android/Termux
 
-Status: **NOT RUN.** On 2026-10-20 the P07-09 suite (`tests/bootstrap.mjs`) ran only on the Linux x64
-glibc reference host. Nothing in this file is a result. It explains how to run the outstanding host
-families so their results can be recorded honestly (contracts §11; PLAN §6.3, Certification).
+Status: Windows, macOS and Android/Termux are **NOT RUN**. Linux x64 glibc has two records: the reference
+host (2026-10-20) and a fresh Debian 12 container with no Node installed (2026-10-22, §5). The rest of this
+file explains how to run the outstanding host families so their results can be recorded honestly
+(contracts §11; PLAN §6.3, Certification).
 
 ## 1. Build a kit on any networked host that has Node
 
@@ -88,13 +89,13 @@ PLOT_KIT=/path/to/kit sh bootstrap/hosts/certify.sh /path/to/out          # add 
 $env:PLOT_KIT='D:\kit'; powershell -ExecutionPolicy Bypass -File bootstrap\hosts\certify.ps1 -Out D:\plot-cert
 ```
 
-| Host family | Status (2026-10-20) |
+| Host family | Status |
 | --- | --- |
 | Linux x64 glibc (reference) | RUN: gate PASS; `certify.sh --quick` all steps exit 0 (validates the runner only) |
 | Windows x64 | NOT RUN |
 | macOS arm64/x64 | NOT RUN |
 | Android/Termux aarch64 | NOT RUN |
-| Linux in a fresh container | NOT RUN (no container runtime on the reference host) |
+| Linux x64 in a fresh container | RUN 2026-10-22: `debian:bookworm-slim`, Node absent before the run; `certify.sh` (full, with gate), every step exit 0, Node 24.22.0 and CPython 3.12.15 acquired online, gate PASS. Host inputs installed by apt before the run: python3, python3-venv, python3-dev, python3-pip, gcc, libc6-dev, make, wget, ca-certificates, curl, xz-utils. Record: `records/linux-x86_64-debian12-container-20261022T074031Z/`. Same kernel family as the reference host, so this is not a second OS family. |
 
 ## 6. What a certifying run must record
 

@@ -1,0 +1,296 @@
+gate: node v24.22.0, Python 3.11.2, preflight_missing=0
+== build
+{"core_bytes":9061,"ceiling_bytes":9063}
+== committed main.js matches build of src/plot.mjs
+== integration
+PASS shipped core stays at or below original 9063 bytes
+PASS real mixed Node/Python demo and module import parity
+PASS default CLI is plot-relative when launched elsewhere
+PASS literal arguments, step cwd/env, and stop on child exit
+PASS spawn:false and missing trusted declaration fail before acquisition
+PASS host mismatch, invalid IDs, missing dependencies, cycles fail closed
+PASS host recipe precedence, wildcard fallback and optional unsupported DLC
+PASS DAG order, reuse, dependency invalidation and frozen older views
+PASS failed installer/check preserve active view, ledger, writable data
+PASS cross-process acquisition lock rejects racing writer
+PASS missing asset and cross-device view require reprovision
+PASS historical exact-key reuse: v1->v2->v1 capability switch spawns nothing
+PASS unstamped, interrupted or forged stages are never adopted
+PASS stdout-only child diagnostic reaches the failure message
+PASS foreground pin names transitive objects during a run and is removed after
+PASS real pip target acquisition, shared interpreter and version conflicts
+1.0
+1.0
+PASS Python module, script, argv, metadata resources and console entrypoint
+PASS subprocess package inheritance, host PYTHONPATH exclusion and writable isolation
+PASS package installation failure and requested depth/version drift fail without stale reuse
+PASS historical exact-key reuse: Python package switch v1->v2->v1 runs no pip
+PASS package-less shallow venv provisions without ensurepip; pip-bearing tenant reports stdout diagnostic
+PASS archive traversal, symlink pivots, hardlinks, PAX, duplicate paths, truncation rejected
+PASS bounded decompression aborts oversized archive without activation
+PASS real locally reconstructed CPython archive and legacy integrity check
+24/24 integration checks
+== resident
+PASS optional capability acquisition and native-only clean CLI startup
+PASS concurrent start clients converge on one authenticated supervisor
+PASS job outlives submitting CLI; a distinct CLI discovers identity, status and output
+PASS abrupt transport disconnect after submission does not cancel accepted work
+PASS concurrent clients, stable identities and exactly one job for retried submission
+PASS supervisor SIGKILL/restart reconnects to an already running independent worker
+PASS exact frozen view, executable, environment, literal commands and dependencies survive changes
+PASS persistent Python jobs retain conflicting package views while reusing one runtime
+PASS bounded binary stdout/stderr, byte cursors, timeout, cancellation and step failure
+PASS missing capability, authority denial, unauthenticated calls and invalid requests fail closed
+PASS stale records never authorize signalling an unrelated live process
+PASS worker crash becomes interrupted/unreachable; no success fabricated or step replayed
+PASS acquisition crash reconciliation retains incomplete objects, committed views and owned state
+PASS damaged job records remain visible and cannot hide healthy jobs
+PASS cancellation owns the direct child and bounds inherited-pipe waiting
+PASS legacy unstamped locks and ambiguous live writers remain blocked
+PASS failed resident acquisition rolls back; disconnected provisioning client does not cancel writer
+PASS cold acquisition continues through supervisor death and restart
+PASS supervisor stop leaves submitted job running and status available after restart
+PASS two concurrent jobs on one view get private PLOT_JOB_STATE and step conduits
+PASS reconciler revision fence never overwrites a newer terminal record
+PASS 20 killed-worker recoveries release capacity and job 21 succeeds
+PASS missed completion notification is repaired by the background reconciler
+PASS simultaneous last-slot submissions admit exactly one before durable acceptance
+PASS submit latency is independent of 1,000 historical and unreachable jobs; no submit waits on a probe
+PASS prune dry-run changes nothing; default apply keeps the cache; policy apply deletes only reclaimable objects
+PASS prune keeps the transitive dependency closure of a pinned object
+PASS includeJobs expiry releases job snapshot roots and expires request IDs without re-execution
+PASS concurrent provision and prune serialize on .grave/.lock without losing a publication
+PASS tombstone crash recovery withdraws unmoved intents and finishes moved deletions
+PASS historical v1 reusable after default prune (seed-coupled: P07-01)
+PASS foreground pin respected by prune (seed-coupled: P07-01)
+PASS standby claim replies only after an independent worker durably owns the job
+PASS supervisor SIGKILL immediately after reply leaves the claimed job running
+PASS claim-stage crash: before claim retries another worker; after claim adopts, never a second worker
+PASS lost claim ACK adopts the durable claim instead of creating a second worker
+PASS duplicate simultaneous rid creates exactly one job and one worker
+PASS bursts of 2/8/16/32 are accounted, bounded and never exceed maxStarting
+PASS idle standbys expire after supervisor SIGKILL and leave with a clean stop
+PASS restart reconciliation dispatches a published job that was never claimed; idle pool stays bounded
+PASS preliminary warm durable submit-and-claim latency (asserted < 6 ms with PLOT_ASSERT_LATENCY=1)
+41/41 resident integration checks
+== resident-env
+PASS activate creates one incarnation; memory persists across independent clients in Python and Node
+PASS warm tenants import a native extension and call an acquired npm-style package under .grave/objects
+PASS conflicting package sessions stay isolated on one shared runtime
+PASS supervisor SIGKILL and restart preserve the live incarnation and its heap
+PASS os.write(1), print, stderr and a replaced sys.stdout are captured without framing confusion
+PASS a flood is capped and counted; late background output is attributed to the next turn
+PASS cwd and sys.path mutations persist across turns
+PASS a partial exception reports failed + partial and keeps earlier mutations
+PASS duplicate turn rid executes once; a different request under the same rid conflicts
+PASS incarnation guard rejects a stale expectIncarnation
+PASS concurrent activate converges on one incarnation and one host
+PASS queue bound: one turn in flight, eight queued, overflow is busy and retryable
+PASS submit jobs never share a tenant heap
+PASS exec turns run a literal command in the environment and leave the heap untouched
+PASS the Environment Host holds a transitive env pin while active; prune retains its objects
+PASS a busy Node loop past its deadline kills the tenant: interrupted, heap lost, no silent restart
+PASS a blocked native call past its deadline is destructive and reported
+PASS tenant death during a turn is an interruption, never an empty-heap restart
+PASS Environment Host death is proven from identity; tenants do not survive it
+PASS deactivate stops tenants and host, releases the env pin, and refuses later turns
+PASS warm turn latency series (preliminary; gate in P07-08)
+21/21 resident environment checks
+== cartographer
+PASS supported range grammar follows npm semver semantics; other forms are unsupported
+PASS diamond A->B,C->D collapses to one D in topological order and D is marked present from .grave
+PASS conflicting ranges keep distinct versions with nested placement and no shadowing
+PASS peer dependencies resolve as siblings and bundled dependencies come from the package itself
+PASS conditional exports/imports resolve in manifest key order for import vs require
+PASS os/cpu/libc/engines constraints prune host-incompatible branches with exact reasons
+PASS absent or incompatible optional dependencies are pruned without failing the plan
+PASS .tgz corpus archives are read through gzip+USTAR (pax, scoped, bundled) without execution or extraction
+PASS dependency cycles and missing mandatory dependencies fail closed with structured diagnostics
+PASS unsupported range forms are reported and never guessed
+PASS CLI and API output is byte-identical across repeated runs and corpus creation order
+PASS sample plan fixture for the assembler is generated from a real corpus
+12/12 cartographer checks
+== assembler
+fixture prerequisites {"python3":true,"cc":true,"pythonH":true}
+runtime shallow-host: /tmp/plot-assembler-yx9oRY/runtime/bin/python3 (venv --without-pip over host /usr/bin/python3, Python 3.11.2 cpython-311-x86_64-linux-gnu)
+PASS pure wheel: planWheels plan, assembled, importable with -I -S, reused [runtime shallow-host]
+PASS compatible C extension: planWheels selects the compatible build, importable by the target runtime with -I -S [runtime shallow-host]
+PASS .data relocation: purelib, platlib, scripts with #!python rewrite, data, headers [runtime shallow-host]
+PASS console and gui entrypoints runnable, exit status and argv preserved, sh trampoline for spaced interpreter [runtime shallow-host]
+PASS malformed RECORD and digest/size mismatches rejected with no write
+PASS incompatible ABI, platform and python tags rejected before any write
+PASS traversal, symlink, special, duplicate entries and colliding destinations rejected
+PASS extraction limits, declared-size lies and zip64 enforced
+PASS two plots assemble conflicting subsets from one read-only bank via planWheels; unsatisfiable plans fail closed; bank unmodified [runtime shallow-host]
+PASS interrupted assembly (SIGKILL after staging) is never adopted; retry publishes, then reuses [runtime shallow-host]
+PASS pin-then-validate: consumed runtime object pinned while read; tombstoned object refused retryably [runtime shallow-host]
+PASS seed capability recipe executes the assembler into its own stage from a plan-wheels plan (main.js provision, -I -S import) [runtime shallow-host]
+PASS cartographer plan over a dir + tgz corpus: nested placement, integrity, bins; one component object per npm name@version; refusals
+PASS BANK_CHANGED: reuse re-verifies recorded wheel and npm digests and refuses changed bank bytes under unchanged names
+PASS cartographer sample-plan.json (P07-02) assembled; planClosure --root then marks every node present and reassembly reuses
+owned-runtime: NOT RUN (pending P07-09/P07-07 composition)
+runtime labels {"shallow-host":8}
+timings {"verify_pure_ms":20.54,"plan_wheels_ms":19.44,"install_pure_ms":62.51,"historical_reuse_ms":18.84,"install_native_ms":48.33,"assemble_bank_ms":83.43,"cli_plan_and_assemble_ms":156.71,"retry_after_crash_ms":63.84,"seed_recipe_provision_ms":112.89,"closure_assemble_ms":96.69}
+15/15 assembler checks
+== bootstrap
+PASS inspect reports host, libc, roots, executables, transports, extractors and network mode
+PASS plan emits a prerequisite DAG with source, provenance, compatibility, destination, disk and network needs
+PASS plan names unsupported routes and per-host sources for foreign targets without claiming them
+PASS launcher pins agree with recipes (plot.sh and plot.ps1)
+PASS offline kit installs the Node, Python and Git closure transactionally (cold)
+PASS acquired Python runs real code with host PATH masked
+PASS acquired Git performs a real init, commit, log and fsck on a local repository
+PASS reuse performs no fetch, extraction or build
+PASS verify detects tampering and activate exports the acquired tools
+PASS interrupted download is never adopted and resumes from the partial bytes
+PASS interrupted extraction is never adopted and is swept by the next attempt
+PASS competing acquisitions share one install through the slot lock
+PASS source failures return actionable diagnostics and install nothing
+PASS a failed forced re-acquisition preserves the prior install
+PASS Node-absent launcher obtains Node from an offline kit and starts the same main.js
+PASS launcher wget transport resumes a partial download from a pinned mirror
+PASS launcher refuses a corrupt source and an unpinned host with actionable messages
+PASS builtin zip extractor unpacks the pinned Windows Node archive exactly (extraction only, no Windows execution)
+PASS builtin tar extractor rejects traversal, link escape, entries below links and duplicates
+PASS online official sources: bootstrap.mjs acquires pinned Python from python-build-standalone
+PASS online official sources: Node-absent launcher fetches pinned Node from nodejs.org with curl
+{
+ "host": {
+  "platform": "linux",
+  "arch": "x64",
+  "node": "v24.22.0",
+  "tmp": "/tmp"
+ },
+ "kit": "/tmp/plot-bootstrap-kit",
+ "online": true,
+ "notRun": [],
+ "facts": {
+  "timings": {
+   "cold_kit_node-24.22.0-linux-x64": 2194,
+   "cold_kit_python-3.12.15-linux-x64": 1684,
+   "cold_kit_zlib-1.3.2-linux-x64": 959,
+   "cold_kit_git-2.56.0-linux-x64": 18313,
+   "reuse_closure_process_ms": 59,
+   "reuse_closure_internal_ms": 1,
+   "resume_python_ms": 2891,
+   "launcher_kit_cold_ms": 2373,
+   "launcher_warm_ms": 87,
+   "online_python_cold_ms": 3433,
+   "online_python_fetch_ms": 1508,
+   "launcher_online_cold_ms": 3233
+  },
+  "closure": {
+   "node-24.22.0-linux-x64": {
+    "bytes": 201678212,
+    "files": 4797,
+    "links": 3,
+    "path": "/tmp/plot-bootstrap-test-libZmz/kit-install/.grave/host/node-24.22.0-linux-x64-hQAbn3"
+   },
+   "python-3.12.15-linux-x64": {
+    "bytes": 222271476,
+    "files": 3482,
+    "links": 1049,
+    "path": "/tmp/plot-bootstrap-test-libZmz/kit-install/.grave/host/python-3.12.15-linux-x64-vF2rrz"
+   },
+   "zlib-1.3.2-linux-x64": {
+    "bytes": 274193,
+    "files": 5,
+    "links": 0,
+    "path": "/tmp/plot-bootstrap-test-libZmz/kit-install/.grave/host/zlib-1.3.2-linux-x64-GsktzQ"
+   },
+   "git-2.56.0-linux-x64": {
+    "bytes": 21190364,
+    "files": 69,
+    "links": 7,
+    "path": "/tmp/plot-bootstrap-test-libZmz/kit-install/.grave/host/git-2.56.0-linux-x64-d3wUB3"
+   }
+  },
+  "libraries": {
+   "python": [
+    "libpthread.so.0",
+    "libdl.so.2",
+    "libutil.so.1",
+    "libm.so.6",
+    "librt.so.1",
+    "libc.so.6",
+    "/lib64/ld-linux-x86-64.so.2"
+   ],
+   "git": [
+    "libc.so.6",
+    "/lib64/ld-linux-x86-64.so.2"
+   ],
+   "node": [
+    "libdl.so.2",
+    "libstdc++.so.6",
+    "libm.so.6",
+    "libgcc_s.so.1",
+    "libpthread.so.0",
+    "libc.so.6",
+    "/lib64/ld-linux-x86-64.so.2"
+   ]
+  },
+  "python": [
+   "/tmp/plot-bootstrap-test-libZmz/kit-install/.grave/host/python-3.12.15-linux-x64-vF2rrz/bin/python3",
+   "/tmp/plot-bootstrap-test-libZmz/kit-install/.grave/host/python-3.12.15-linux-x64-vF2rrz",
+   "3.12.15",
+   "OpenSSL 3.5.9 29 Sep 2026",
+   "3.53.1"
+  ],
+  "git": {
+   "version": "git version 2.56.0",
+   "head": "a53f5a12a15e10e731d9eb0cd55740a7123c58a4"
+  },
+  "resume": {
+   "killedAtBytes": 8388608,
+   "total": 66983838
+  },
+  "compete": [
+   "shared",
+   "acquired",
+   "shared",
+   "shared"
+  ],
+  "launcherPath": [
+   "sh",
+   "mkdir",
+   "rmdir",
+   "mv",
+   "rm",
+   "cat",
+   "uname",
+   "dirname",
+   "ls",
+   "sleep",
+   "date",
+   "mktemp",
+   "cut",
+   "sed",
+   "grep",
+   "tr",
+   "wc",
+   "sync",
+   "tar",
+   "gzip",
+   "sha256sum",
+   "chmod"
+  ]
+ }
+}
+21/21 bootstrap checks
+== e2e
+prerequisites {"kit":"/tmp/plot-bootstrap-kit","cc":true,"linux":true}
+PASS bootstrap acquires an owned Node and Python closure from the offline kit into <root>/.grave/host [runtime owned]
+PASS cartographer and planWheels emit the closures; the native wheel is compiled against the owned runtime [runtime owned]
+PASS seed recipes assemble the wheel and npm layers into .grave/objects over the owned venv (no pip) [runtime owned]
+PASS crash at seed publication: SIGKILL mid-install leaves an unstamped stage that is archived by recovery and never adopted [runtime owned]
+PASS owned-runtime jobs: crash after the standby claim is adopted (interrupted, no output, no second worker); the next job runs both layers [runtime owned]
+PASS environment over the assembled view: Python native wheel and Node npm layer in warm tenants; heap persists across turns [runtime owned]
+PASS crash during activation: supervisor SIGKILL while the host starts; restart converges on one live host and the earlier heap survives [runtime owned]
+PASS crash at turn completion after the record: the retried rid returns the recorded outcome; the effect ran once [runtime owned]
+PASS crash at turn completion before the record: the retried rid reports interrupted/lost and never re-executes; reactivation is a new heap [runtime owned]
+PASS crash during prune (moved): recovery then prune finishes the deletion; pinned environment objects survive [runtime owned]
+PASS crash during prune (intents): recovery then prune withdraws the intent and deletes anew; pinned environment objects survive [runtime owned]
+PASS teardown: deactivate stops every host and tenant; supervisor stop is clean [runtime owned]
+12/12 e2e checks
+== package-smoke
+gate: PASS

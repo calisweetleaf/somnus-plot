@@ -1,0 +1,14 @@
+node-path exit=0
+node-version exit=0
+plan exit=0
+acquire exit=0
+verify exit=0
+suite-integration exit=0
+suite-resident exit=0
+suite-resident-env exit=0
+suite-cartographer exit=0
+suite-assembler exit=0
+suite-bootstrap exit=0
+suite-e2e exit=0
+suite-package-smoke exit=0
+gate exit=0

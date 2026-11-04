@@ -26,6 +26,8 @@ async function server(root,env={}){const c=cp.spawn(node,[module,'--serve',root,
  s.e=await until(async()=>{const e=read(path.join(root,'.grave/resident/service.json'));await request(e,{op:'ping'},300);return e},20000,20);return s}
 async function stop(s){try{await request(s.e,{op:'stop'})}catch{}await s.done;services.delete(s)}
 const ping=async e=>(await request(e,{op:'ping'})).pool;
+// Linux-only peak resident set of a live process; null elsewhere.
+const hwm=pid=>{try{return Number(/VmHWM:\s+(\d+)/.exec(fs.readFileSync(`/proc/${pid}/status`,'utf8'))[1])}catch{return null}};
 const terminal=st=>['succeeded','failed','cancelled','timed_out','interrupted'].includes(st);
 const okJob=[{cmd:node,args:['-e',"process.stdout.write('ok')"]}];
 function root(name,m){const r=path.join(tmp,name);fs.mkdirSync(r);fs.writeFileSync(path.join(r,'manifest.json'),JSON.stringify({hosts:['node'],execution:'trusted',permissions:{spawn:true},...m}));return r}
@@ -74,6 +76,7 @@ try{
   const ok=run.out.filter(x=>x.ok),acc=ok.length/run.out.length,empties=p1.empty-p0.empty,idleZero=obs.filter(o=>o.idle===0).length;
   metrics.sustained_submit={offered:run.out.length,accepted:ok.length,acceptance:acc,rejected:run.out.length-ok.length,rejections:run.out.filter(x=>!x.ok).reduce((a,x)=>(a[x.error]=(a[x.error]||0)+1,a),{}),correctness_failures:bad,successful:series(ok.map(x=>x.ms)),paths:ok.reduce((a,x)=>(a[x.path]=(a[x.path]||0)+1,a),{}),
    schedule:{seed:'0x5eed07',rate_per_s:10,duration_s:+(offsets.at(-1)/1000).toFixed(3),wall_ms:run.wall,dispatch_lag:stats(run.lag)},pool_empty:{at_start:emptyAtStart,lease_found_no_idle:empties,sampled_idle_zero:idleZero,samples:obs.length},valid:empties>0&&!QUICK};
+  metrics.sustained_submit.supervisor_peak_rss_kib=hwm(s.c.pid);
   if(!(empties>0))failures.push('sustained_submit invalid: default pool never observed empty');if(bad)failures.push('sustained_submit correctness failures '+bad);
   gates.sustained_submit={successful_p95_under_6_ms:stats(ok.map(x=>x.ms)).p95_ms<6,acceptance_at_least_99_pct:acc>=0.99,zero_correctness_failures:bad===0,valid:empties>0};
   // ---- saturation: ramp 5 -> 40/s, step 5/s, 30 s each, then drain; same supervisor, fresh rids.
@@ -82,7 +85,12 @@ try{
   const drainT=now();for(const st of steps){st.correctness_failures=await verify(s.e,st.out,180000);delete st.out}const drain=now()-drainT;
   let maxStable=null;for(const st of steps){if(st.acceptance>=0.99&&st.correctness_failures===0)maxStable=st.rate_per_s;else break}
   metrics.saturation={steps,drain_ms:drain,max_stable_rate_per_s:maxStable,stable_rule:'highest step R such that every step <= R had acceptance >= 99% and zero correctness failures after drain'};
-  if(steps.some(st=>st.correctness_failures))failures.push('saturation correctness failures');await stop(s)}
+  if(steps.some(st=>st.correctness_failures))failures.push('saturation correctness failures');metrics.saturation.supervisor_peak_rss_kib=hwm(s.c.pid);await stop(s)}
+ // ---- sustained_submit_tuned: the frozen schedule on a 4/4 pool. Reported without a gate: the frozen row stays the 2/2 pool.
+ {const S=root('sustained-tuned',{environment:{use:[]},steps:[]});await openPlot(S).provision('native',{use:[]});const offsets=poisson(0x5eed07,10,QUICK?10:120,QUICK?0:1200);
+  s=await server(S,{PLOT_RESIDENT_READY:'4',PLOT_RESIDENT_MAX_STARTING:'4'});const p0=await ping(s.e),run=await openLoop(s.e,offsets,'tun'),p1=await ping(s.e),bad=await verify(s.e,run.out),ok=run.out.filter(x=>x.ok);
+  metrics.sustained_submit_tuned={pool:{ready:4,maxStarting:4},offered:run.out.length,accepted:ok.length,acceptance:ok.length/run.out.length,correctness_failures:bad,successful:series(ok.map(x=>x.ms)),paths:ok.reduce((a,x)=>(a[x.path]=(a[x.path]||0)+1,a),{}),lease_found_no_idle:p1.empty-p0.empty,supervisor_peak_rss_kib:hwm(s.c.pid),scope:'same seeded 1,200 arrivals as sustained_submit; PLOT_RESIDENT_READY=4, PLOT_RESIDENT_MAX_STARTING=4; no gate'};
+  if(bad)failures.push('sustained_submit_tuned correctness failures '+bad);await stop(s)}
 
  // ---- warm_env_interact: Python native call and Node session + acquired package, one incarnation.
  {const wd=path.join(tmp,'wheels-env');fs.mkdirSync(wd);const dist=wheels(wd),E=root('envs',{tenants:{python:{command:python,packages:[dist.one,dist.native],pip:['--no-index']}},capabilities:{pkg},environment:{use:[]},steps:[]});

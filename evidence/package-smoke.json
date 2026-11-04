@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-20T13:43:45.242Z",
+  "at": "2026-10-22T08:23:33.803Z",
   "deployed_files": [
     "main.js",
     "manifest.json",
@@ -12,9 +12,9 @@
   "deployed_dirs": [
     "bootstrap"
   ],
-  "node": "v24.22.0",
+  "node": "v24.14.0",
   "platform": "linux",
-  "core_bytes": 9008,
+  "core_bytes": 9061,
   "resident_bytes": 70243,
   "capability_bytes": {
     "resident.mjs": 70243,
@@ -27,13 +27,13 @@
     "cartographer_nodes": [
       "q@1.0.0"
     ],
-    "assembled": "q-C2bu05"
+    "assembled": "q-aYKAAZ"
   },
   "npm_install_required": false,
   "python_required": false,
   "launch_cwd": "outside deployed root",
   "status": 0,
-  "job_id": "9ba824f8-e5f1-4258-9346-cf25f167cdef",
+  "job_id": "c2e50915-e82d-4fea-873c-a3f030499981",
   "client_reconnected": true,
   "output": "clean package started\nclean package survived\n",
   "owned_assets": [

@@ -109,3 +109,22 @@ Format:
 - Sentinel (after code): no new kill sites; no tokens in evidence or docs.
 - Next agent: none queued. Operator decisions: Law 12 single-record reading (O-10), horizon wording (O-4). Candidate next packet: sustained admission p95 (pool sizing or faster worker birth) on the unchanged frozen workload.
 - Hazards: durable rows pass by < 0.1 ms on a non-idle host; non-Linux and fresh container NOT RUN; power loss untested; ALARM 51 (seed `run()` tombstone check) open.
+
+### 2026-10-22 03:10 CDT — Droid (Opus 5.5) — v0.7 closeout
+- Base: `7c266f1` (v0.7.0 integrated candidate). Operator files under `.factory/skills/code-fable/`, `SWARM.md`, root `Plot-Fable.md` left untouched.
+- Did: O-15/ALARM 51 fixed in `src/plot.mjs`: `run()` checks `.grave/tombstones/<obj>.json` intents after the synced foreground pin and fails `tombstoned`; pin file now `foreground-<pid>-<hrtime ns>.json` to fit the ceiling (9,061 B). Integration "foreground pin" check asserts no step spawns against a tombstoned object. Fresh Debian 12 container certification (`certify.sh`, Node absent) found three test-only defects, all fixed: assembler ABI test assumed host Python is not cp311; assembler sample-plan test depended on the writing host's absolute corpus path (now rebased); resident acquisition test polled atom temp files. `tests/v07-benchmark.mjs` adds `sustained_submit_tuned` (4/4 pool, same schedule, no gate) and Linux supervisor VmHWM; `tests/report.mjs` renders both and the container host row. Contracts v1.10. Record archived at `bootstrap/hosts/records/linux-x86_64-debian12-container-20261022T074031Z/`.
+- Validation: `PLOT_REQUIRE_SEED_COUPLED=1 scripts/gate.sh` → PASS before evidence; `scripts/gate.sh --evidence` → PASS (146/146, smoke PASS, v07 run valid 07:48–07:58Z). Container: 14/14 steps exit 0, gate PASS.
+- Proof facts (p95 ms, new host Ryzen 5 5625U × 12 bare metal, Node v24.14.0): view lookup 0.159; mixed cached view 0.399; resident RPC 0.706; multi_version_switch 0.481 (0 spawns); submit-and-claim reply 3.183 / claim record 3.221; warm Python 0.956, Node 0.806; sustained (2/2) 14.922 FAIL with 1,106 standby / 83 waited / 11 cold; tuned (4/4) 4.572; saturation max stable 40/s; supervisor RSS 74,776 KiB (101,900 after saturation). O-11 diagnosis (scratch harness): standby birth ≈ 42 ms (Node boot + eval 26, setup 7, warm-up 6); deferring warm-up and early replenish did not move p95.
+- Decision (operator, 2026-10-22): v0.7 closed by acceptance with named exceptions O-11, O-12 (other OS families), O-13 (power loss), O-10 (Law 12 single-record reading accepted). Horizon numbering deferred; v0.7 is canon to reuse.
+- Surfaces synchronized: AGENTS, TASK, CONTEXT, MEMORY (law 11, lineage), contracts §14, WHITEPAPER v1.1, filetree, README, bootstrap/hosts/README, evidence (generated).
+- Next agent: none queued. The next stage takes a new form; start from `docs/Plot-Fable.md` and operator direction.
+- Hazards: 2 bytes of core headroom remain; any seed change needs bytes found first. Evidence host changed, so 2026-10-20 and 2026-10-22 numbers are not a speedup comparison. Load average 1.57 at benchmark start.
+
+### 2026-10-22 03:30 CDT — Droid (Opus 5.5) — v0.7 closeout, evidence correction
+- Base: closeout working tree above (uncommitted).
+- Did: O-18: the v0.6 benchmark generators hard-coded "container scratch" (wrong on bare metal). `tests/benchmark.mjs` and `tests/resident-benchmark.mjs` now record `scratch under <os.tmpdir()>` and a host-neutral `limits[0]`; `tests/report.mjs` prints the recorded filesystem. Evidence regenerated again; this run supersedes the 07:48Z run in the entry above, whose numbers are not evidence of record.
+- Validation: `scripts/gate.sh --evidence` → PASS (146/146, smoke PASS, v07 run 08:13–08:23Z valid, load 2.51 at start).
+- Proof facts (p95 ms): view lookup 0.170; multi_version_switch 0.495; reply 3.322 / claim record 3.364; warm Python 1.156, Node 0.899; sustained (2/2) 16.365 FAIL (1,105 / 85 waited / 10 cold); tuned (4/4) 6.295, all standby, also above the bell on this non-idle run; saturation max stable 35/s; RSS 75,528 / 102,220 / 76,156 KiB.
+- Surfaces synchronized: CONTEXT, TASK, WHITEPAPER (v1.1), RESULTS (generated).
+- Next agent: none queued.
+- Hazards: run-to-run spread on a non-idle desktop is visible (tuned row 4.572 → 6.295 ms between same-day runs); cite only the evidence files.

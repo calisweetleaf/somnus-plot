@@ -1,0 +1,27 @@
+PASS shipped core stays at or below original 9063 bytes
+PASS real mixed Node/Python demo and module import parity
+PASS default CLI is plot-relative when launched elsewhere
+PASS literal arguments, step cwd/env, and stop on child exit
+PASS spawn:false and missing trusted declaration fail before acquisition
+PASS host mismatch, invalid IDs, missing dependencies, cycles fail closed
+PASS host recipe precedence, wildcard fallback and optional unsupported DLC
+PASS DAG order, reuse, dependency invalidation and frozen older views
+PASS failed installer/check preserve active view, ledger, writable data
+PASS cross-process acquisition lock rejects racing writer
+PASS missing asset and cross-device view require reprovision
+PASS historical exact-key reuse: v1->v2->v1 capability switch spawns nothing
+PASS unstamped, interrupted or forged stages are never adopted
+PASS stdout-only child diagnostic reaches the failure message
+PASS foreground pin names transitive objects during a run and is removed after
+PASS real pip target acquisition, shared interpreter and version conflicts
+1.0
+1.0
+PASS Python module, script, argv, metadata resources and console entrypoint
+PASS subprocess package inheritance, host PYTHONPATH exclusion and writable isolation
+PASS package installation failure and requested depth/version drift fail without stale reuse
+PASS historical exact-key reuse: Python package switch v1->v2->v1 runs no pip
+PASS package-less shallow venv provisions without ensurepip; pip-bearing tenant reports stdout diagnostic
+PASS archive traversal, symlink pivots, hardlinks, PAX, duplicate paths, truncation rejected
+PASS bounded decompression aborts oversized archive without activation
+PASS real locally reconstructed CPython archive and legacy integrity check
+24/24 integration checks

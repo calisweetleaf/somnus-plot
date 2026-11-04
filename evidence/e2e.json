@@ -1,11 +1,11 @@
 {
-  "started_at": "2026-10-20T13:34:20.649Z",
-  "finished_at": "2026-10-20T13:34:29.014Z",
-  "node": "v24.22.0",
+  "started_at": "2026-10-22T08:29:04.902Z",
+  "finished_at": "2026-10-22T08:29:11.109Z",
+  "node": "v24.14.0",
   "platform": "linux",
   "arch": "x64",
   "runtime": "owned",
-  "kit": "/tmp/plot-bootstrap-kit",
+  "kit": "/home/daeron/.cache/plot-evidence-tmp/plot-bootstrap-kit",
   "total": 12,
   "passed": 12,
   "not_run": [],
@@ -13,18 +13,18 @@
     {
       "name": "bootstrap acquires an owned Node and Python closure from the offline kit into <root>/.grave/host",
       "passed": true,
-      "ms": 6105.3,
+      "ms": 3763.1,
       "runtime": "owned",
       "evidence": {
-        "node": "/tmp/plot-e2e-xM6Azq/root/.grave/host/node-24.22.0-linux-x64-UEkl4G/bin/node",
-        "python": "/tmp/plot-e2e-xM6Azq/root/.grave/host/python-3.12.15-linux-x64-ZasX3j/bin/python3",
-        "ms": 6022.8
+        "node": "/home/daeron/.cache/plot-evidence-tmp/plot-e2e-zRzB5k/root/.grave/host/node-24.22.0-linux-x64-HMK3nT/bin/node",
+        "python": "/home/daeron/.cache/plot-evidence-tmp/plot-e2e-zRzB5k/root/.grave/host/python-3.12.15-linux-x64-h04rTW/bin/python3",
+        "ms": 3692.8
       }
     },
     {
       "name": "cartographer and planWheels emit the closures; the native wheel is compiled against the owned runtime",
       "passed": true,
-      "ms": 265.8,
+      "ms": 238,
       "runtime": "owned",
       "evidence": {
         "wheels": [
@@ -40,52 +40,52 @@
     {
       "name": "seed recipes assemble the wheel and npm layers into .grave/objects over the owned venv (no pip)",
       "passed": true,
-      "ms": 325.1,
+      "ms": 383.2,
       "runtime": "owned",
       "evidence": {
         "view": {
-          "python": "python-9A1ZWf",
-          "python-packages": "python-packages-emhFpF",
-          "wheels": "wheels-BSVIAs",
-          "npm": "npm-vuxOfr"
+          "python": "python-567paH",
+          "python-packages": "python-packages-2itnDo",
+          "wheels": "wheels-1guwjl",
+          "npm": "npm-8otees"
         },
-        "ms": 282.4
+        "ms": 338.8
       }
     },
     {
       "name": "crash at seed publication: SIGKILL mid-install leaves an unstamped stage that is archived by recovery and never adopted",
       "passed": true,
-      "ms": 102.7,
+      "ms": 130.9,
       "runtime": "owned",
       "evidence": {
-        "stage": "held-yvYLrj",
-        "archived": "acquisition-da4706e2-0692-430e-b81a-5247b6980121"
+        "stage": "held-uI5uAL",
+        "archived": "acquisition-66f14af0-5461-4a3e-bfd6-7429fdadfb99"
       }
     },
     {
       "name": "owned-runtime jobs: crash after the standby claim is adopted (interrupted, no output, no second worker); the next job runs both layers",
       "passed": true,
-      "ms": 183.3,
+      "ms": 205.1,
       "runtime": "owned",
       "evidence": {
-        "adopted": "d8911bfd-50d1-45d5-9416-c463d883e598",
-        "succeeded": "561fecfd-ab4e-4518-bf79-d07e9bc1fabf",
+        "adopted": "6aec2e5a-9ddf-42b8-b54d-d097d79e8893",
+        "succeeded": "2cb5fb0d-3564-43ef-8a81-1ea5a02f3b7a",
         "path": "standby"
       }
     },
     {
       "name": "environment over the assembled view: Python native wheel and Node npm layer in warm tenants; heap persists across turns",
       "passed": true,
-      "ms": 156,
+      "ms": 169.2,
       "runtime": "owned",
       "evidence": {
-        "incarnation": "940d3e03-0143-4ba0-8b2f-8cae7a7957fa"
+        "incarnation": "dac613ac-ec33-43ac-aa5f-c9f6edd5a282"
       }
     },
     {
       "name": "crash during activation: supervisor SIGKILL while the host starts; restart converges on one live host and the earlier heap survives",
       "passed": true,
-      "ms": 118.2,
+      "ms": 124.7,
       "runtime": "owned",
       "evidence": {
         "incarnations": 1,
@@ -95,32 +95,32 @@
     {
       "name": "crash at turn completion after the record: the retried rid returns the recorded outcome; the effect ran once",
       "passed": true,
-      "ms": 104.4,
+      "ms": 136.1,
       "runtime": "owned",
       "evidence": {
-        "turnId": "478a6c5e-2deb-4a58-93fa-1271c3a0e458",
+        "turnId": "60dfa320-d9c2-451a-9d03-dc001b66993d",
         "state": "interrupted"
       }
     },
     {
       "name": "crash at turn completion before the record: the retried rid reports interrupted/lost and never re-executes; reactivation is a new heap",
       "passed": true,
-      "ms": 222.5,
+      "ms": 235.2,
       "runtime": "owned",
       "evidence": {
-        "lost": "b304da97-477f-40a1-842b-40faf78fd72e"
+        "lost": "7f77f0ce-2b8a-4c60-b4aa-8c454e0a2c67"
       }
     },
     {
       "name": "crash during prune (moved): recovery then prune finishes the deletion; pinned environment objects survive",
       "passed": true,
-      "ms": 181.5,
+      "ms": 205.8,
       "runtime": "owned",
       "evidence": {
         "deleted": 1,
         "recovered": [
           {
-            "path": "/tmp/plot-e2e-xM6Azq/root/.grave/objects/junk-YmflNu",
+            "path": "/home/daeron/.cache/plot-evidence-tmp/plot-e2e-zRzB5k/root/.grave/objects/junk-OY5ihV",
             "kind": "object",
             "action": "finish-deletion"
           }
@@ -130,13 +130,13 @@
     {
       "name": "crash during prune (intents): recovery then prune withdraws the intent and deletes anew; pinned environment objects survive",
       "passed": true,
-      "ms": 172.2,
+      "ms": 216,
       "runtime": "owned",
       "evidence": {
         "deleted": 2,
         "recovered": [
           {
-            "path": "/tmp/plot-e2e-xM6Azq/root/.grave/objects/junk-rR9Tti",
+            "path": "/home/daeron/.cache/plot-evidence-tmp/plot-e2e-zRzB5k/root/.grave/objects/junk-Dpfr5T",
             "kind": "object",
             "action": "intent-withdrawn"
           }
@@ -146,7 +146,7 @@
     {
       "name": "teardown: deactivate stops every host and tenant; supervisor stop is clean",
       "passed": true,
-      "ms": 288.4,
+      "ms": 262.8,
       "runtime": "owned",
       "evidence": {
         "stopped": 7
@@ -155,8 +155,8 @@
   ],
   "facts": {
     "timings": {
-      "bootstrap_cold_ms": 6022.8,
-      "seed_provision_ms": 282.4
+      "bootstrap_cold_ms": 3692.8,
+      "seed_provision_ms": 338.8
     }
   }
 }

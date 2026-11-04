@@ -96,8 +96,10 @@ export function openPlot(root){
    if(cmd==='python'||cmd==='.grave/py/bin/python3'){if(!v.python||!args.length)fail('Python view/args missing');cmd=v.python;if(args[0]!=='--version')args=['-I','-S','-c',runner,options.cwd,v.packages||'',v.state,...args]}
    return {cmd:cmd,args:args,options:options};})};};
  // Pin-then-validate: the pin precedes resolve(), whose view() check fails the run if an object vanished.
- const run=async (name=dflt,steps)=>{let paths=Object.values(read(join(envs,id(name)+'.json')).assets).map(a=>a.path),pins=join(grave,'pins'),pin=join(pins,'foreground-'+proc.pid+'-'+Math.random().toString(36).slice(2)+'.json');
+ const run=async (name=dflt,steps)=>{let paths=Object.values(read(join(envs,id(name)+'.json')).assets).map(a=>a.path),pins=join(grave,'pins'),pin=join(pins,'foreground-'+proc.pid+'-'+proc.hrtime.bigint()+'.json');
   mkdir(pins);try{create(pin,{schema:1,kind:'foreground',owner:{pid:proc.pid,birth:null},ref:'fg',paths:paths,created:new Date().toISOString()});syncdir(pin);
+   // Prune writes intents before re-reading pins; checking intents after the pin means one side always sees the other.
+   paths.some(x=>exists(join(grave,'tombstones',p.basename(x)+'.json')))&&fail('tombstoned');
    for(let s of resolve(name,steps).steps){let code=await new Promise((resolve,reject)=>{let c=spawn(s.cmd,s.args,{...s.options,stdio:'inherit'});c.on('error',reject);c.on('close',n=>resolve(n??1))});if(code)return code;}return 0}finally{rm(pin)}};
 
  return {plan:spec=>plan(manifest(spec),wanted(manifest(spec),spec)).map(([id,recipe])=>({id,recipe})),provision:provision,run:run,view:view,resolve:resolve};

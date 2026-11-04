@@ -57,6 +57,8 @@ try{
   assert.deepEqual(pin.paths.sort(),[view.assets.a.path,view.assets.b.path].sort());assert.deepEqual(fs.readdirSync(path.join(root,'.grave/pins')),[]);
   let plot=openPlot(root);assert.equal(await plot.run('default',[{cmd:node,args:['-e',probe,root]},{cmd:node,args:['-e','process.exit(3)']}]),3);assert.equal(JSON.parse(fs.readFileSync(path.join(root,'seen.json'))).length,1);assert.deepEqual(fs.readdirSync(path.join(root,'.grave/pins')),[]);
   await assert.rejects(plot.run('default',[{cmd:path.join(tmp,'absent-binary'),args:[]}]));assert.deepEqual(fs.readdirSync(path.join(root,'.grave/pins')),[]);
+  let tombs=path.join(root,'.grave/tombstones'),intent=path.join(tombs,path.basename(view.assets.a.path)+'.json');fs.mkdirSync(tombs,{recursive:true});fs.writeFileSync(intent,JSON.stringify({path:view.assets.a.path,reason:'test',at:new Date().toISOString()}));fs.rmSync(path.join(root,'seen.json'));
+  await assert.rejects(plot.run('default',[{cmd:node,args:['-e',probe,root]}]),/tombstoned/);assert.ok(!fs.existsSync(path.join(root,'seen.json')),'no step spawned against a tombstoned object');assert.deepEqual(fs.readdirSync(path.join(root,'.grave/pins')),[]);fs.rmSync(intent);
   fs.rmSync(path.join(view.assets.a.path,'.plot.json'));await assert.rejects(plot.run('default'),/asset missing/);assert.deepEqual(fs.readdirSync(path.join(root,'.grave/pins')),[]);
  });
  let wheelDir=path.join(tmp,'wheels');fs.mkdirSync(wheelDir);let dist=wheels(wheelDir),pkgRoot=fixture(tmp,'packages',{tenants:{python:{depth:'shallow',command:python,packages:[dist.one,dist.native],pip:['--no-index']}},steps:[]}),plot=openPlot(pkgRoot),one,two;

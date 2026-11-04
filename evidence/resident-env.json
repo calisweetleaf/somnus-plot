@@ -1,7 +1,7 @@
 {
-  "started_at": "2026-10-20T13:32:58.739Z",
-  "finished_at": "2026-10-20T13:33:07.471Z",
-  "node": "v24.22.0",
+  "started_at": "2026-10-22T08:27:50.067Z",
+  "finished_at": "2026-10-22T08:28:00.169Z",
+  "node": "v24.14.0",
   "platform": "linux",
   "arch": "x64",
   "total": 21,
@@ -10,16 +10,16 @@
     {
       "name": "activate creates one incarnation; memory persists across independent clients in Python and Node",
       "passed": true,
-      "ms": 102.20117500000015,
+      "ms": 99.01807400000007,
       "evidence": {
-        "incarnation": "f5f7401e-9e05-4a3b-be09-dd903e2030e0",
+        "incarnation": "257b46e2-4a3b-47ed-8f97-a42a0dd5ecda",
         "clients": 2
       }
     },
     {
       "name": "warm tenants import a native extension and call an acquired npm-style package under .grave/objects",
       "passed": true,
-      "ms": 10.830029000000195,
+      "ms": 12.65722199999982,
       "evidence": {
         "native": "37",
         "npm": "5"
@@ -28,7 +28,7 @@
     {
       "name": "conflicting package sessions stay isolated on one shared runtime",
       "passed": true,
-      "ms": 10.430867999999919,
+      "ms": 14.883897000000161,
       "evidence": {
         "py1": "'1.0'",
         "py2": "'2.0'"
@@ -37,15 +37,15 @@
     {
       "name": "supervisor SIGKILL and restart preserve the live incarnation and its heap",
       "passed": true,
-      "ms": 84.56202500000018,
+      "ms": 68.73790699999972,
       "evidence": {
-        "incarnation": "f5f7401e-9e05-4a3b-be09-dd903e2030e0"
+        "incarnation": "257b46e2-4a3b-47ed-8f97-a42a0dd5ecda"
       }
     },
     {
       "name": "os.write(1), print, stderr and a replaced sys.stdout are captured without framing confusion",
       "passed": true,
-      "ms": 16.85811799999965,
+      "ms": 21.519198999999844,
       "evidence": {
         "python": [
           "raw\nprinted\n",
@@ -58,7 +58,7 @@
     {
       "name": "a flood is capped and counted; late background output is attributed to the next turn",
       "passed": true,
-      "ms": 540.4593559999998,
+      "ms": 543.8470120000002,
       "evidence": {
         "floodBytes": 3145729,
         "kept": 1048576,
@@ -71,15 +71,15 @@
     {
       "name": "cwd and sys.path mutations persist across turns",
       "passed": true,
-      "ms": 17.348775999999816,
+      "ms": 20.433598000000075,
       "evidence": {
-        "cwd": "/tmp/plot-resident-env-MQo7Mq/cwd-lk0udg"
+        "cwd": "/home/daeron/.cache/plot-evidence-tmp/plot-resident-env-0utMxB/cwd-CFxTjk"
       }
     },
     {
       "name": "a partial exception reports failed + partial and keeps earlier mutations",
       "passed": true,
-      "ms": 13.57944899999984,
+      "ms": 19.94252400000005,
       "evidence": {
         "python": "ValueError: half",
         "node": "failed"
@@ -88,7 +88,7 @@
     {
       "name": "duplicate turn rid executes once; a different request under the same rid conflicts",
       "passed": true,
-      "ms": 15.929932000000008,
+      "ms": 16.31411900000012,
       "evidence": {
         "clients": 4,
         "executions": 1
@@ -97,7 +97,7 @@
     {
       "name": "incarnation guard rejects a stale expectIncarnation",
       "passed": true,
-      "ms": 1.2595900000005713,
+      "ms": 0.5176040000001194,
       "evidence": {
         "guarded": true
       }
@@ -105,7 +105,7 @@
     {
       "name": "concurrent activate converges on one incarnation and one host",
       "passed": true,
-      "ms": 116.13896300000033,
+      "ms": 120.07858900000019,
       "evidence": {
         "clients": 3,
         "incarnations": 1
@@ -114,7 +114,7 @@
     {
       "name": "queue bound: one turn in flight, eight queued, overflow is busy and retryable",
       "passed": true,
-      "ms": 823.1494760000005,
+      "ms": 840.2487299999998,
       "evidence": {
         "inFlight": 1,
         "queued": 8,
@@ -124,7 +124,7 @@
     {
       "name": "submit jobs never share a tenant heap",
       "passed": true,
-      "ms": 72.6616269999995,
+      "ms": 62.14590599999974,
       "evidence": {
         "jobSaw": "undefined"
       }
@@ -132,7 +132,7 @@
     {
       "name": "exec turns run a literal command in the environment and leave the heap untouched",
       "passed": true,
-      "ms": 32.792105999999876,
+      "ms": 31.87235099999998,
       "evidence": {
         "exitCode": 0
       }
@@ -140,7 +140,7 @@
     {
       "name": "the Environment Host holds a transitive env pin while active; prune retains its objects",
       "passed": true,
-      "ms": 4.317302000000382,
+      "ms": 8.31640199999947,
       "evidence": {
         "pinPaths": 3
       }
@@ -148,25 +148,25 @@
     {
       "name": "a busy Node loop past its deadline kills the tenant: interrupted, heap lost, no silent restart",
       "passed": true,
-      "ms": 719.9801170000001,
+      "ms": 728.9130160000004,
       "evidence": {
-        "ms": 503.634807,
+        "ms": 505.342094,
         "state": "interrupted",
-        "newIncarnation": "e3e2826f-a105-4985-b113-5f1596828c0b"
+        "newIncarnation": "dc5142d3-bfc1-4101-9bef-80aae25fbaaf"
       }
     },
     {
       "name": "a blocked native call past its deadline is destructive and reported",
       "passed": true,
-      "ms": 584.9923820000004,
+      "ms": 604.1043419999996,
       "evidence": {
-        "ms": 503.562309
+        "ms": 504.49685
       }
     },
     {
       "name": "tenant death during a turn is an interruption, never an empty-heap restart",
       "passed": true,
-      "ms": 159.83381999999983,
+      "ms": 156.00854299999992,
       "evidence": {
         "state": "interrupted"
       }
@@ -174,7 +174,7 @@
     {
       "name": "Environment Host death is proven from identity; tenants do not survive it",
       "passed": true,
-      "ms": 145.11780799999997,
+      "ms": 150.82945199999995,
       "evidence": {
         "proof": "absent"
       }
@@ -182,7 +182,7 @@
     {
       "name": "deactivate stops tenants and host, releases the env pin, and refuses later turns",
       "passed": true,
-      "ms": 234.99460999999974,
+      "ms": 237.94711300000017,
       "evidence": {
         "state": "stopped"
       }
@@ -190,21 +190,21 @@
     {
       "name": "warm turn latency series (preliminary; gate in P07-08)",
       "passed": true,
-      "ms": 1339.2198440000002,
+      "ms": 3421.7197459999998,
       "evidence": {
         "python": {
           "n": 200,
-          "p50": 3.294388,
-          "p95": 4.298043,
-          "p99": 6.305109,
-          "max": 19.666102
+          "p50": 4.783565,
+          "p95": 5.230737,
+          "p99": 7.422427,
+          "max": 9.823307
         },
         "node": {
           "n": 200,
-          "p50": 3.098559,
-          "p95": 3.927978,
-          "p99": 4.76306,
-          "max": 8.833427
+          "p50": 4.683699,
+          "p95": 53.166421,
+          "p99": 53.98806,
+          "max": 64.84458
         }
       }
     }

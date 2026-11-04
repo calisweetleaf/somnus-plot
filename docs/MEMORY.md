@@ -15,6 +15,7 @@ Source for each law is cited; `docs/Plot-Fable.md` is operator canon.
 8. **Cross-device in grammar before proof.** Linux is the only demonstrated execution lane until a device run says otherwise. — `STAGE-1.md`, `evidence/RESULTS.md`
 9. **No fabricated recovery.** PIDs are never signal targets; uncertain jobs are reported, never replayed or marked successful. — `PERSISTENT-NATIVE.md`
 10. **No content hash as identity.** Resource identity = canonical recipe + host + dependency locations. — `STAGE-1.md`
+11. **Acceptance with named exceptions is not a pass.** A version may close by operator acceptance; each unmet gate stays named, measured and open in the paper, and is never reworded as satisfied. — Operator, 2026-10-22 (v0.7 closeout)
 
 ## Vocabulary
 
@@ -36,5 +37,5 @@ Source for each law is cited; `docs/Plot-Fable.md` is operator canon.
 | v0.4 | ≤ 2026-10-12 | Tiny runner; webview + Node hosts; audited in `baseline/REPORT.md` |
 | v0.5 | 2026-10-14 | Acquisition separated from view; DAG; 9,036 bytes; 18/18 |
 | v0.6 | 2026-10-17 | Persistent native execution; optional resident; 9,061 bytes; 37/37 |
-| v0.7 | planned | "Seventh Flash": derive power from relationships among small pieces (see `TASK.md` queue) |
-| v10 | operator prediction | Total completion: persistent VM deployable on any device |
+| v0.7 | 2026-10-22 | "Seventh Flash": composition from small pieces (cartographer, assembler, bootstrap, resident jobs/environments, pins/prune); 9,061 bytes; 146/146. Closed by operator acceptance with named exceptions (`WHITEPAPER.md` App C) |
+| v10 | operator prediction | Total completion: persistent VM deployable on any device. Numbering after v0.7 (v0.8–v1.0 vs v8–v10) deliberately deferred by the operator, 2026-10-22: the next stage takes a new form with more code and reuses v0.7 as canon |

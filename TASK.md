@@ -10,13 +10,13 @@
 | --- | --- |
 | Product / long goal | Persistent virtual machine built by composition from a tiny seed; v10 predicted complete |
 | Current base | `main` @ `b72a98d` (v0.6.0) plus landed v0.7 packets below |
-| Active wave | None. All v0.7 packets landed 2026-10-20; v0.7.0 is an integrated candidate with open gates (below) |
+| Active wave | None. All v0.7 packets landed 2026-10-20; closeout landed 2026-10-22. **v0.7.0 is closed by operator acceptance with named exceptions** (below). No next packet is queued: the next stage takes a new form and reuses v0.7 as canon (operator) |
 | Swarm | Keeper/coordinator (Opus 5.5) + project droids (`somnus-prod-finalizer` foragers, `fletcher`, `somnus-defense-grade-doc-engine`) + `scrutiny-feature-reviewer` sentinels; colony protocol `SWARM.md` |
 | Current gate | `scripts/gate.sh` |
 | Expected result | `gate: PASS` at every landing; v0.7 acceptance per `PLAN.md` §8 |
 | Handoff surface | `docs/NOTEPAD.md` |
 | Commit policy | Coordinator commits each landed packet locally; never pushes |
-| Known open gates | `sustained_submit` successful p95 40.536 ms (FAIL vs 6 ms); second OS family and fresh container NOT RUN (cross-host acceptance open); power loss untested; Law 12 file-set wording awaits operator (`WHITEPAPER.md` O-10) |
+| Named exceptions (accepted 2026-10-22) | `sustained_submit` frozen-row successful p95 16.365 ms (FAIL vs 6 ms; worker birth ≈ 42 ms under a 2/2 pool; tuned 4/4 pool 6.295 ms on the same run, no gate); second OS family NOT RUN (fresh Debian 12 container RUN, all steps exit 0); power loss/reboot untested; Law 12 accepted as satisfied by the single durable `claimed.json` record. Horizon numbering deferred by the operator (`WHITEPAPER.md` App C) |
 
 ## Packet graph
 

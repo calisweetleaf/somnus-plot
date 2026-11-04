@@ -15,8 +15,10 @@ let text=`# Somnus Plot v0.7 — evidence report
 Generated from completed runs on ${v7.finished_at.slice(0,10)}.
 **${passed}/${total} checks pass** (${suites.map(([n,r])=>`${r.passed}/${r.total} ${n}`).join('; ')}).
 Suites without a JSON report are read from their gate logs${Object.entries(logs).filter(([,v])=>!v).map(([n])=>`; ${n} log absent`).join('')}.
-Clean-package smoke status: **${smoke.status===0?'PASS':'FAIL'}**. Host matrix: Linux x64 glibc only;
-Windows, macOS and Android/Termux are **NOT RUN** (kits and runners in \`bootstrap/hosts/\`).
+Clean-package smoke status: **${smoke.status===0?'PASS':'FAIL'}**. Host matrix: Linux x64 glibc only, on this
+host and in a fresh Debian 12 container without Node (2026-10-22, \`certify.sh\` with gate, every step exit 0;
+record in \`bootstrap/hosts/records/\`). Windows, macOS and Android/Termux are **NOT RUN** (kits and runners
+in \`bootstrap/hosts/\`).
 
 The complete required foreground bundle is **${original.core_bytes.toLocaleString('en-US')} bytes**,
 within the unchanged **9,063-byte ceiling**. The optional acquired resident module
@@ -41,8 +43,7 @@ outputs, frozen views, private metadata and completion markers are checked.
 ## Measurements
 
 Host: ${rb.environment.platform}/${rb.environment.arch}, ${rb.environment.node},
-${rb.environment.cpu}; kernel ${rb.environment.release}. Container scratch filesystem,
-warm local caches. Integration completed before the final sequential benchmark runs.
+${rb.environment.cpu}; kernel ${rb.environment.release}. Filesystem: ${rb.environment.filesystem}. Integration completed before the final sequential benchmark runs.
 Every raw sample is retained; no outliers are removed.
 
 | Operation | n | p50 ms | p95 ms | p99 ms | max ms |
@@ -61,12 +62,14 @@ Run valid: **${v7.valid?'yes':'NO'}**${v7.failures.length?' — failures: '+v7.f
 `;
 const m7=v7.metrics,row=(l,x)=>x?`| ${l} | ${x.n} | ${fmt(x.p50_ms)} | ${fmt(x.p95_ms)} | ${fmt(x.p99_ms)} | ${fmt(x.max_ms)} |\n`:'';
 text+=row('multi_version_switch (child spawns '+m7.multi_version_switch?.child_spawns+')',m7.multi_version_switch?.summary)+row('durable_submit_and_claim: reply',m7.durable_submit_and_claim?.reply.summary)+row('durable_submit_and_claim: control ready (endpoint record)',m7.durable_submit_and_claim?.control_ready.summary)+row('control endpoint first answer (no gate)',m7.durable_submit_and_claim?.control_answer.summary)
- +row('sustained_submit successful (Poisson 10/s)',m7.sustained_submit?.successful.summary)+row('warm_env_interact python ('+m7.warm_env_interact_python?.runtime+')',m7.warm_env_interact_python?.summary)+row('warm_env_interact node',m7.warm_env_interact_node?.summary)
+ +row('sustained_submit successful (Poisson 10/s)',m7.sustained_submit?.successful.summary)+row('sustained_submit_tuned successful (4/4 pool, no gate)',m7.sustained_submit_tuned?.successful.summary)+row('warm_env_interact python ('+m7.warm_env_interact_python?.runtime+')',m7.warm_env_interact_python?.summary)+row('warm_env_interact node',m7.warm_env_interact_node?.summary)
  +row('cold_worker_spawn',m7.cold_worker_spawn?.summary)+row('complete_isolated_job',m7.complete_isolated_job?.summary)+row('cold_acquisition',m7.cold_acquisition?.summary)+row('bootstrap_cold (Node from kit)',m7.bootstrap_cold?.summary)+row('replenish',m7.replenish?.summary);
 const sus=m7.sustained_submit,g7=v7.gates;
 text+=`
 Sustained: ${sus?`${sus.offered} offered over ${sus.schedule.duration_s} s (seed ${sus.schedule.seed}), ${sus.accepted} accepted (${(sus.acceptance*100).toFixed(2)} %), ${sus.correctness_failures} correctness failures, paths ${JSON.stringify(sus.paths)}; pool empty at start ${sus.pool_empty.at_start}, leases that found no idle standby ${sus.pool_empty.lease_found_no_idle}`:'NOT RUN'}.
 Bursts (offered → accepted / rejected, peak starting): ${Object.entries(m7.burst_submit||{}).map(([b,x])=>`${b} → ${x.accepted}/${x.rejected}, ${x.peakStarting}`).join('; ')}.
+Tuned pool (ready 4, maxStarting 4; same schedule, no gate): ${m7.sustained_submit_tuned?`${m7.sustained_submit_tuned.accepted}/${m7.sustained_submit_tuned.offered} accepted, ${m7.sustained_submit_tuned.correctness_failures} correctness failures, paths ${JSON.stringify(m7.sustained_submit_tuned.paths)}, leases that found no idle standby ${m7.sustained_submit_tuned.lease_found_no_idle}`:'NOT RUN'}.
+Supervisor peak RSS (Linux VmHWM): default pool after sustained ${sus?.supervisor_peak_rss_kib??'—'} KiB, after saturation ${m7.saturation?.supervisor_peak_rss_kib??'—'} KiB, tuned ${m7.sustained_submit_tuned?.supervisor_peak_rss_kib??'—'} KiB.
 Saturation: max stable rate **${m7.saturation?.max_stable_rate_per_s??'—'}/s** (${m7.saturation?.stable_rule}); steps ${(m7.saturation?.steps||[]).map(x=>`${x.rate_per_s}/s ${(x.acceptance*100).toFixed(1)} % p95 ${fmt(x.successful.p95_ms)}`).join(', ')}.
 ${v7.not_run.length?'NOT RUN: '+v7.not_run.map(x=>x.row+' ('+x.why+')').join('; ')+'\n':''}
 | Frozen gate | Result |
@@ -149,7 +152,7 @@ capability work and is only a runtime baseline. There are no network download ti
 | Resource/job garbage collection | Pin-safe prune, dry-run by default, tombstone intents with crash recovery. No automatic schedule; historical cache and uncertain jobs are kept unless policy selects them. |
 | Resident environment heaps | Survive supervisor replacement; tenant or host death retires the incarnation (\`interrupted\`, heap lost). No checkpoint/restore. |
 | Legacy unstamped/incomplete writer or recovery locks | Retained for inspection; no blind lock theft. A recovery guard interrupted before release requires operator inspection. |
-| Windows/macOS/Termux native execution | NOT RUN. Kits, launchers and certification runners ship in \`bootstrap/\`; Linux execution is the only evidence here. Cross-host acceptance is open. |
+| Windows/macOS/Termux native execution | NOT RUN. Kits, launchers and certification runners ship in \`bootstrap/\`; Linux execution (this host and a fresh Debian 12 container) is the only evidence here. A second OS family is a named exception to v0.7 acceptance (operator, 2026-10-22). |
 | Pinned upstream Python/Node/Git | Acquired and verified on Linux x64 glibc from the pinned python-build-standalone/nodejs.org/git archives (bootstrap suite) and used as the owned runtime by the end-to-end suite. |
 | p99 latency | Not gated. Several p99 values exceed 6 ms; only p95 is the objective. |
 | Full Python CLI / editable installs / browser host | Outside this change; v0.5 limits remain in STAGE-1.md. |

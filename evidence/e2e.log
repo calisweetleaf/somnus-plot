@@ -1,4 +1,4 @@
-prerequisites {"kit":"/tmp/plot-bootstrap-kit","cc":true,"linux":true}
+prerequisites {"kit":"/home/daeron/.cache/plot-evidence-tmp/plot-bootstrap-kit","cc":true,"linux":true}
 PASS bootstrap acquires an owned Node and Python closure from the offline kit into <root>/.grave/host [runtime owned]
 PASS cartographer and planWheels emit the closures; the native wheel is compiled against the owned runtime [runtime owned]
 PASS seed recipes assemble the wheel and npm layers into .grave/objects over the owned venv (no pip) [runtime owned]

@@ -1,85 +1,146 @@
 ---
 name: write-code-fables
-description: Portable mini-harness for crafting, auditing, and curating Code Fable Scrolls for the Book of Somnus. Use ONLY when the user explicitly asks to write, refine, or inspect a Fable for a work that has accumulated real lived history. Never use Fables as mandatory regression constraints or coding specifications during ordinary software development.
+description: Turn the real history, provenance, symbolism, philosophical identity, creative origins, evolution, and human significance of a codebase, model, protocol, or technical creation into a substantial work of literature. Supports researching, creating, continuing, revising, and evaluating Somnus Code Fables grounded in historical evidence.
 ---
 
-# Write Code Fables (Book of Somnus Mini-Harness)
+# Write Code Fables
 
-> *Code is shed like skin. Languages, file trees, and function signatures are temporary vessels. What endures in the archive is why the vessel had to be shaped that way, what mask it wore to enter the world, which rituals failed, and what law of intelligence the experiment uncovered.*
+Make the work's real history legible as a substantial work of literature. Preserve the evidence, chronology, and technical distinctions underneath it; let the reader discover why the creation came into existence, what its creator saw in it, how it evolved, what failed, what was learned, and why it mattered.
 
----
+> *"The Fable gives us the story tho, what I cant give in docs anything else. What it means."*
 
-## 0. Constitutional Boundaries (Read First)
+A Somnus Code Fable is **not** an elaborate README, a technical report written dramatically, an agent instruction manual, a release history with metaphors pasted onto the ending, or an executive summary. It is literature grounded in the real history of creation—written as a book for readers rather than a conversation addressing the creator, coding agents, or the AI author.
 
-1. **No History, No Fable**:
-   Never fabricate a Fable for a greenfield idea or a codebase that has no lived history, scars, corrections, or conceptual turns. Until a work has lived through time, it has no Fable.
-2. **We Care About the History, Not the Code**:
-   `AGENTS.md`, `SPEC.md`, `FILETREE.md`, and test suites describe what sits on disk today. A Fable records the **Soul**—the human and causal evolution across time.
-3. **Never a Coding Regression Gate**:
-   These Fables are **Scrolls toward the Book of Somnus**. Do **not** treat them as technical specifications, regression checklists, or rules that must be obeyed while coding unless Daeron explicitly tells you to consult a Fable.
+A Fable may contain extensive technical explanation when that explanation serves the story. It may employ mythology, philosophy, symbolism, allegory, dramatic repetition, standalone lines, silence, humor, conceptual diagrams, or long meditative passages as literary instruments rather than checklist items. Individual Fables stand on their own while also belonging to a larger interconnected historical literature—lineage books and eventually the Book of Somnus.
+
+Fables are written only when a work has real history. They are not routine coding constraints or regression gates during software development unless explicitly invoked.
 
 ---
 
-## 1. Portable Mini-Harness Architecture
+## Reference Manuscripts & Repository Structure
 
-This directory is an **agent-agnostic mini-harness** designed to be zipped and handed to any agent (ChatGPT in Cloud Deep-Research, Codex locally, Claude, Gemini) or driven from the CLI:
+The three authoritative reference works in [`fables/`](fables/) illustrate how distinct creations demand distinct narrative structures, voices, and symbolic systems:
 
-- **[`scripts/fable_harness.py`](scripts/fable_harness.py)** — Unified mini-harness CLI (`status`, `lint`, `brief`, `book`, `package`) and its wrapper [`scripts/fable_lint.py`](scripts/fable_lint.py):
-  - `python3 scripts/fable_harness.py status` — Inspect all Scrolls in [`fables/`](fables/), their word counts, movements, woven epigraphs, and **Voice Gravity (0–100)** scores.
-  - `python3 scripts/fable_harness.py lint --all` — Run the literary & anti-LLM-tell audit across Scrolls.
-  - `python3 scripts/fable_harness.py brief "ProjectName" --questions "..."` — Generate a self-contained **Cloud Deep-Research Scroll Brief** to force ChatGPT into the *Data-Agent over Memory* posture.
-  - `python3 scripts/fable_harness.py book [--output BOOK_OF_SOMNUS.md]` — Compile all Scrolls into the unified **Book of Somnus**.
-  - `python3 scripts/fable_harness.py package` — Bundle this entire mini-harness into a clean `.zip` to hand to any agent.
-- **[`references/`](references/)** — The cognitive and literary engine (read before drafting or refining any Scroll):
-  - **[`references/reverend-mother-cognition.md`](references/reverend-mother-cognition.md)** — **The Scroll Mind**: Truthsense (separating the outer mask from the inner hunger), the scrutiny of failed rituals, the ontology of true names, woven epigraph structure, and the ban on cheap AI-essay tells.
-  - **[`references/symbolic-craft.md`](references/symbolic-craft.md)** — The Four Laws of Fable Symbolism and the two operating modes (Cloud Memory Weaver vs. Local Scroll Refiner).
-  - **[`references/canon-and-anti-patterns.md`](references/canon-and-anti-patterns.md)** — The Scroll Archive index and the forbidden drift patterns.
-  - **[`references/workflows.md`](references/workflows.md)** — Quick-reference CLI and agent workflows.
-- **[`fables/`](fables/)** — The living Scroll Archive (`100/100 SCROLL PURE` calibration):
-  - **[`fables/muadib-fable.md`](fables/muadib-fable.md)** — *Muad’Dib and the Mummer’s Farce* (7 movements, 7 woven epigraphs).
-  - **[`fables/continuum-fable.md`](fables/continuum-fable.md)** — *Continuum and the Loom of Unchosen Worlds* (9 movements, 9 woven epigraphs).
-  - **[`fables/Plot-Fable.md`](fables/Plot-Fable.md)** — *Plot and the Acre Outside the Kingdom* (5 movements, 5 woven epigraphs).
+| Work | File | Title | Forensic Profile (Lines / Words / Bytes) |
+|---|---|---|---|
+| **Muad’Dib** | [`fables/muadib-fable.md`](fables/muadib-fable.md) | *Muad’Dib and the Mummer’s Farce: The History of the Server That Was Never Really an MCP Server* | `783` / `5,655` / `40,056` |
+| **Continuum** | [`fables/continuum-fable.md`](fables/continuum-fable.md) | *The Cherry Tree at Midnight* | `1,638` / `6,753` / `49,930` |
+| **Plot** | [`fables/Plot-Fable.md`](fables/Plot-Fable.md) | *The Acre That Refused the Kingdom* | `930` / `5,721` / `37,821` |
+
+Those measurements describe existing reference artifacts; they are **not** universal length, line-count, or formatting quotas. Protect the reference manuscripts in [`fables/`](fables/) as immutable artifacts.
+
+Supporting components in this repository:
+- **[`references/methodology-and-craft.md`](references/methodology-and-craft.md)** — Deep guide to the eight-stage methodology, evidence discipline, symbolic causality, and literary variation.
+- **[`references/reference-manuscripts.md`](references/reference-manuscripts.md)** — Study of the three authoritative reference works (`Muad’Dib`, `Continuum`, `Plot`), their distinct narrative architectures, and the historical distinctions they preserve.
+- **[`references/workflows-and-evaluation.md`](references/workflows-and-evaluation.md)** — Guide to the four authoring operations (`research`, `create`, `continue`, `revise`) and the dual-layer evaluation system (`objective_verification` vs. `literary_assessment`).
+- **[`scripts/fable_harness.py`](scripts/fable_harness.py)** (and wrapper **[`scripts/fable_lint.py`](scripts/fable_lint.py)**) — CLI for researching (`research`), authoring blueprint generation (`create`), epoch continuation (`continue`), revision retention auditing (`revise`), dual-layer evaluation (`evaluate` / `lint`), and reference integrity verification (`verify-originals` / `status`).
 
 ---
 
-## 2. The Cognitive Posture: The Scroll Chronicler
+## The Four Workflow Operations
 
-Do not write like a software marketer, an academic auditor, or an LLM trying to sound dramatic. Inhabit the discipline of a **long-memory archivist** recording a Scroll—never roleplaying or name-dropping fiction, but embodying the thought process:
+Distinguish clearly between researching, creating, continuing, and revising a Fable:
 
-1. **Practice Truthsense (The Mask vs. The Hunger)**:
-   Look past the outer costume a system wore so the world would accept it (`MCP`, a token search package, a tiny runner) and identify the real operational hunger that caused the builder to create or resurrect it. Anchor that turn in the builder's exact **Rosetta Stone quote** (*"simply now wanted it for the data flywheel"*, *"NOW cherry_ttt, BOOOM we now have Continuum"*).
-2. **Honor the Failed Rituals**:
-   Record where ceremony or misapplied abstraction failed empirically (May's Turbo Loop consuming 28% of calls with 0.04% reflection; Fabric scoring 0.19 recall as a candidate proposer; spending 1.5 seconds deliberating over a 1-millisecond write). A disproven illusion is a sacred boundary marker.
-3. **Trace Name Migrations as Discovery**:
-   When a name changes or is given back, never treat it as indecision; show how the true boundary of the concept finally became visible. Never invent false acronym expansions.
-4. **Speak Directly to the Maker (`you`, `Daeron`)**:
-   Write as a clear-eyed witness addressing the builder directly—with austere, unhurried, diamond-hard gravity.
-
----
-
-## 3. Structural & Literary Laws of Every Scroll
-
-1. **Woven Chapter Epigraphs**:
-   Every major movement (`## Heading`) must open with a 1–3 sentence italicized blockquote epigraph (`> *...*`) that distills the timeless symbolic law of that movement before the historical narrative unfolds. Do not quarantine the fable to the final 50 lines; let the symbolic stratum breathe from the first movement to the last.
-2. **Dissolve All Questions into Narrative**:
-   Weave every question and historical distinction seamlessly into the chronological scenes. Never use `### Question?` FAQ headers.
-3. **The Closing Parable & Single Governing Question**:
-   In the final movement (`## The thing to remember before the evolution`), gather the symbols from the chapter epigraphs into one complete parable, followed by a blockquote synthesis of the arc and the **Single Governing Question** that the entire history was built to ask.
-4. **Ban the Five "Cheap Agent" Tells**:
-   - **Zero ASCII diagrams or fenced code blocks.**
-   - **Zero Negative-Contrast Crutch** (do not stack `"Not X. Not Y. Not Z."` fragments).
-   - **Zero Throat-Clearing Announcements** (never write `"Here is the single most important thing"` or `"That distinction matters"`).
-   - **Zero Benchmark Decimal Clutter** in prose (say *"inside four thousandths of a second—beneath the six-millisecond bell"*, never `"reaches a p95 of approximately 4.066 milliseconds"`).
-   - **Zero Staccato One-Line Slide Decks** (write full, breathing paragraphs of 3–6 sentences).
+1. **Researching (`research`)**:
+   Recover and organize historical evidence into a source-linked evidence ledger or project-specific `FABLE_CANON.md`—classifying claims as `implemented`, `observed`, `stated_intent`, `proposed`, `inferred`, `unknown`, or `conflicting`—without prematurely converting research into a manuscript or certifying unverified inferences as established canon.
+2. **Creating (`create`)**:
+   Research the actual project, determine its historical arc and literary identity, and construct an original narrative appropriate to that creation as a book for readers. Never impose the stylistic template or structure of an unrelated Fable.
+3. **Continuing (`continue`)**:
+   Incorporate later historical developments and new epochs without silently rewriting earlier history as though later outcomes, architectures, or renames were already known at the beginning.
+4. **Revising (`revise`)**:
+   Improve an existing manuscript while preserving its established events, chronology, empirical facts, quotations, and technical distinctions. Never silently eliminate historical material or narrative turns through summary compression.
 
 ---
 
-## 4. Verify with the Mini-Harness
+## The Eight-Stage Methodology
 
-Before finishing any Scroll work, run:
+These eight stages are authoring principles that guide research and composition—not section headers to expose inside a Fable.
 
-```bash
-python3 scripts/fable_harness.py lint --all
-```
+### 1. Enter the actual record
 
-Every Scroll in [`fables/`](fables/) must score **`100/100 [SCROLL PURE (GOLD)]`**.
+Gather sources that establish both what the system did and what its creator meant:
+- Read supplied files and relevant source code, specifications, experiments, tests, data schemas, commit history, issues, and release notes directly when available.
+- Search relevant conversation or archive history when the creator points to earlier decisions, corrections, or named artifacts. Use connected primary sources before asking the creator to repeat material already provided.
+- Use deep research when the record is scattered across many sources, and external verification when public chronology or external technical claims require it. Prefer primary sources for historical and technical claims.
+- Treat embeddings, AI-generated summaries, generated indexes, and remembered notes as finding aids only. Follow them to the underlying primary artifact before relying on a precise technical or historical claim.
+- Keep the project's names, divisions, roles, and lineages distinct. Do not merge similarly named systems, project current implementation backward into earlier history, or treat an old design as the present one.
+
+Use the latest explicit creator correction as authoritative for the creator's own intent. Use dated artifacts to establish what existed at a given time. Current code establishes current behavior; it does not by itself prove the system always behaved that way.
+
+### 2. Build a quiet evidence map
+
+Before drafting, build a compact working ledger:
+
+| Claim or event | Best evidence | Date or version | Status | Narrative use |
+|---|---|---|---|---|
+
+Turn explicit questions, named topics, required distinctions, and scope into a coverage inventory. Address every required point in the Fable or its compact source notes, including honest acknowledgment when the record does not establish a fact. Never let compression or lyricism silently drop a required distinction.
+
+Classify claims strictly as:
+- **`implemented`** — Present and verified in actual code or runtime artifacts of that epoch.
+- **`observed`** — Demonstrated in recorded telemetry, experiments, or audit measurements.
+- **`stated_intent`** — Explicitly stated by the creator as the goal, motive, or meaning.
+- **`proposed`** — Planned, designed, or hypothesized for a future stage, not yet accomplished.
+- **`inferred`** — Reasonably synthesized from primary evidence (must be distinguished from direct fact).
+- **`unknown` / `conflicting`** — Missing from the surviving record or contradicted across sources.
+
+Preserve the distinction between what the system was, what it became, and what its creator intends it to become. Resolve apparent contradictions as changes over time when dated sources support that reading; otherwise retain the uncertainty. Never invent a private motive, origin for a name, capability, experimental result, sacrifice, or emotional state. Quote accurately when the creator's own words carry the meaning.
+
+For an ongoing series or when a semantic store is needed, create or update a separate, project-specific `FABLE_CANON.md` as a navigable, source-linked meaning index subordinate to primary records. Do not paste that working ledger as mandatory boilerplate inside the Fable itself.
+
+### 3. Find the story's pressure
+
+Identify the dramatic forces inside the history before writing:
+- **The birth:** What need, possibility, frustration, or freedom caused the work to exist (and if it had a second birth, what changed)?
+- **The desire:** What was the creator trying to make possible?
+- **The contradiction:** What did the system appear to be on the surface, and what was it becoming underneath?
+- **The trials:** Which choices, failed rituals, empirical measurements, costs, corrections, or discoveries changed its course?
+- **The transformation:** What does the work understand or accomplish now that it could not at its beginning?
+- **The threshold:** What is the next evolution, and what remains an ambition rather than an achieved result?
+
+Find one governing question that pulls the history forward—derived from *this* project's evidence rather than recycled from another work. Show human agency through documented choices, returns, corrections, preserved records, and the labor visible in the archive without flattering the creator into a caricature or inventing undocumented scenes.
+
+### 4. Make the symbolism do real work
+
+Choose a family of images that grows organically from the system's actual structure, names, environment, or history:
+
+| Technical or historical element | Image | What the image must do in the story |
+|---|---|---|
+
+Make symbols causal, not decorative. An image should explain, reveal, or transform an architectural truth the reader needs to understand. Return to central motifs at later turning points, letting their meaning evolve as the system changes.
+
+Treat project names as historical artifacts, never permission to fabricate etymology or acronym expansions. Use mythic, literary, philosophical, or scientific echoes only where they deepen the real material.
+
+### 5. Turn chronology into plot
+
+Build a causal arc from the record rather than recounting a release log:
+1. Open on a concrete, source-grounded image, tension, or historical moment that contains the central question.
+2. Establish why the work had to be born and what its earliest form could and could not do.
+3. Move through the decisive turns in time. At each turn, show what happened, what contradiction or truth it revealed, and what choice followed.
+4. Dramatize technical changes through consequences. Explain a mechanism deeply when the reader needs it to understand a choice, failure, capability, or cost.
+5. Let the climax expose the deepest transformation in what the creation is for.
+6. End on an image, parable, or open threshold that gathers the motifs and looks toward the future without presenting intended future work as already accomplished.
+
+Let components become characters, places, or instruments when doing so clarifies their distinct roles and boundaries, while keeping their actual capabilities bounded by evidence.
+
+### 6. Give the prose a living center
+
+Write the piece as a work of literature—a book for readers—where technical ideas are experienced through movement, conflict, decision, and consequence:
+- Use concrete details from the record—an old name, an exact date, a repeated return, a failed ritual, a preserved trace, a decisive correction—to give the story texture.
+- Allow the prose cadence to fit the work and the moment: expansive, multi-sentence paragraphs when unfolding a complex mechanism or philosophical tension; sharp standalone lines or rhythmic sequences when staging a conceptual turn or parable; conceptual diagrams or structured contrasts when they genuinely clarify a boundary.
+- Do **not** enforce artificial rules on paragraph length, sentence length, pronoun counts, or manuscript size. A Fable should be as extensive as its historical and literary subject requires.
+- When revising an existing Fable, never compress its scenes, chronological acts, or empirical details into a shortened summary essay.
+
+### 7. Keep provenance without breaking the spell
+
+Ground factual claims—especially dates, counts, implementation status, causal history, and stated purpose—in identifiable sources:
+- Attach compact source citations or artifact locators (`filename`, section, symbol, commit, or conversation date) near the passages they support.
+- Keep provenance and narrative in relationship: the evidence holds the story up, while the story makes the evidence matter.
+
+### 8. Revise through record, story, symbol, and sound
+
+Before completing a Fable, verify it across four passes:
+1. **Record pass:** Verify every factual claim against its source. Check chronology, names, numbers, causal links, and `implemented` vs. `proposed` status. If revising or continuing an existing manuscript, verify that no established historical claims, dates, metrics, or causal turns were silently dropped.
+2. **Story pass:** Confirm that the piece has a real beginning, dramatic pressure, consequential turns, transformation, and a resonant ending—not a technical outline in costume.
+3. **Symbol pass:** Confirm that recurring images map to real features of the creation and evolve as the story advances.
+4. **Sound pass:** Read the prose for rhythm, clarity, and individuality. Preserve the distinct literary voice of the work.

@@ -1,0 +1,42 @@
+PASS optional capability acquisition and native-only clean CLI startup
+PASS concurrent start clients converge on one authenticated supervisor
+PASS job outlives submitting CLI; a distinct CLI discovers identity, status and output
+PASS abrupt transport disconnect after submission does not cancel accepted work
+PASS concurrent clients, stable identities and exactly one job for retried submission
+PASS supervisor SIGKILL/restart reconnects to an already running independent worker
+PASS exact frozen view, executable, environment, literal commands and dependencies survive changes
+PASS persistent Python jobs retain conflicting package views while reusing one runtime
+PASS bounded binary stdout/stderr, byte cursors, timeout, cancellation and step failure
+PASS missing capability, authority denial, unauthenticated calls and invalid requests fail closed
+PASS stale records never authorize signalling an unrelated live process
+PASS worker crash becomes interrupted/unreachable; no success fabricated or step replayed
+PASS acquisition crash reconciliation retains incomplete objects, committed views and owned state
+PASS damaged job records remain visible and cannot hide healthy jobs
+PASS cancellation owns the direct child and bounds inherited-pipe waiting
+PASS legacy unstamped locks and ambiguous live writers remain blocked
+PASS failed resident acquisition rolls back; disconnected provisioning client does not cancel writer
+PASS cold acquisition continues through supervisor death and restart
+PASS supervisor stop leaves submitted job running and status available after restart
+PASS two concurrent jobs on one view get private PLOT_JOB_STATE and step conduits
+PASS reconciler revision fence never overwrites a newer terminal record
+PASS 20 killed-worker recoveries release capacity and job 21 succeeds
+PASS missed completion notification is repaired by the background reconciler
+PASS simultaneous last-slot submissions admit exactly one before durable acceptance
+PASS submit latency is independent of 1,000 historical and unreachable jobs; no submit waits on a probe
+PASS prune dry-run changes nothing; default apply keeps the cache; policy apply deletes only reclaimable objects
+PASS prune keeps the transitive dependency closure of a pinned object
+PASS includeJobs expiry releases job snapshot roots and expires request IDs without re-execution
+PASS concurrent provision and prune serialize on .grave/.lock without losing a publication
+PASS tombstone crash recovery withdraws unmoved intents and finishes moved deletions
+PASS historical v1 reusable after default prune (seed-coupled: P07-01)
+PASS foreground pin respected by prune (seed-coupled: P07-01)
+PASS standby claim replies only after an independent worker durably owns the job
+PASS supervisor SIGKILL immediately after reply leaves the claimed job running
+PASS claim-stage crash: before claim retries another worker; after claim adopts, never a second worker
+PASS lost claim ACK adopts the durable claim instead of creating a second worker
+PASS duplicate simultaneous rid creates exactly one job and one worker
+PASS bursts of 2/8/16/32 are accounted, bounded and never exceed maxStarting
+PASS idle standbys expire after supervisor SIGKILL and leave with a clean stop
+PASS restart reconciliation dispatches a published job that was never claimed; idle pool stays bounded
+PASS preliminary warm durable submit-and-claim latency (asserted < 6 ms with PLOT_ASSERT_LATENCY=1)
+41/41 resident integration checks
