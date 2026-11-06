@@ -1,4 +1,4 @@
-// Somnus Plot v0.6: owned acquisitions, transactional views, literal native steps.
+// Somnus Plot v0.7: owned acquisitions, transactional views, literal native steps.
 // Native execution is trusted code. Manifest fs fields do not confine children.
 import * as f from 'node:fs';
 import * as p from 'node:path';

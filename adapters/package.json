@@ -1,0 +1,22 @@
+{
+  "name": "somnus-plot-cli",
+  "version": "0.1.0",
+  "description": "Somnus Plot adapter: one installable `plot` front door over the v0.7 seed and capabilities, with a global manager for global and per-project plot roots.",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "plot": "cli/plot.mjs",
+    "plot-mcp": "mcp/server.mjs"
+  },
+  "files": [
+    "cli/",
+    "mcp/",
+    "skills/"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node test/cli.mjs && node test/mcp.mjs"
+  }
+}

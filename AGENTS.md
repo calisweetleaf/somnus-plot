@@ -25,6 +25,7 @@
 | Resume active work | `TASK.md` active packet + newest entry in `docs/NOTEPAD.md` | Actual assignment and last handoff | Packet Required Reads |
 | Current reality | `docs/CONTEXT.md` + newest NOTEPAD entry | State, gate posture, blockers | Active packet |
 | Why Plot exists / what it must never become | `docs/Plot-Fable.md` | Constitutional narrative: no-assignment status, seed vs catalog, Flash principle, v0.7 direction | `docs/MEMORY.md` laws |
+| Whole-system architecture (one read) | `ARCHITECTURE.md` | Living spec: flow, components, schemas, hazards, host matrix; source/tests/evidence win | Relevant contract doc |
 | Durable law or vocabulary | `docs/MEMORY.md` | Stable decisions separated from status | Relevant contract doc |
 | Acquisition / view / Python tenant behavior | `STAGE-1.md` then `src/plot.mjs` | v0.5 contract still governs these | `tests/integration.mjs` |
 | Resident / jobs / recovery behavior | `PERSISTENT-NATIVE.md` then `capabilities/resident.mjs` | v0.6 contract | `tests/resident.mjs` |
@@ -58,6 +59,7 @@
 | `docs/Plot-Fable.md` | Constitutional narrative and v0.7 direction ("The Seventh Flash") | Before any architectural or scope decision | Measured claims (defer to evidence) | `docs/MEMORY.md`, `TASK.md` queue | Operator-owned | MEMORY |
 | `scripts/gate.sh` | Integrated gate (disposable copy by default; `--bench`; `--evidence` in place) | Before landing anything | Test semantics | All tests | `gate: PASS` | Handoff |
 | `PLAN.md` | v0.7 master architecture plan (operator-supplied) | Scope, laws 11–12, acceptance matrix §8 | Behavior (source wins) | `TASK.md`, contracts | Review | `docs/V07-CONTRACTS.md` |
+| `ARCHITECTURE.md` | Living spec (v1.0, 2026-11-05): topology, component catalog, `.grave/` schemas, lock order, trust model, validation and host matrix (incl. arm64 partial run) | Orienting on the whole system; citing structure | Measurements (evidence wins), wire formats (contracts win) | All source, contracts, evidence | Re-check after any source or `--evidence` change | `WHITEPAPER.md` |
 | `WHITEPAPER.md` | v0.7 whitepaper (v1.1, closeout); every v0.7 number copied from `evidence/`; open items in App C | Citing v0.7 design or results in prose | Measurements (evidence wins) | `evidence/`, contracts | Re-check against evidence after any `--evidence` run | `evidence/RESULTS.md` |
 | `docs/V07-CONTRACTS.md` | Frozen v0.7 shared interfaces: lock order, pins, request IDs, lifecycles, closure schema, workloads, ownership | Before any v0.7 packet | Implementation | Every v0.7 lane | Amendment row + consumers updated | Packet |
 | `TASK.md` | Active and queued packets | Assignment | Design semantics | NOTEPAD, CONTEXT | `validate-packet` | Packet |
