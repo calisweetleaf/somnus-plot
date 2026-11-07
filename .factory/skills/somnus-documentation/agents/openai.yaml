@@ -1,4 +1,0 @@
-interface:
-  display_name: "Somnus Documentation"
-  short_description: "Design evidence-grounded public Markdown docs."
-  default_prompt: "Use $somnus-documentation to revise this codebase's reader-facing documentation with verified content and its own visual identity."
